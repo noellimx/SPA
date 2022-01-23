@@ -1,5 +1,8 @@
 .DS_Store
 .idea
 
+cmake-build-debug
+
+*.db
 tests/spa_logs
 !tests/spa_logs/analysis.xsl
