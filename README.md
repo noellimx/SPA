@@ -62,7 +62,7 @@ DIRECTORY_TEST_OUTPUT="${DIRECTORY_TEST}${SUBDIRECTORY_OUTPUTS}"
 # Run autotest on input sets
 
 for t in "${SET_NAMES[@]}"; do
-  eval "${BINARY_PATH} ${DIRECTORY_TEST_INPUT}/$t.simple ${DIRECTORY_TEST_INPUT}/${t}.pql ${DIRECTORY_TEST_OUTPUT}/${t}.xml"
+  eval "${BINARY_PATH} ${DIRECTORY_TEST_INPUT}/${t}.simple ${DIRECTORY_TEST_INPUT}/${t}.pql ${DIRECTORY_TEST_OUTPUT}/${t}.xml"
 done
 
 ```
