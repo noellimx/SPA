@@ -30,7 +30,7 @@ void QueryProcessor::evaluate(string query, vector<string>& output) {
 	// This logic is highly simplified based on iteration 1 requirements and
 	// the assumption that the queries are valid.
 	if (synonymType == "procedure") {
-		Database::getProcedures(databaseResults);
+		database::getProcedures(databaseResults);
 	}
 
 	// post process the results to fill in the output vector

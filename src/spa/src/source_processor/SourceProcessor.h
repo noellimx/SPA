@@ -2,7 +2,7 @@
 #include <sstream>
 #include <fstream>
 #include <vector>
-#include "Database.h"
+#include "database/database.h"
 #include "SourceTokenizer.h"
 
 using namespace std;

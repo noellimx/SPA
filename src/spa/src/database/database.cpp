@@ -1,11 +1,11 @@
-#include "Database.h"
+#include "database.h"
 
-sqlite3* Database::dbConnection;
-vector<vector<string>> Database::dbResults;
-char* Database::errorMessage;
+sqlite3* database::dbConnection;
+vector<vector<string>> database::dbResults;
+char* database::errorMessage;
 
 // method to connect to the database and initialize tables in the database
-void Database::initialize() {
+void database::initialize() {
 	// open a database connection and store the pointer into dbConnection
 	sqlite3_open(".database.db", &dbConnection);
 
@@ -22,18 +22,18 @@ void Database::initialize() {
 }
 
 // method to close the database connection
-void Database::close() {
+void database::close() {
 	sqlite3_close(dbConnection);
 }
 
 // method to insert a procedure into the database
-void Database::insertProcedure(string procedureName) {
+void database::insertProcedure(string procedureName) {
 	string insertProcedureSQL = "INSERT INTO procedures ('procedureName') VALUES ('" + procedureName + "');";
 	sqlite3_exec(dbConnection, insertProcedureSQL.c_str(), NULL, 0, &errorMessage);
 }
 
 // method to get all the procedures from the database
-void Database::getProcedures(vector<string>& results){
+void database::getProcedures(vector<string>& results){
 	// clear the existing results
 	dbResults.clear();
 
@@ -52,7 +52,7 @@ void Database::getProcedures(vector<string>& results){
 
 // callback method to put one row of results from the database into the dbResults vector
 // This method is called each time a row of results is returned from the database
-int Database::callback(void* NotUsed, int argc, char** argv, char** azColName) {
+int database::callback(void* NotUsed, int argc, char** argv, char** azColName) {
 	NotUsed = 0;
 	vector<string> dbRow;
 

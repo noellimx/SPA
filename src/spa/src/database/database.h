@@ -8,7 +8,7 @@ using namespace std;
 
 // The Database has to be a static class due to various constraints.
 // It is advisable to just add the insert / get functions based on the given examples.
-class Database {
+class database {
 public:
 	// method to connect to the database and initialize tables in the database
 	static void initialize();

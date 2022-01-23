@@ -1,5 +1,5 @@
 
-#include "Database.h"
+#include "database/database.h"
 
 #include "catch.hpp"
 using namespace std;
@@ -13,13 +13,13 @@ namespace TestDatabase {
     // The name of a test case should be unique and meaningful.
     TEST_CASE("CheckDatabaseProcedure") {
         // initialize the database and insert a procedure
-        Database::initialize();
-        Database::insertProcedure("echo1");
-        Database::insertProcedure("echo2");
+        database::initialize();
+        database::insertProcedure("echo1");
+        database::insertProcedure("echo2");
 
         // retrieve the procedures from the database
         vector<string> dbResults;
-        Database::getProcedures(dbResults);
+        database::getProcedures(dbResults);
 
         // create the test output string from the procedures retrieved
         string testOutput;
