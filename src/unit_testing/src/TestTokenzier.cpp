@@ -1,5 +1,5 @@
 
-#include "Tokenizer.h"
+#include "SourceTokenizer.h"
 
 #include "catch.hpp"
 using namespace std;
@@ -16,7 +16,7 @@ namespace TestTokenizer {
         string testInput = "procedure p;Select p";
 
         // run the tokenizer method
-        Tokenizer tk;
+        SourceTokenizer tk;
         vector<string> tokens;
         tk.tokenize(testInput, tokens);
 
@@ -40,7 +40,7 @@ namespace TestTokenizer {
     TEST_CASE("CheckTokenizeProgram") {
         string testInput = "procedure echo { read num1; index = 1001; print index; print num1; }";
 
-        Tokenizer tk;
+        SourceTokenizer tk;
         vector<string> tokens;
         tk.tokenize(testInput, tokens);
 

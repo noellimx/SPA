@@ -1,11 +1,11 @@
-#include "Tokenizer.h"
+#include "SourceTokenizer.h"
 #include <iostream>
 
 // constructor
-Tokenizer::Tokenizer() {}
+SourceTokenizer::SourceTokenizer() {}
 
 // destructor
-Tokenizer::~Tokenizer() {}
+SourceTokenizer::~SourceTokenizer() {}
 
 // method to tokenize a program / query string
 // it currently tokenizes the string into a vector of 
@@ -13,7 +13,7 @@ Tokenizer::~Tokenizer() {}
 // numbers (any numeric sequence of characters, e.g., "1001"),
 // and punctuations (any other non-space characters, e.g., "=", ";", "{", "}").
 // it should be extended as needed to handle additional SIMPLE / PQL grammar rules.
-void Tokenizer::tokenize(string text, vector<string>& tokens) {
+void SourceTokenizer::tokenize(string text, vector<string>& tokens) {
 	tokens.clear();
 	string token;
 	

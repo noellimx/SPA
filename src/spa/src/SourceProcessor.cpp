@@ -9,7 +9,7 @@ void SourceProcessor::process(string program) {
 	Database::initialize();
 
 	// tokenize the program
-	Tokenizer tk;
+    SourceTokenizer tk;
 	vector<string> tokens;
 	tk.tokenize(program, tokens);
 
