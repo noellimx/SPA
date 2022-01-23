@@ -19,20 +19,17 @@ The binary will be found in debug or release directory. [//]: # (Where?)
 Run binary which takes in a set of 3 file paths:
 
 ## User Inputs
-
-User Inputs are placed in a common directory ```./tests/inputs```. See [Viewing Test Result](#viewing-test-result)
-
 1. Source script in SIMPLE (.simple)
 2. Queries in PQL and its expected results (.pql)
+User Inputs are placed in a common directory ```./tests/inputs```.
 
 ## SPA Outputs
+3. Target output stores test result. (.xml)
 
-Outputs are placed in ```./tests/spa_logs```.  See [Viewing Test Result](#viewing-test-result). \
-Also, outputs will not be persistently stored in the repository. Run execution to obtain fresh logs.
+Output Folder: ```./tests/spa_logs```.  See [Viewing Test Result](#viewing-test-result). \
+Outputs will not be persistently stored in the repository. Run execution to obtain fresh logs.
 
-3. target output to store test result. (.xml)
-
-For simplicity the file names in each set should have the same name and differentiated by its file extension.
+For simplicity file names in each set should have the same name and differentiated by its file extension.
 
 ## Example - Execution
 
@@ -66,11 +63,6 @@ for t in "${SET_NAMES[@]}"; do
 done
 
 ```
-cannot work
-./cmake-build-debug/src/autotester/autotester ./tests/inputs/001.simple ./tests/inputs/001.pql ./tests/spa_log/001.xml
-
-
-./cmake-build-debug/src/autotester/autotester ./tests/inputs/001.simple ./tests/inputs/001.pql ./tests/spa_logs/001123.xml
 
 # Test Tool
 
@@ -83,12 +75,11 @@ cannot work
 ## Viewing Test Result
 
 If python is installed, run a simple local server in the wd. \
-Please note analysis.xml is required in the same parent directory of test result file for nice formatting.
+analysis.xml is required in the same parent directory of test result file for nice formatting.
 
-### Run server (Default url should be localhost:8000)
+- Run server (Default url should be localhost:8000) \
 ``` python3 -m http.server ```
-
 
 # CLion Development
 ## Adding new cpp and header files
-Right click the project > Reload CMake Project
+Right click the project > Reload CMake Project 
