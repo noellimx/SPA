@@ -8,7 +8,7 @@ SET_NAMES=("001")
 # Build
 BINARY_PATH="./cmake-build-debug/src/autotester/autotester"
 
-rm "${BINARY_PATH}"
+rm -f "${BINARY_PATH}"
 # Build Debug (Some magic here that needs deeper look)
 cmake --build ./cmake-build-debug --target all
 
