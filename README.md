@@ -86,3 +86,8 @@ Please note analysis.xml is required in the same parent directory of test result
 
 ### Run server (Default url should be localhost:8000)
 ``` python3 -m http.server ```
+
+
+# CLion Development
+## Adding new cpp and header files
+Right click the project > Reload CMake Project
