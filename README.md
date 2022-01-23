@@ -19,14 +19,14 @@ Run binary which takes in a set of 3 file paths:
 
 ## User Inputs
 
-User Inputs are placed in a common directory (./tests/inputs etc). See [Viewing Test Result](#viewing-test-result)
+User Inputs are placed in a common directory ```./tests/inputs```. See [Viewing Test Result](#viewing-test-result)
 
 1. Source script in SIMPLE (.simple)
 2. Queries in PQL and its expected results (.pql)
 
 ## SPA Outputs
 
-Outputs are placed in ./tests/spa_logs.  See [Viewing Test Result](#viewing-test-result). \
+Outputs are placed in ```./tests/spa_logs```.  See [Viewing Test Result](#viewing-test-result). \
 Also, outputs will not be persistently stored in the repository. Run execution to obtain fresh logs.
 
 3. target output to store test result. (.xml)
