@@ -1,5 +1,5 @@
 #include "QueryProcessor.h"
-#include "Tokenizer.h"
+#include "QueryTokenizer.h"
 
 // constructor
 QueryProcessor::QueryProcessor() {}
@@ -16,7 +16,7 @@ void QueryProcessor::evaluate(string query, vector<string>& output) {
 	output.clear();
 
 	// tokenize the query
-	Tokenizer tk;
+    QueryTokenizer tk;
 	vector<string> tokens;
 	tk.tokenize(query, tokens);
 
@@ -27,7 +27,7 @@ void QueryProcessor::evaluate(string query, vector<string>& output) {
 	vector<string> databaseResults;
 
 	// call the method in database to retrieve the results
-	// This logic is highly simplified based on iteration 1 requirements and 
+	// This logic is highly simplified based on iteration 1 requirements and
 	// the assumption that the queries are valid.
 	if (synonymType == "procedure") {
 		Database::getProcedures(databaseResults);

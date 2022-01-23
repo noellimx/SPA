@@ -2,13 +2,16 @@
 # Include input sets here.
 SET_NAMES=("001")
 
+
+
+
+# Build
+BINARY_PATH="./cmake-build-debug/src/autotester/autotester"
+
+rm "${BINARY_PATH}"
 # Build Debug (Some magic here that needs deeper look)
 cmake --build ./cmake-build-debug --target all
 
-# Paths
-
-# Path - Binary
-BINARY_PATH="./cmake-build-debug/src/autotester/autotester"
 if [ ! -f "${BINARY_PATH}" ]; then
   echo "ERROR: Binary not found"
   exit 1
