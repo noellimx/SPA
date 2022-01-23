@@ -1,15 +1,7 @@
 procedure main {
-    read num1;
-    index = num1;
-
-    print num1;
-    print index;
+    x = 1;
 }
 
 procedure main2 {
-    read num1;
-    index = num1;
-
-    print num1;
-    print index;
+    y = 1;
 }
