@@ -36,7 +36,7 @@ else()
     endif()
 endif()
 list(APPEND CMAKE_PREFIX_PATH "${AUTOTESTER_ROOT}")
-find_package(Autotester REQUIRED)
+find_package(AUTOTESTER REQUIRED)
 include_directories("${CMAKE_CURRENT_LIST_DIR}/lib")#include catch.hpp
 
 add_subdirectory(src/spa)

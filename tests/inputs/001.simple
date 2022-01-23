@@ -1,0 +1,15 @@
+procedure main {
+    read num1;
+    index = num1;
+
+    print num1;
+    print index;
+}
+
+procedure main2 {
+    read num1;
+    index = num1;
+
+    print num1;
+    print index;
+}
