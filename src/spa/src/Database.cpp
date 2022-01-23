@@ -7,7 +7,7 @@ char* Database::errorMessage;
 // method to connect to the database and initialize tables in the database
 void Database::initialize() {
 	// open a database connection and store the pointer into dbConnection
-	sqlite3_open("database.db", &dbConnection);
+	sqlite3_open(".database.db", &dbConnection);
 
 	// drop the existing procedure table (if any)
 	string dropProcedureTableSQL = "DROP TABLE IF EXISTS procedures";
