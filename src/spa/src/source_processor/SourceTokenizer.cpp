@@ -1,5 +1,4 @@
 #include "SourceTokenizer.h"
-#include <iostream>
 
 // constructor
 SourceTokenizer::SourceTokenizer() {}
@@ -13,7 +12,7 @@ SourceTokenizer::~SourceTokenizer() {}
 // numbers (any numeric sequence of characters, e.g., "1001"),
 // and punctuations (any other non-space characters, e.g., "=", ";", "{", "}").
 // it should be extended as needed to handle additional SIMPLE / PQL grammar rules.
-void SourceTokenizer::tokenize(string text, vector<string>& tokens) {
+void SourceTokenizer::tokenize(string text, std::vector<string>& tokens) {
 	tokens.clear();
 	string token;
 	
