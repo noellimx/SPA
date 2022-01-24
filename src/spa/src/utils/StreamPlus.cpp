@@ -6,7 +6,6 @@
 
 std::ostream& operator<<(std::ostream& os, const std::vector<std::string> & elements)
 {
-
     int length = elements.size();
     std::cout << "[ ";
     int i = 0;
