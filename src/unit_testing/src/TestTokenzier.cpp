@@ -1,5 +1,5 @@
 
-#include "source_processor/SourceTokenizer.h"
+#include "source_processor/SourceTokenizer.hpp"
 
 #include "catch.hpp"
 using namespace std;

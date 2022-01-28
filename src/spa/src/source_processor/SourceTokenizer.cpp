@@ -1,4 +1,4 @@
-#include "SourceTokenizer.h"
+#include "SourceTokenizer.hpp"
 
 // constructor
 SourceTokenizer::SourceTokenizer() {}

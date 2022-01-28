@@ -1,7 +1,7 @@
 #include "TestWrapper.h"
-#include "source_processor/SourceProcessor.h"
-#include "database/database.h"
-#include "query_processor/QueryProcessor.h"
+#include "source_processor/SourceProcessor.hpp"
+#include "database/database.hpp"
+#include "query_processor/QueryProcessor.hpp"
 
 // implementation code of WrapperFactory - do NOT modify the next 5 lines
 AbstractWrapper* WrapperFactory::wrapper = 0;

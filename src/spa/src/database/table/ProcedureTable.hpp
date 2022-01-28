@@ -4,23 +4,27 @@
 
 #pragma once
 
+#include "database/table/Table.hpp"
+
 #include <string>
 
-class ProcedureTable {
+class ProcedureTable: public Table {
 
 private:
     ProcedureTable();
     std::string _name;
 
-    static ProcedureTable& GET();
+    std::string _col_name;
 
-    std::string getName();
 public:
     ProcedureTable(ProcedureTable const&) = delete;              // Don't Implement
     void operator=(ProcedureTable const&) = delete; // Don't implement
-
+    static ProcedureTable& GET();
     static std::string NAME();
-
+    static std::string COLUMN_NAME();
+    std::string getAttributes();
+     std::string getName();
+     std::string getColName();
 };
 
 

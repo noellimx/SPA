@@ -2,7 +2,7 @@
 
 #include <string>
 #include <vector>
-#include "database/database.h"
+#include "database/database.hpp"
 
 using namespace std;
 

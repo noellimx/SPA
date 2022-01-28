@@ -5,10 +5,10 @@
 
 #include <vector>
 
-#include "SourceTokenizer.h"
+#include "SourceTokenizer.hpp"
 
-#include "database/database.h"
-#include "utils/StreamPlus.h"
+#include "database/database.hpp"
+#include "utils/StreamPlus.hpp"
 
 using namespace std;
 

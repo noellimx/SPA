@@ -1,5 +1,5 @@
-#include "QueryProcessor.h"
-#include "QueryTokenizer.h"
+#include "QueryProcessor.hpp"
+#include "QueryTokenizer.hpp"
 
 // constructor
 QueryProcessor::QueryProcessor() {}

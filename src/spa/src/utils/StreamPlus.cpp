@@ -2,7 +2,7 @@
 // Created by Noel Lim on 24/1/22.
 //
 
-#include "StreamPlus.h"
+#include "StreamPlus.hpp"
 
 std::ostream& operator<<(std::ostream& os, const std::vector<std::string> & elements)
 {

@@ -1,4 +1,4 @@
-#include "QueryTokenizer.h"
+#include "QueryTokenizer.hpp"
 
 // constructor
 QueryTokenizer::QueryTokenizer() {}

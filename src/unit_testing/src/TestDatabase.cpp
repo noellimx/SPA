@@ -1,21 +1,26 @@
 
-#include "database/database.h"
+#include "database/database.hpp"
 
 #include "catch.hpp"
 using namespace std;
 
 // Each cpp is a set of test cases for a specific component.
 namespace TestDatabase {
-    void require(bool b) {
+    void require(bool b, string & desc) {
         REQUIRE(b);
     }
 
     // The name of a test case should be unique and meaningful.
-    TEST_CASE("CheckDatabaseProcedure") {
+    TEST_CASE("CheckDatabaseProcedure","[Check Database Procedure]") {
         // initialize the database and insert a procedure
         database::initialize();
-        database::insertProcedure("echo1");
-        database::insertProcedure("echo2");
+
+        std::string procedureName1 = "procedure1";
+        std::string procedureName2 = "procedure2";
+        std::string procedureName3 = "procedure3";
+        database::insertProcedure(procedureName1);
+        database::insertProcedure(procedureName2);
+        database::insertProcedure(procedureName3);
 
         // retrieve the procedures from the database
         vector<string> dbResults;
@@ -28,14 +33,13 @@ namespace TestDatabase {
             testOutput.append(dbResults.at(i) + "$");
         }
 
-        // create the expected output string
-        string expectedOutput = "echo1$echo2$";
+        string isProcedure1Exist = database::isProcedureExist(procedureName1);
+        string isProcedure2Exist = database::isProcedureExist(procedureName2);
+        string isProcedure3Exist = database::isProcedureExist(procedureName3);
 
-        // compare the test output with expected output
-        require(testOutput == expectedOutput);
-
-        // The test output should match with the expected output
-        // and hence the assertion would be true.
+        CHECK("1" == isProcedure1Exist);
+        CHECK("1" == isProcedure2Exist);
+        CHECK("1" == isProcedure3Exist);
     }
 }
 
