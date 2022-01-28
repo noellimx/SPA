@@ -3,30 +3,37 @@
 #include <string>
 #include <vector>
 #include "sqlite3.h"
-
-using namespace std;
+#include "database/table/ProcedureTable.h"
 
 // The Database has to be a static class due to various constraints.
 // It is advisable to just add the insert / get functions based on the given examples.
 class database {
 public:
+
+    static const std::string TABLE_PROCEDURES;
 	// method to connect to the database and initialize tables in the database
-	static void initialize();
+    static void initializeConnection();
+    static void clearTables();
+    static void initializeTables();
+
+    static void createTableProcedure();
+    static void createTables();
+    static void initialize();
 
 	// method to close the database connection
 	static void close();
 
 	// method to insert a procedure into the database
-	static void insertProcedure(string procedureName);
+	static void insertProcedure(std::string procedureName);
 
 	// method to get all the procedures from the database
-	static void getProcedures(vector<string>& results);
+	static void getProcedures(std::vector<std::string>& results);
 
 private:
 	// the connection pointer to the database
 	static sqlite3* dbConnection; 
 	// a vector containing the results from the database
-	static vector<vector<string>> dbResults; 
+	static std::vector<std::vector<std::string>> dbResults;
 	// the error message from the database
 	static char* errorMessage;
 	// callback method to put one row of results from the database into the dbResults vector
