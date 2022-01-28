@@ -24,9 +24,10 @@ void TestWrapper::parse(std::string filename) {
     ifstream fs(filename);
     stringstream buffer;
     buffer << fs.rdbuf();
-    string program = buffer.str();
+    std::string program = buffer.str();
 
     // call the source processor to process it
+    std::cout << program << std::endl;
     SourceProcessor sp;
     sp.process(program);
 }

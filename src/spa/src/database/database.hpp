@@ -27,7 +27,7 @@ public:
     static std::string isProcedureExist(std::string procedureName);
 	// method to get all the procedures from the database
 	static void getProcedures(std::vector<std::string>& results);
-
+    static std::string getProcedureCount();
 private:
 
 	// the connection pointer to the database

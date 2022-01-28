@@ -36,7 +36,6 @@ void database::createTables(){
     for(Table * table : tables){
         attributes.clear();
         std::string createProcedureTableStatement = "CREATE TABLE " +table->getName()+" "+table->getAttributes() + ";";
-        std::cout << createProcedureTableStatement << std::endl;
         sqlite3_exec(dbConnection, createProcedureTableStatement.c_str(), NULL, 0, &errorMessage);
         if(errorMessage != nullptr){
             throw errorMessage;
@@ -87,7 +86,15 @@ void database::getProcedures(std::vector<std::string>& results){
 		results.push_back(result);
 	}
 }
-
+std::string database::getProcedureCount() {
+    dbResults.clear();
+    std::string getProceduresSQL = "SELECT COUNT(*) FROM procedures;";
+    sqlite3_exec(dbConnection, getProceduresSQL.c_str(), callback, 0, &errorMessage);
+    if(errorMessage != nullptr){
+        return errorMessage;
+    }
+    return dbResults[0][0];
+}
 // callback method to put one row of results from the database into the dbResults vector
 // This method is called each time a row of results is returned from the database
 int database::callback(void* NotUsed, int argc, char** argv, char** azColName) {
