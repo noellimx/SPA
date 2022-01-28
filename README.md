@@ -9,7 +9,7 @@ CLion
 
 # Build Steps and Binary
 
-The preconfigured build steps should run in CLion and the repository should be a CLion project. \
+The preconfigured build steps should run in CLion and (repository is a CLion project). \
 It is recommended to reload the project and build cache before development. See [CLion Development](#clion-development)
 
 The binary will be found in debug or release directory. [//]: # (Where?)
