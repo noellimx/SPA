@@ -5,6 +5,7 @@
 #pragma once
 
 #include <string>
+#include <iostream>
 
 #include <utility>
 
@@ -15,7 +16,7 @@ protected:
 public:
   Token() = default;
   ~Token() = default;
-
+  virtual std::string getType();
 };
 
 

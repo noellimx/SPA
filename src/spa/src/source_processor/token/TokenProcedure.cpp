@@ -4,5 +4,6 @@
 
 #include "TokenProcedure.hpp"
 
-
-
+std::string TokenProcedure::getType() {
+  return TokenProcedure::NAME();
+}

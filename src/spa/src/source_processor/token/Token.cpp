@@ -4,6 +4,8 @@
 
 #include "Token.hpp"
 
-
+std::string Token::getType() {
+  return "---";
+};
 
 

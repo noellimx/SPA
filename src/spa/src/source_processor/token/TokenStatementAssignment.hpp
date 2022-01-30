@@ -16,7 +16,12 @@ protected:
 public:
   TokenStatementAssignment() = default;
   ~TokenStatementAssignment() = default;
-
+  static std::string NAME() {
+    return "assignment";
+  };
+  std::string getType() final {
+    return TokenStatementAssignment::NAME();
+  };
 };
 
 

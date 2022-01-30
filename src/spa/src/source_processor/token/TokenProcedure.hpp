@@ -14,7 +14,10 @@ protected:
 public:
   TokenProcedure() = default;
   ~TokenProcedure() = default;
-
+  static std::string NAME() {
+    return "procedure";
+  };
+  std::string getType();
 };
 
 

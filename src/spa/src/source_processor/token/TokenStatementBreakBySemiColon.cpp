@@ -4,3 +4,6 @@
 
 #include "TokenStatementBreakBySemiColon.hpp"
 
+std::string TokenStatementBreakBySemiColon::getType() {
+return "TokenStatementBreakBySemiColon---";
+};

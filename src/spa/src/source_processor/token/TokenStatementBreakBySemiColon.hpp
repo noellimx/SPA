@@ -14,7 +14,7 @@ class TokenStatementBreakBySemiColon : public Token {
 public:
   TokenStatementBreakBySemiColon() = default;
   ~TokenStatementBreakBySemiColon() = default;
-
+  std::string getType() override;
 };
 
 
