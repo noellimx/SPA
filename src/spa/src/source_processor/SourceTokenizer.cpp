@@ -110,7 +110,17 @@ void SourceTokenizer::tokenize(std::vector<Token *> &tokens) {
                         int cursorEndStatement = cursor;
                         std::string stmt = source.substr(cursorStartStatement,
                                                          cursorEndStatement - cursorStartStatement + 1);
-                        auto *tokenAssignment = new TokenStatementAssignment();
+
+                        int moving = cursorStartStatement;
+                        while(source.at(moving + 1) != '='){
+
+                          moving++;
+                        }
+                      std::string var = source.substr(cursorStartStatement,
+                                                      moving - cursorStartStatement + 1);
+
+                        auto * tokenLHS = new TokenVariable(var);
+                        auto *tokenAssignment = new TokenStatementAssignment(tokenLHS);
                         tokens.push_back(tokenAssignment);
                         tokenProcedure->addChildToken(tokenAssignment);
                     }
