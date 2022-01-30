@@ -22,9 +22,9 @@ namespace TestDatabase {
 //        TokenProcedure proc2 = TokenProcedure(std::move(procedureName2));
 //        TokenProcedure proc3 = TokenProcedure(std::move(procedureName3));
 
-  TokenProcedure proc1 = TokenProcedure();
-  TokenProcedure proc2 = TokenProcedure();
-  TokenProcedure proc3 = TokenProcedure();
+  TokenProcedure proc1 = TokenProcedure(procedureName1);
+  TokenProcedure proc2 = TokenProcedure(procedureName2);
+  TokenProcedure proc3 = TokenProcedure(procedureName3);
 //        database::insertProcedure(&proc1);
 //        database::insertProcedure(&proc2);
 //        database::insertProcedure(&proc3);

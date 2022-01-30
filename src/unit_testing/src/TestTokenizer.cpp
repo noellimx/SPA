@@ -21,12 +21,15 @@ TEST_CASE("[Test]Tokenize1SourceExpect1NaiveProcedure", "[Tokenize1Procedure]") 
   Token * actualToken0 = tokens.at(0);
   std::string Token0typeActual = actualToken0->getType();
   std::string Token0typeExpected = "procedure";
+  std::string Token0ProcedureNameActual = actualToken0->getName();
+  std::string Token0ProcedureNameExpected = "main";
 
   Token * actualToken1 = tokens.at(1);
   std::string Token1typeActual = actualToken1->getType();
   std::string Token1typeExpected = "assignment";
 
   CHECK(Token0typeActual == Token0typeExpected);
+  CHECK(Token0ProcedureNameActual == Token0ProcedureNameExpected);
   CHECK(Token1typeActual == Token1typeExpected);
   CHECK(2 == tokens.size());
 }

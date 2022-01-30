@@ -11,13 +11,18 @@
 
 class TokenProcedure : public Token {
 protected:
+  std::string name;
 public:
-  TokenProcedure() = default;
+  TokenProcedure() = delete;
+  explicit TokenProcedure(std::string& _name) :name(std::move(_name)){}
   ~TokenProcedure() = default;
-  static std::string NAME() {
+  static std::string TYPE() {
     return "procedure";
   };
   std::string getType();
+  std::string getName(){
+    return name;
+  };
 };
 
 
