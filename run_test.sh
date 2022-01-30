@@ -1,11 +1,10 @@
 #!/bin/bash
 # Include input sets here.
-SET_NAMES=("001")
+#SET_NAMES=("001")
 
+SET_NAMES=() # // TODO. for now no autotest test yet. implementing autotester.
 
-
-
-# Build
+# Build path.
 BINARY_PATH="./cmake-build-debug/src/autotester/autotester"
 
 rm -f "${BINARY_PATH}"
