@@ -12,15 +12,12 @@ void SourceProcessor::process(std::string program) {
   SourceTokenizer tk(program);
   std::vector<Token *> tokens;
   tk.tokenize(tokens);
-  // This logic is highly simplified based on iteration 1 requirements and
-  // the assumption that the programs are valid.
-//    for (Token *token: tokens) {
-//
-//        std::string type = token->getType();
-//        if (type == "procedure") {
-//            database::insertProcedure((TokenProcedure *) token);
-//        }
-//
-//
-//    }
+//   This logic is highly simplified based on iteration 1 requirements and
+//   the assumption that the programs are valid.
+  for (Token *token : tokens) {
+    std::string type = token->getType();
+    if (type == "procedure") {
+      database::insertProcedure((TokenProcedure *) token);
+    }
+  }
 }

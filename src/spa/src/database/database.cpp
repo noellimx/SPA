@@ -12,6 +12,9 @@ char* database::errorMessage;
 // method to connect to the database and initialize tables in the database
 
 void database::initializeConnection() {
+    if(dbConnection != nullptr){
+      throw "initializeConnection should be invoked once.";
+    }
     sqlite3_open(".database.db", &dbConnection);
 }
 
