@@ -4,9 +4,10 @@
 #include "query_processor/QueryProcessor.hpp"
 
 // implementation code of WrapperFactory - do NOT modify the next 5 lines
-AbstractWrapper* WrapperFactory::wrapper = 0;
-AbstractWrapper* WrapperFactory::createWrapper() {
-  if (wrapper == 0) wrapper = new TestWrapper;
+AbstractWrapper *WrapperFactory::wrapper = 0;
+AbstractWrapper *WrapperFactory::createWrapper() {
+  if (wrapper == 0)
+    wrapper = new TestWrapper;
   return wrapper;
 }
 // do not modify the following line
@@ -20,28 +21,28 @@ TestWrapper::TestWrapper() {
 
 // method for parsing the SIMPLE source
 void TestWrapper::parse(std::string filename) {
-    // read the source program from the file
-    ifstream fs(filename);
-    stringstream buffer;
-    buffer << fs.rdbuf();
-    std::string program = buffer.str();
+  // read the source program from the file
+  std::ifstream fs(filename);
+  std::stringstream buffer;
+  buffer << fs.rdbuf();
+  std::string program = buffer.str();
 
-    // call the source processor to process it
-    std::cout << program << std::endl;
-    SourceProcessor sp;
-    sp.process(program);
+  // call the source processor to process it
+  std::cout << program << std::endl;
+  SourceProcessor sp;
+  sp.process(program);
 }
 
 // method to evaluating a query
-void TestWrapper::evaluate(std::string query, std::list<std::string>& results){
-    vector<string> output;
+void TestWrapper::evaluate(std::string query, std::list<std::string> &results) {
+  std::vector<std::string> output;
 
-    // call the query processor to process a single query
-    QueryProcessor qp;
-    qp.evaluate(query, output);
+  // call the query processor to process a single query
+  QueryProcessor qp;
+  qp.evaluate(query, output);
 
-    // convert a vector of results to a list of results
-    for (string result : output) {
-        results.push_back(result);
-    }
+  // convert a vector of results to a list of results
+  for (std::string result : output) {
+    results.push_back(result);
+  }
 }

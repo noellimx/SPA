@@ -60,14 +60,14 @@ void database::insertProcedure(std::string procedureName) {
     sqlite3_exec(dbConnection, insertProcedureSQL.c_str(), NULL, 0, &errorMessage);
 }
 
-std::string database::isProcedureExist(std::string procedureName) {
+bool database::isProcedureExist(std::string procedureName) {
     dbResults.clear();
     std::string statement = "SELECT EXISTS(SELECT 1 FROM " + ProcedureTable::NAME() +  " WHERE " + ProcedureTable::COLUMN_NAME() + "=\""+procedureName+"\" LIMIT 1)";
     sqlite3_exec(dbConnection, statement.c_str(), callback, 0, &errorMessage);
     if(errorMessage != nullptr){
         return errorMessage;
     }
-    return dbResults[0][0];
+    return dbResults[0][0] == "1";
 }
 // method to get all the procedures from the database
 void database::getProcedures(std::vector<std::string>& results){
