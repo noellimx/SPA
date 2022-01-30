@@ -24,7 +24,7 @@ public:
     static void close();
 
     // method to insert a procedure into the database
-    static void insertProcedure(std::string name);
+    static void insertProcedure(TokenProcedure *);
 
     static bool isProcedureExist(std::string procedureName);
 
