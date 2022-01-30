@@ -54,6 +54,17 @@ TEST_CASE("[TestTokenizer] A variable token", "") {
 
   CHECK(expectedTokenType == actualTokenType);
 }
+
+
+TEST_CASE("[TestTokenizer] A constant token", "") {
+  std::string var1 = "1";
+
+  auto *token = new TokenConstant(var1);
+  std::string expectedTokenType = "constant";
+  std::string actualTokenType = token->getType();
+
+  CHECK(expectedTokenType == actualTokenType);
+}
 }
 
 
