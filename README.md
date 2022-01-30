@@ -3,9 +3,10 @@
 
 ## Operating System
 MacOS Monterey
-
 ## IDE
 CLion
+## Build Tools
+CMake, ninja
 
 # Build Steps and Binary
 
@@ -81,5 +82,10 @@ analysis.xml is required in the same parent directory of test result file for ni
 ``` python3 -m http.server ```
 
 # CLion Development
-## Adding new cpp and header files
+
+## Using command line
+
+It is recommended to open the project in Clion.
+
+## In Clion, Adding new cpp and header files
 Right click the project > Reload CMake Project 
