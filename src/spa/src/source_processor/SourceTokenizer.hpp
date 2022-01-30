@@ -7,6 +7,7 @@
 #include "source_processor/token/Token.hpp"
 #include "source_processor/token/TokenProcedure.hpp"
 #include "source_processor/token/TokenStatementAssignment.hpp"
+#include "source_processor/token/TokenVariable.hpp"
 
 // A class to tokenize a program / query string into a vector of tokens
 class SourceTokenizer {

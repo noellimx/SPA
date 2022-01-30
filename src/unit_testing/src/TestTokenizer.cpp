@@ -12,7 +12,7 @@ void require(bool b, std::string &desc) {
 }
 
 // The name of a test case should be unique and meaningful.
-TEST_CASE("[Test]Tokenize1SourceExpect1NaiveProcedure", "[Tokenize1Procedure]") {
+TEST_CASE("[TestTokenizer]Tokenize1SourceExpect1NaiveProcedure", "[Tokenize1Procedure]") {
   std::string source = "procedure main { a = 0; }";
   SourceTokenizer tk(source);
   std::vector<Token *> tokens;
@@ -37,6 +37,18 @@ TEST_CASE("[Test]Tokenize1SourceExpect1NaiveProcedure", "[Tokenize1Procedure]") 
 
   CHECK(Token1typeActual == Token1typeExpected);
   CHECK(2 == tokens.size());
+}
+
+TEST_CASE("[TestTokenizer] A variable token",""){
+  std::string var1 = "abc";
+
+
+  auto * token = new TokenVariable(var1);
+  std::string expectedTokenType = "assignment";
+  std::string actualTokenType = token->getType();
+
+  CHECK(expectedTokenType == actualTokenType);
+
 }
 }
 
