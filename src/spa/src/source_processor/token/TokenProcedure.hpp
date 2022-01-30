@@ -7,11 +7,13 @@
 #include "source_processor/token/Token.hpp"
 #include <iostream>
 #include <string>
+#include <vector>
 #include <utility>
 
 class TokenProcedure : public Token {
 protected:
   std::string name;
+  std::vector<Token *> children;
 public:
   TokenProcedure() = delete;
   explicit TokenProcedure(std::string& _name) :name(std::move(_name)){}
@@ -19,10 +21,18 @@ public:
   static std::string TYPE() {
     return "procedure";
   };
-  std::string getType();
-  std::string getName(){
+  std::string getType() override;
+  std::string getName() override{
     return name;
   };
+
+  void addChildToken(Token * tokenPtr){
+    children.push_back(tokenPtr);
+  }
+
+  Token * getChildAtPosition(int npos){
+    return children.at(npos);
+  }
 };
 
 

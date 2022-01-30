@@ -82,8 +82,8 @@ void SourceTokenizer::tokenize(std::vector<Token *> &tokens) {
                 int cursorEndProcedureEnd = cursor;
                 std::string procedureName = source.substr(cursorStartProcedureName,
                                                           cursorEndProcedureEnd - cursorStartProcedureName + 1);
-                auto *token = new TokenProcedure(procedureName);
-                tokens.push_back(token); // The first token of every set is a procedure token.
+                auto *tokenProcedure = new TokenProcedure(procedureName);
+                tokens.push_back(tokenProcedure); // The first token of every set is a procedure token.
                 moveCursor(); // move out of procedure name
                 char delimiterBetweenProcedureNameAndBody = source.at(cursor);
                 if (delimiterBetweenProcedureNameAndBody != ' ') {
@@ -110,8 +110,9 @@ void SourceTokenizer::tokenize(std::vector<Token *> &tokens) {
                         int cursorEndStatement = cursor;
                         std::string stmt = source.substr(cursorStartStatement,
                                                          cursorEndStatement - cursorStartStatement + 1);
-                        auto *tkstmt = new TokenStatementAssignment();
-                        tokens.push_back(tkstmt);
+                        auto *tokenAssignment = new TokenStatementAssignment();
+                        tokens.push_back(tokenAssignment);
+                        tokenProcedure->addChildToken(tokenAssignment);
                     }
                 }
             }
