@@ -15,10 +15,10 @@ protected:
   std::string name;
 public:
   TokenVariable() = delete;
-  explicit TokenVariable(std::string& _name) :name(std::move(_name)){}
+  explicit TokenVariable(std::string _name) :name(std::move(_name)){}
   ~TokenVariable() = default;
   static std::string TYPE() {
-    return "assignment";
+    return "variable";
   };
   std::string getType() override {
     return TokenVariable::TYPE();

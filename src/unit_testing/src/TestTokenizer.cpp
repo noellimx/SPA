@@ -5,59 +5,81 @@
 
 #include <string>
 
-// Each cpp is a set of test cases for a specific component.
 namespace TestTokenizer {
 void require(bool b, std::string &desc) {
   REQUIRE(b);
 }
 
-// The name of a test case should be unique and meaningful.
 TEST_CASE("[TestTokenizer]Tokenize1SourceExpect1NaiveProcedure", "[Tokenize1Procedure]") {
-  std::string source = "procedure main { a = 0; }";
+
+  std::string expectedProcedureName = "main";
+
+  std::string expectedVar1Name = "var1";
+  std::string expectedConst = "0";
+  std::string statement1 = expectedVar1Name + " = " + expectedConst + ";"; // line 1
+  int expectedStatement1LineNo = 1;
+  std::string source = "procedure " + expectedProcedureName + " { " +  statement1 +" }";
+
+  // Act
+  // Tokenize source.
+  std::vector<Token *> procedureTokens;
+  std::vector<TokenStatementBreakBySemiColon *> statementTokens;
+  std::map<std::string, Token *> variableTokens;
+
   SourceTokenizer tk(source);
-  std::vector<Token *> tokens;
-  tk.tokenize(tokens);
+  tk.tokenize(procedureTokens, statementTokens, variableTokens);
 
-  Token *actualToken0 = tokens.at(0);
-  std::string Token0typeActual = actualToken0->getType();
-  std::string Token0typeExpected = "procedure";
+  // Assert
 
-  auto *tokenProcedurePtr = (TokenProcedure *) actualToken0;
-  std::string Token0ProcedureNameActual = actualToken0->getName();
-  Token *Token0ProcedureChild0Actual = tokenProcedurePtr->getChildAtPosition(0);
-  std::string Token0ProcedureNameExpected = "main";
+  // actualToken0 : procedure
+  auto *tokenProcedurePtr = (TokenProcedure *) procedureTokens.at(0);
+  std::string Token0typeActual = tokenProcedurePtr->getType();
+  std::string Token0ProcedureNameActual = tokenProcedurePtr->getName();
 
-  Token *actualToken1 = tokens.at(1);
-  std::string Token1typeActual = actualToken1->getType();
-  std::string Token1typeExpected = "assignment";
+  CHECK(Token0typeActual == "procedure");
+  CHECK(Token0ProcedureNameActual == expectedProcedureName);
 
-  auto *token1 = (TokenStatementAssignment *) actualToken1;
-  Token *actualToken1LHS = token1->getLHS();
+  auto *firstStatementOfProcedure =  (TokenStatementAssignment *)tokenProcedurePtr->getChildAtPosition(0);
+  auto * lhsOfFirstStatement = (TokenStatementAssignment *)firstStatementOfProcedure->getLHS();
 
-  std::string actualTokenLHSType = actualToken1LHS->getType();
-  std::string expectedTokenLHSType = "assignment";
-  CHECK(Token0typeActual == Token0typeExpected);
-  CHECK(Token0ProcedureNameActual == Token0ProcedureNameExpected);
-  CHECK(actualToken1 == Token0ProcedureChild0Actual);
-  CHECK(actualTokenLHSType == expectedTokenLHSType);
+  // tokenStatement : statement1
+  std::string expectedLHSTtype = "variable";
+  Token * tokenLHSFromMap = variableTokens.at(expectedVar1Name);
 
-  CHECK(Token1typeActual == Token1typeExpected);
-  CHECK(2 == tokens.size());
+  CHECK(expectedLHSTtype == tokenLHSFromMap->getType());
+  CHECK(lhsOfFirstStatement == tokenLHSFromMap); // LHS of the first statement of the first procedure found by traversing is the same variable accessed by variable map.
+  CHECK(expectedStatement1LineNo == statementTokens.at(0)->getLineNo());
+
+  // Count Summary Check
+  CHECK(1 == procedureTokens.size());
+  CHECK(1 == variableTokens.size());
+
 }
 
 TEST_CASE("[TestTokenizer] A variable token", "") {
-  std::string var1 = "abc";
+  std::string var1 = "abc";  std::string varcopy = "abc";
+
+  std::cout << var1.size() << std::endl;
 
   auto *token = new TokenVariable(var1);
+  std::cout << var1.size() << std::endl;
+
   std::string expectedTokenType = "assignment";
   std::string actualTokenType = token->getType();
 
+  std::map<std::string, Token *> variables = std::map<std::string, Token *>();
+  std::cout << var1.size() << std::endl;
+
+  variables.insert({var1, token});
+
+  CHECK(token == variables.at(varcopy));
+  CHECK(1 == variables.count(varcopy));
+  CHECK(var1 == varcopy);
   CHECK(expectedTokenType == actualTokenType);
 }
 
-
 TEST_CASE("[TestTokenizer] A constant token", "") {
-  std::string var1 = "1";
+  std::string var1 = "b";
 
   auto *token = new TokenConstant(var1);
   std::string expectedTokenType = "constant";

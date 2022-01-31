@@ -15,7 +15,9 @@ protected:
   Token * lhs = nullptr;
 public:
   TokenStatementAssignment() = delete;
-  explicit TokenStatementAssignment(Token * _lhs) : lhs(_lhs) {}
+   TokenStatementAssignment(Token * _lhs,int _lineNo) : TokenStatementBreakBySemiColon(_lineNo) {
+     lhs = _lhs;
+   }
   ~TokenStatementAssignment() = default;
   static std::string TYPE() {
     return "assignment";
@@ -26,6 +28,7 @@ public:
   Token * getLHS() {
     return lhs;
   }
+
 };
 
 

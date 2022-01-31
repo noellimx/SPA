@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <map>
 
 #include "source_processor/token/Token.hpp"
 #include "source_processor/token/TokenProcedure.hpp"
@@ -14,8 +15,11 @@
 class SourceTokenizer {
 
 private:
+  int lineNo = 1;
   int cursor = 0;
   std::string source;
+
+  std::map<std::string,Token *> variables = std::map<std::string,Token *>();
 
   bool isNotEndOfSource();
 
@@ -28,7 +32,12 @@ private:
   void moveCursorToNextBrace();
   void moveCursorFromBeforeWhiteSpaceToAfterWhiteSpace();
   void moveToStatementBreakOrClosingBrace();
-
+protected:
+  int getNextLineNo () {
+    int current = lineNo;
+    lineNo++;
+    return current;
+  }
 public:
   // default constructor
   SourceTokenizer() = delete;
@@ -38,6 +47,6 @@ public:
   // destructor
   ~SourceTokenizer();
 
-  void tokenize(std::vector<Token *> &tokens);
+  void tokenize(std::vector<Token *> &procedureTokens, std::vector<TokenStatementBreakBySemiColon *> &statementTokens, std::map<std::string,Token *> &variableTokens);
 };
 
