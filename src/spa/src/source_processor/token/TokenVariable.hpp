@@ -10,7 +10,7 @@
 #include <vector>
 #include <utility>
 
-class TokenVariable : public Token {
+class TokenVariable : public TokenFactor {
 protected:
   std::string name;
 public:
@@ -26,9 +26,6 @@ public:
   std::string getName() override{
     return name;
   };
-
-
-
 };
 
 
