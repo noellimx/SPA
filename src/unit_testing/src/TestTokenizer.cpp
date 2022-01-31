@@ -18,7 +18,7 @@ TEST_CASE("[TestTokenizer]Tokenize1SourceExpect1NaiveProcedure", "[Tokenize1Proc
   std::string expectedConst = "0";
   std::string statement1 = expectedVar1Name + " = " + expectedConst + ";"; // line 1
   int expectedStatement1LineNo = 1;
-  std::string source = "procedure " + expectedProcedureName + " { " +  statement1 +" }";
+  std::string source = "procedure " + expectedProcedureName + " { " + statement1 + " }";
 
   // Act
   // Tokenize source.
@@ -39,15 +39,16 @@ TEST_CASE("[TestTokenizer]Tokenize1SourceExpect1NaiveProcedure", "[Tokenize1Proc
   CHECK(Token0typeActual == "procedure");
   CHECK(Token0ProcedureNameActual == expectedProcedureName);
 
-  auto *firstStatementOfProcedure =  (TokenStatementAssignment *)tokenProcedurePtr->getChildAtPosition(0);
-  auto * lhsOfFirstStatement = (TokenStatementAssignment *)firstStatementOfProcedure->getLHS();
+  auto *firstStatementOfProcedure = (TokenStatementAssignment *) tokenProcedurePtr->getChildAtPosition(0);
+  auto *lhsOfFirstStatement = (TokenStatementAssignment *) firstStatementOfProcedure->getLHS();
 
   // tokenStatement : statement1
   std::string expectedLHSTtype = "variable";
-  Token * tokenLHSFromMap = variableTokens.at(expectedVar1Name);
+  Token *tokenLHSFromMap = variableTokens.at(expectedVar1Name);
 
   CHECK(expectedLHSTtype == tokenLHSFromMap->getType());
-  CHECK(lhsOfFirstStatement == tokenLHSFromMap); // LHS of the first statement of the first procedure found by traversing is the same variable accessed by variable map.
+  CHECK(lhsOfFirstStatement
+            == tokenLHSFromMap); // LHS of the first statement of the first procedure found by traversing is the same variable accessed by variable map.
   CHECK(expectedStatement1LineNo == statementTokens.at(0)->getLineNo());
 
   // Count Summary Check
@@ -57,7 +58,8 @@ TEST_CASE("[TestTokenizer]Tokenize1SourceExpect1NaiveProcedure", "[Tokenize1Proc
 }
 
 TEST_CASE("[TestTokenizer] A variable token", "") {
-  std::string var1 = "abc";  std::string varcopy = "abc";
+  std::string var1 = "abc";
+  std::string varcopy = "abc";
 
   std::cout << var1.size() << std::endl;
 
