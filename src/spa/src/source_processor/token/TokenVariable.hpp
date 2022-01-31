@@ -15,8 +15,8 @@ protected:
   std::string name;
 public:
   TokenVariable() = delete;
-  explicit TokenVariable(std::string _name) :name(std::move(_name)){}
   ~TokenVariable() = default;
+  explicit TokenVariable(std::string _name) :name(std::move(_name)){}
   static std::string TYPE() {
     return "variable";
   };

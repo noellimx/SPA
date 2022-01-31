@@ -54,12 +54,10 @@ TEST_CASE("[TestTokenizer]Tokenize1SourceExpect1NaiveProcedure", "[Tokenize1Proc
   // Count Summary Check
   CHECK(1 == procedureTokens.size());
   CHECK(1 == variableTokens.size());
-
 }
 
 TEST_CASE("[TestTokenizer] A variable token", "") {
   std::string var1 = "abc";
-  std::string varcopy = "abc";
 
   std::cout << var1.size() << std::endl;
 
@@ -74,9 +72,9 @@ TEST_CASE("[TestTokenizer] A variable token", "") {
 
   variables.insert({var1, token});
 
-  CHECK(token == variables.at(varcopy));
-  CHECK(1 == variables.count(varcopy));
-  CHECK(var1 == varcopy);
+  CHECK(token == variables.at(var1));
+  CHECK(1 == variables.count(var1));
+  CHECK(var1 == var1);
   CHECK(expectedTokenType == actualTokenType);
 }
 
