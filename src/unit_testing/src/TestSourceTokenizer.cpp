@@ -18,7 +18,8 @@ TEST_CASE("[TestTokenizer]Tokenize1SourceExpect1NaiveProcedure", "[Tokenize1Proc
   std::string expectedConst = "0";
   std::string statement1 = expectedVar1Name + " = " + expectedConst + ";"; // line 1
   int expectedStatement1LineNo = 1;
-  std::string source = /* procedure 'procedure' proc_name '{' stmt '}'*/ "procedure " + expectedProcedureName + " { " + statement1 + " }";
+  std::string source = /* procedure 'procedure' proc_name '{' stmt '}'*/
+      "procedure " + expectedProcedureName + " { " + statement1 + " }";
 
   // Act
   // Tokenize source.
@@ -61,16 +62,12 @@ TEST_CASE("[TestTokenizer]Tokenize1SourceExpect1NaiveProcedure", "[Tokenize1Proc
 TEST_CASE("[TestTokenizer] A variable token", "") {
   std::string var1 = "abc";
 
-  std::cout << var1.size() << std::endl;
-
   auto *token = new TokenVariable(var1);
-  std::cout << var1.size() << std::endl;
 
-  std::string expectedTokenType = "assignment";
+  std::string expectedTokenType = "variable";
   std::string actualTokenType = token->getType();
 
   std::map<std::string, Token *> variables = std::map<std::string, Token *>();
-  std::cout << var1.size() << std::endl;
 
   variables.insert({var1, token});
 
