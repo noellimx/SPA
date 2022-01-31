@@ -119,9 +119,9 @@ void SourceTokenizer::tokenize(std::vector<Token *> &procedureTokens,
                                             moving - cursorStartStatement + 1); // LHS is always a variable.
             auto * tokenVar = new TokenVariable(var);
             variableTokens.insert(std::pair<std::string,Token *>(var,tokenVar));
-            int lineNo = SourceTokenizer::getNextLineNo();
-            auto *tokenAssignment = new TokenStatementAssignment(variableTokens.at(var),lineNo);
-
+            int thisLineNo = SourceTokenizer::getNextLineNo();
+            auto *tokenAssignment = new TokenStatementAssignment(variableTokens.at(var),thisLineNo);
+            tokenAssignment->setScope(tokenProcedure);
             statementTokens.push_back(tokenAssignment);
             tokenProcedure->addChildToken(tokenAssignment);
           }

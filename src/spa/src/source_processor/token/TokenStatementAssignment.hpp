@@ -12,12 +12,13 @@ class TokenStatementAssignment : public TokenStatementBreakBySemiColon {
 
 private:
 protected:
-  Token * lhs = nullptr;
+  Token *lhs = nullptr;
+  Token *scope = nullptr;
 public:
   TokenStatementAssignment() = delete;
-   TokenStatementAssignment(Token * _lhs,int _lineNo) : TokenStatementBreakBySemiColon(_lineNo) {
-     lhs = _lhs;
-   }
+  TokenStatementAssignment(Token *_lhs, int _lineNo) : TokenStatementBreakBySemiColon(_lineNo) {
+    lhs = _lhs;
+  }
   ~TokenStatementAssignment() = default;
   static std::string TYPE() {
     return "assignment";
@@ -25,8 +26,15 @@ public:
   std::string getType() final {
     return TokenStatementAssignment::TYPE();
   }
-  Token * getLHS() {
+  Token *getLHS() {
     return lhs;
+  }
+
+  void setScope(Token *_scope) {
+    scope = _scope;
+  }
+  Token *getScope() {
+    return scope;
   }
 
 };

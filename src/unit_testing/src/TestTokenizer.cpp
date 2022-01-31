@@ -40,6 +40,7 @@ TEST_CASE("[TestTokenizer]Tokenize1SourceExpect1NaiveProcedure", "[Tokenize1Proc
   CHECK(Token0ProcedureNameActual == expectedProcedureName);
 
   auto *firstStatementOfProcedure = (TokenStatementAssignment *) tokenProcedurePtr->getChildAtPosition(0);
+  auto *scopeOfFirstStatementOfProcedure = (TokenProcedure *) firstStatementOfProcedure->getScope();
   auto *lhsOfFirstStatement = (TokenStatementAssignment *) firstStatementOfProcedure->getLHS();
 
   // tokenStatement : statement1
@@ -50,6 +51,7 @@ TEST_CASE("[TestTokenizer]Tokenize1SourceExpect1NaiveProcedure", "[Tokenize1Proc
   CHECK(lhsOfFirstStatement
             == tokenLHSFromMap); // LHS of the first statement of the first procedure found by traversing is the same variable accessed by variable map.
   CHECK(expectedStatement1LineNo == statementTokens.at(0)->getLineNo());
+  CHECK(scopeOfFirstStatementOfProcedure == tokenProcedurePtr);
 
   // Count Summary Check
   CHECK(1 == procedureTokens.size());
