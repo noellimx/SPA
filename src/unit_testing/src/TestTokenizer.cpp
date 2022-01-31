@@ -18,7 +18,7 @@ TEST_CASE("[TestTokenizer]Tokenize1SourceExpect1NaiveProcedure", "[Tokenize1Proc
   std::string expectedConst = "0";
   std::string statement1 = expectedVar1Name + " = " + expectedConst + ";"; // line 1
   int expectedStatement1LineNo = 1;
-  std::string source = "procedure " + expectedProcedureName + " { " + statement1 + " }";
+  std::string source = /* procedure 'procedure' proc_name '{' stmt '}'*/ "procedure " + expectedProcedureName + " { " + statement1 + " }";
 
   // Act
   // Tokenize source.
