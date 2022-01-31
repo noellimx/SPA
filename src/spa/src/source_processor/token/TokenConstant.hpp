@@ -15,7 +15,7 @@ protected:
   std::string name;
 public:
   TokenConstant() = delete;
-  explicit TokenConstant(std::string &_name) : name(std::move(_name)) {}
+  explicit TokenConstant(std::string _name) : name(std::move(_name)) {}
   ~TokenConstant() = default;
   static std::string TYPE() {
     return "constant";

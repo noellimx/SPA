@@ -26,9 +26,10 @@ TEST_CASE("[TestTokenizer]Tokenize1SourceExpect1NaiveProcedure", "[Tokenize1Proc
   std::vector<Token *> procedureTokens;
   std::vector<TokenStatementBreakBySemiColon *> statementTokens;
   std::map<std::string, Token *> variableTokens;
+  std::map<std::string, Token *> constantTokens;
 
   SourceTokenizer tk(source);
-  tk.tokenize(procedureTokens, statementTokens, variableTokens);
+  tk.tokenize(procedureTokens, statementTokens, variableTokens, constantTokens);
 
   // Assert
 
@@ -41,8 +42,8 @@ TEST_CASE("[TestTokenizer]Tokenize1SourceExpect1NaiveProcedure", "[Tokenize1Proc
   CHECK(Token0ProcedureNameActual == expectedProcedureName);
 
   auto *firstStatementOfProcedure = (TokenStatementAssignment *) tokenProcedurePtr->getChildAtPosition(0);
-  auto *scopeOfFirstStatementOfProcedure = (TokenProcedure *) firstStatementOfProcedure->getScope();
-  auto *lhsOfFirstStatement = (TokenStatementAssignment *) firstStatementOfProcedure->getLHS();
+  auto *scopeOfFirstStatementOfProcedure = firstStatementOfProcedure->getScope();
+  auto *lhsOfFirstStatement = firstStatementOfProcedure->getLHS();
 
   // tokenStatement : statement1
   std::string expectedLHSTtype = "variable";
@@ -57,6 +58,58 @@ TEST_CASE("[TestTokenizer]Tokenize1SourceExpect1NaiveProcedure", "[Tokenize1Proc
   // Count Summary Check
   CHECK(1 == procedureTokens.size());
   CHECK(1 == variableTokens.size());
+}
+
+TEST_CASE("[TestTokenizer]Tokenize1SourceExpect1NaiveProcedure - statement", "[Tokenize1Procedure]") {
+
+  std::string expectedProcedureName = "main";
+
+  std::string expectedVar1Name = "var1";
+  std::string expectedConst = "4";
+  std::string statement1 = expectedVar1Name + " = " + expectedConst + " ;"; // line 1
+  std::string source = /* procedure 'procedure' proc_name '{' stmt '}'*/
+      "procedure " + expectedProcedureName + " { " + statement1 + " }";
+
+  // Act
+  // Tokenize source.
+  std::vector<Token *> procedureTokens;
+  std::vector<TokenStatementBreakBySemiColon *> statementTokens;
+  std::map<std::string, Token *> variableTokens;
+  std::map<std::string, Token *> constantTokens;
+
+  SourceTokenizer tk(source);
+  tk.tokenize(procedureTokens, statementTokens, variableTokens, constantTokens);
+
+  // Assert
+
+  // actualToken0 : procedure
+  auto *tokenProcedurePtr = (TokenProcedure *) procedureTokens.at(0);
+  std::string Token0typeActual = tokenProcedurePtr->getType();
+  std::string Token0ProcedureNameActual = tokenProcedurePtr->getName();
+
+  auto *firstStatementOfProcedure = (TokenStatementAssignment *) tokenProcedurePtr->getChildAtPosition(0);
+
+  // we are testing this.
+  auto *lhsOfFirstStatement = firstStatementOfProcedure->getLHS();
+  auto *rhsOfFirstStatement = firstStatementOfProcedure->getRHS();
+
+  // tokenStatement : statement1
+  std::string expectedLHSType = "variable";
+  Token *tokenLHSFromMap = variableTokens.at(expectedVar1Name);
+
+  std::string expectedRHSType = "constant";
+  Token *tokenRHSFromMap = constantTokens.at(expectedConst);
+
+  CHECK(expectedLHSType == tokenLHSFromMap->getType());
+  CHECK(lhsOfFirstStatement
+            == tokenLHSFromMap); // LHS of the first statement of the first procedure found by traversing is the same variable accessed by variable map.
+  CHECK(expectedRHSType == tokenRHSFromMap->getType());
+  CHECK(rhsOfFirstStatement == tokenRHSFromMap);
+  // Count Summary Check
+  CHECK(1 == procedureTokens.size());
+  CHECK(1 == statementTokens.size());
+  CHECK(1 == variableTokens.size());
+  CHECK(1 == constantTokens.size());
 }
 
 TEST_CASE("[TestTokenizer] A variable token", "") {
