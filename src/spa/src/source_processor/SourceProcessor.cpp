@@ -11,16 +11,11 @@ void SourceProcessor::process(const std::string& program) {
   // tokenize the program
   SourceTokenizer tk(program);
   std::vector<Token *> tokens;
-  std::vector<TokenStatementBreakBySemiColon *> dummy;
+  std::vector<InterfaceStatementWithLineNo *> dummy;
   std::map<std::string, Token *> dummy2;
   std::map<std::string, Token *> dummy3;
   tk.tokenize(tokens,dummy,dummy2,dummy3);
 //   This logic is highly simplified based on iteration 1 requirements and
 //   the assumption that the programs are valid.
-  for (Token *token : tokens) {
-    std::string type = token->getType();
-    if (type == "procedure") {
-      database::insertProcedure((TokenProcedure *) token);
-    }
-  }
+
 }

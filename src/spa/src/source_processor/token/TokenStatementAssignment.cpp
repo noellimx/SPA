@@ -5,3 +5,6 @@
 #include "TokenStatementAssignment.hpp"
 
 
+
+
+std::string TokenStatementAssignment::TTYPE= "assignment";

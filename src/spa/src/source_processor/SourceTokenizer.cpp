@@ -67,7 +67,7 @@ void SourceTokenizer::moveToStatementBreakOrClosingBrace() {
 // and punctuations (any other non-space characters, e.g., "=", ";", "{", "}").
 // it should be extended as needed to handle additional SIMPLE / PQL grammar rules.
 void SourceTokenizer::tokenize(std::vector<Token *> &procedureTokens,
-                               std::vector<TokenStatementBreakBySemiColon *> &statementTokens,
+                               std::vector<InterfaceStatementWithLineNo *> &statementTokens,
                                std::map<std::string, Token *> &variableTokens,
                                std::map<std::string, Token *> &constantTokens) {
   procedureTokens.clear();
@@ -177,7 +177,7 @@ void SourceTokenizer::tokenize(std::vector<Token *> &procedureTokens,
                 int thisLineNo = this->getNextLineNo();
                 auto *tokenAssignment =
                     new TokenStatementAssignment(variableTokens.at(var), constantTokens.at(rhs), thisLineNo);
-                tokenAssignment->setScope(tokenProcedure);
+                tokenAssignment->setBlockScope(tokenProcedure);
                 statementTokens.push_back(tokenAssignment);
                 tokenProcedure->addChildToken(tokenAssignment);
 

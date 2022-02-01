@@ -4,6 +4,3 @@
 
 #include "TokenProcedure.hpp"
 
-std::string TokenProcedure::getType() {
-  return TokenProcedure::TYPE();
-}

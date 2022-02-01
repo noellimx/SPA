@@ -4,29 +4,32 @@
 
 #pragma once
 
-#include "source_processor/token/TokenStatementBreakBySemiColon.hpp"
+#include "source_processor/token/interface/InterfaceStatementWithLineNo.hpp"
+#include "source_processor/token/interface/InterfaceTokenTyped.hpp"
+#include "source_processor/token/interface/InterfaceBlockScope.hpp"
+
 #include <iostream>
 #include <string>
 
-class TokenStatementAssignment : public TokenStatementBreakBySemiColon {
+class TokenStatementAssignment : public InterfaceStatementWithLineNo, public InterfaceTokenTyped, public InterfaceBlockScope{
 
 private:
 protected:
   Token *lhs = nullptr;
   Token *rhs = nullptr;
-  Token *scope = nullptr;
+
 public:
   TokenStatementAssignment() = default;
-  TokenStatementAssignment(Token *_lhs,Token *_rhs, int _lineNo) : TokenStatementBreakBySemiColon(_lineNo) {
+  TokenStatementAssignment(Token *_lhs,Token *_rhs, int _lineNo) : InterfaceStatementWithLineNo(_lineNo) {
     lhs = _lhs;
     rhs = _rhs;
   }
   ~TokenStatementAssignment() = default;
-  static std::string TYPE() {
-    return "assignment";
-  }
+
+  static std::string TTYPE;
+
   std::string getType() final {
-    return TokenStatementAssignment::TYPE();
+    return TokenStatementAssignment::TTYPE;
   }
   Token *getLHS() {
     return lhs;
@@ -34,14 +37,6 @@ public:
   Token *getRHS() {
     return rhs;
   }
-
-  void setScope(Token *_scope) {
-    scope = _scope;
-  }
-  Token *getScope() {
-    return scope;
-  }
-
 };
 
 

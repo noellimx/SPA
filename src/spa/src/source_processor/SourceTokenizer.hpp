@@ -47,6 +47,6 @@ public:
   // destructor
   ~SourceTokenizer();
 
-  void tokenize(std::vector<Token *> &, std::vector<TokenStatementBreakBySemiColon *> &, std::map<std::string,Token *> &, std::map<std::string,Token *> &);
+  void tokenize(std::vector<Token *> &, std::vector<InterfaceStatementWithLineNo *> &, std::map<std::string, Token *> &, std::map<std::string, Token *> &);
 };
 

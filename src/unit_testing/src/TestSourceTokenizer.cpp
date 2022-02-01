@@ -24,7 +24,7 @@ TEST_CASE("[TestTokenizer]Tokenize1SourceExpect1NaiveProcedure", "[Tokenize1Proc
   // Act
   // Tokenize source.
   std::vector<Token *> procedureTokens;
-  std::vector<TokenStatementBreakBySemiColon *> statementTokens;
+  std::vector<InterfaceStatementWithLineNo *> statementTokens;
   std::map<std::string, Token *> variableTokens;
   std::map<std::string, Token *> constantTokens;
 
@@ -42,14 +42,14 @@ TEST_CASE("[TestTokenizer]Tokenize1SourceExpect1NaiveProcedure", "[Tokenize1Proc
   CHECK(Token0ProcedureNameActual == expectedProcedureName);
 
   auto *firstStatementOfProcedure = (TokenStatementAssignment *) tokenProcedurePtr->getChildAtPosition(0);
-  auto *scopeOfFirstStatementOfProcedure = firstStatementOfProcedure->getScope();
+  auto *scopeOfFirstStatementOfProcedure = firstStatementOfProcedure->getBlockScope();
   auto *lhsOfFirstStatement = firstStatementOfProcedure->getLHS();
 
   // tokenStatement : statement1
   std::string expectedLHSTtype = "variable";
   Token *tokenLHSFromMap = variableTokens.at(expectedVar1Name);
 
-  CHECK(expectedLHSTtype == tokenLHSFromMap->getType());
+  CHECK(expectedLHSTtype == ((TokenVariable *) tokenLHSFromMap)->getType());
   CHECK(lhsOfFirstStatement
             == tokenLHSFromMap); // LHS of the first statement of the first procedure found by traversing is the same variable accessed by variable map.
   CHECK(expectedStatement1LineNo == statementTokens.at(0)->getLineNo());
@@ -73,7 +73,7 @@ TEST_CASE("[TestTokenizer]Tokenize1SourceExpect1NaiveProcedure - statement", "[T
   // Act
   // Tokenize source.
   std::vector<Token *> procedureTokens;
-  std::vector<TokenStatementBreakBySemiColon *> statementTokens;
+  std::vector<InterfaceStatementWithLineNo *> statementTokens;
   std::map<std::string, Token *> variableTokens;
   std::map<std::string, Token *> constantTokens;
 
@@ -100,10 +100,10 @@ TEST_CASE("[TestTokenizer]Tokenize1SourceExpect1NaiveProcedure - statement", "[T
   std::string expectedRHSType = "constant";
   Token *tokenRHSFromMap = constantTokens.at(expectedConst);
 
-  CHECK(expectedLHSType == tokenLHSFromMap->getType());
+  CHECK(expectedLHSType == ((TokenVariable *) tokenLHSFromMap)->getType());
   CHECK(lhsOfFirstStatement
             == tokenLHSFromMap); // LHS of the first statement of the first procedure found by traversing is the same variable accessed by variable map.
-  CHECK(expectedRHSType == tokenRHSFromMap->getType());
+  CHECK(expectedRHSType == ((TokenConstant *) tokenRHSFromMap)->getType());
   CHECK(rhsOfFirstStatement == tokenRHSFromMap);
   // Count Summary Check
   CHECK(1 == procedureTokens.size());

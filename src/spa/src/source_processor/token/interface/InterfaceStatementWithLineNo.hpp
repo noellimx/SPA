@@ -9,14 +9,13 @@
 #include <string>
 #include <utility>
 
-class TokenStatementBreakBySemiColon : public Token {
+class InterfaceStatementWithLineNo : public Token {
 private:
   int lineNo = 0;
 public:
-  TokenStatementBreakBySemiColon() = default;
-  explicit TokenStatementBreakBySemiColon(int _lineNo) : lineNo(_lineNo){}
-  ~TokenStatementBreakBySemiColon() = default;
-  std::string getType() override;
+  InterfaceStatementWithLineNo() = default;
+  explicit InterfaceStatementWithLineNo(int _lineNo) : lineNo(_lineNo){}
+  ~InterfaceStatementWithLineNo() = default;
 
   [[nodiscard]] int getLineNo() const{
     return lineNo;
