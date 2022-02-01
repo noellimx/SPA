@@ -19,21 +19,21 @@ private:
   int cursor = 0;
   std::string source;
 
-  std::map<std::string,Token *> variables = std::map<std::string,Token *>();
+  std::map<std::string, Token *> variables = std::map<std::string, Token *>();
 
   bool isNotEndOfSource();
-
-  bool isCursorStartOfWord();
 
   void moveCursor();
 
   void moveCursorToEndOfWord();
   void moveCursorToEndOfProcedureName();
+  bool isCursorAtWhitespace();
   void moveCursorToNextBrace();
-  void moveCursorFromBeforeWhiteSpaceToAfterWhiteSpace();
+  void moveCursorAtBeforeWhiteSpaceToAfterWhiteSpace();
+  void moveCursorAtWhiteSpaceToAfterWhiteSpace();
   void moveToStatementBreakOrClosingBrace();
 protected:
-  int getNextLineNo () {
+  int getNextLineNo() {
     int current = lineNo;
     lineNo++;
     return current;
@@ -47,6 +47,9 @@ public:
   // destructor
   ~SourceTokenizer();
 
-  void tokenize(std::vector<Token *> &, std::vector<InterfaceStatementWithLineNo *> &, std::map<std::string, TokenVariable *> &, std::map<std::string, Token *> &);
+  void tokenize(std::vector<Token *> &,
+                std::vector<InterfaceStatementWithLineNo *> &,
+                std::map<std::string, TokenVariable *> &,
+                std::map<std::string, Token *> &);
 };
 

@@ -11,25 +11,39 @@ bool SourceTokenizer::isNotEndOfSource() {
   return cursor < source.length();
 }
 
-bool SourceTokenizer::isCursorStartOfWord() {
-  char ch = source.at(cursor);
-  return isalpha(ch);
+bool SourceTokenizer::isCursorAtWhitespace() {
+  return isspace(source.at(cursor));
 }
 
-void SourceTokenizer::moveCursorFromBeforeWhiteSpaceToAfterWhiteSpace() {
-  char ch = source.at(cursor + 1);
-  if (ch != ' ') {
-    throw "First lookahead should be a white space";
-  }
-  while (ch == ' ') {
-    moveCursor();
-    ch = source.at(cursor + 1);
+void SourceTokenizer::moveCursorAtBeforeWhiteSpaceToAfterWhiteSpace() {
+
+  char ch = source.at(cursor);
+  if (isspace(ch)) {
+    throw "Method should be called only if the current character is non-whitespace";
   }
   moveCursor();
+  ch = source.at(cursor);
+  if (!isspace(ch)) {
+    throw "Method should be called only if first lookahead is be a white space";
+  }
+  while (isspace(ch)) {
+    moveCursor();
+    ch = source.at(cursor);
+  }
+}
+void SourceTokenizer::moveCursorAtWhiteSpaceToAfterWhiteSpace() {
+  char ch = source.at(cursor);
+  if (!isspace(ch)) {
+    throw "Character at cursor should be a white space";
+  }
+  while (isspace(ch)) {
+    moveCursor();
+    ch = source.at(cursor);
+  }
 }
 
 void SourceTokenizer::moveCursor() {
-  cursor++;
+  cursor += 1;
 }
 
 void SourceTokenizer::moveCursorToEndOfWord() {
@@ -72,125 +86,137 @@ void SourceTokenizer::tokenize(std::vector<Token *> &procedureTokens,
                                std::map<std::string, Token *> &constantTokens) {
   procedureTokens.clear();
   while (isNotEndOfSource()) {
-    if (isCursorStartOfWord()) {
-      int cursorStartWord = cursor;
-      moveCursorToEndOfWord();
-      int cursorEndWord = cursor;
-      std::string word = source.substr(cursorStartWord, cursorEndWord - cursorStartWord + 1);
-      if ("procedure" == word) {
-        moveCursorFromBeforeWhiteSpaceToAfterWhiteSpace(); // Move to space.
-        int cursorStartProcedureName = cursor;
-        moveCursorToEndOfProcedureName();
-        int cursorEndProcedureEnd = cursor;
-        std::string procedureName = source.substr(cursorStartProcedureName,
-                                                  cursorEndProcedureEnd - cursorStartProcedureName + 1);
-        auto *tokenProcedure = new TokenProcedure(procedureName);
-        procedureTokens.push_back(tokenProcedure); // The first token of every set is a procedure token.
-        moveCursor(); // move out of procedure name
-        char delimiterBetweenProcedureNameAndBody = source.at(cursor);
-        if (delimiterBetweenProcedureNameAndBody != ' ') {
-          throw "procedure name and body should be minimally delimited by space ";
+    if (isCursorAtWhitespace()) {
+      moveCursorAtWhiteSpaceToAfterWhiteSpace();
+    } // move to the first alphanumeric character of each procedure.
+
+    int cursorStartWord = cursor;
+    moveCursorToEndOfWord();
+    int cursorEndWord = cursor;
+    std::string word = source.substr(cursorStartWord, cursorEndWord - cursorStartWord + 1);
+    if (!("procedure" == word)) {
+      throw "procedure should start with the keyword procedure";
+    }
+    moveCursorAtBeforeWhiteSpaceToAfterWhiteSpace();
+    int cursorStartProcedureName = cursor;
+    moveCursorToEndOfProcedureName();
+    int cursorEndProcedureEnd = cursor;
+    std::string procedureName = source.substr(cursorStartProcedureName,
+                                              cursorEndProcedureEnd - cursorStartProcedureName + 1);
+    auto *tokenProcedure = new TokenProcedure(procedureName);
+    procedureTokens.push_back(tokenProcedure); // The first token of every set is a procedure token.
+    moveCursor(); // move out of procedure name
+    char delimiterBetweenProcedureNameAndBody = source.at(cursor);
+    if (!isspace(delimiterBetweenProcedureNameAndBody)) {
+      throw "procedure name and body should be minimally delimited by space ";
+    }
+
+    moveCursorToNextBrace(); // Cursor at the opening brace of body
+    int cursorBodyOpeningBrace = cursor;
+    int openingBraceCount = 1;
+    int closingBraceCount = 0;
+    if (source.at(cursor) != '{') {
+      throw "after delimiter between procedure name and body, first character should be {";
+    }
+    moveCursor();// move cursor out of opening brace (start of body)
+
+    while (openingBraceCount !=
+        closingBraceCount) { // while the final closing brace of the procedure body has not been found
+
+      if (isCursorAtWhitespace()) {
+        moveCursorAtWhiteSpaceToAfterWhiteSpace();
+      } // move to the first alphanumeric character.
+
+      int cursorFirstAlphaNumericCharacter = cursor; //
+      moveToStatementBreakOrClosingBrace();
+      char statementBreakOrClosingBrace = source.at(cursor);
+      if (statementBreakOrClosingBrace == '}') {
+        closingBraceCount += 1;
+      } else if (statementBreakOrClosingBrace == ';') { // a statement is found
+        int cursorEndSemiColon = cursor; // end of statement cursor
+
+        int moving = cursorFirstAlphaNumericCharacter;
+        while (!isspace(source.at(moving + 1))) { // move scoped cursor end of alphanumeric word before whitespace
+          moving += 1;
         }
 
-        moveCursorToNextBrace();
-        int cursorBodyOpeningBrace = cursor;
-        int openingBraceCount = 1; // Cursor at the opening brace
-        int closingBraceCount = 0;
-        if (source.at(cursor) != '{') {
-          throw "after delimiter between procedure name and body, first character should be {";
-        }
+        // LHS
+        std::string lhs = source.substr(cursorFirstAlphaNumericCharacter,
+                                        moving - cursorFirstAlphaNumericCharacter + 1);
 
-        while (openingBraceCount !=
-            closingBraceCount) { // while the final closing brace of the procedure body has not been found
-          moveCursorFromBeforeWhiteSpaceToAfterWhiteSpace(); // move to the first alphanumeric character.
-          int cursorFirstAlphaNumericCharacter = cursor; //
-          moveToStatementBreakOrClosingBrace();
-          char statementBreakOrClosingBrace = source.at(cursor);
-          if (statementBreakOrClosingBrace == '}') {
-            closingBraceCount++;
-          } else if (statementBreakOrClosingBrace == ';') { // a statement is found
-            int cursorEndSemiColon = cursor; // end of statement cursor
-            // trim starting whitespace
-            int moving = cursorFirstAlphaNumericCharacter;
-            while (source.at(moving + 1) != ' ') { // move scoped cursor before whitespace
-              moving++;
+        if (lhs != "read" || lhs != "print") {
+          // assignment statement found .
+
+          // LHS
+          std::string var = lhs;
+
+          auto *tokenVar = new TokenVariable(var);
+          variableTokens.insert({var, tokenVar});
+
+          moving += 1; // move out of alphanumeric word
+          while (isspace(source.at(moving))) { // move scoped cursor from end of alphanumeric word to equal sign
+            moving += 1;
+          }
+
+          if (source.at(moving) != '=') {
+            std::string ss = "|" + std::to_string(moving) + "|";
+            throw " 167 After LHS and its following whitespace(s), assignment should have an '=' character. Got: "
+                + ss;
+          }
+
+          moving += 1; // skip = sign
+
+          while (isspace(source.at(moving))) { // move scoped cursor to first alphanumeric of RHS
+            moving += 1;
+          }
+
+          // Check if var or const
+          bool rhsIsVarOrConst =
+              true; // assume rhs is a simple expression ( in this case is a simple term, also in turn is a simple factor)
+          for (int i = moving; i < cursorEndSemiColon; i += 1) {
+            char charRHS = source.at(i);
+            if (charRHS == '+' || charRHS == '-' || charRHS == '/' || charRHS == '*' || charRHS == '%') {
+              rhsIsVarOrConst = false;
+              break;
+            }
+          }
+
+          Token *tokenRHS = nullptr;
+
+          if (rhsIsVarOrConst) {
+            int cursorStartOfSimpleWordRHS = moving;
+            char charStartOfSimpleWordRHS = source.at(cursorStartOfSimpleWordRHS);
+
+            while (source.at(moving + 1)
+                != ';') { // move scoped cursor before whitespace (end of rhs word) or eol ;
+              if (isspace(source.at(moving + 1)))
+                break;
+              moving += 1;
             }
 
-            // LHS
-            std::string lhs = source.substr(cursorFirstAlphaNumericCharacter,
-                                            moving - cursorFirstAlphaNumericCharacter + 1);
-
-            if (lhs != "read" || lhs != "print") {
-              // assignment statement found .
-
-              // LHS
-              std::string var = lhs;
-              auto *tokenVar = new TokenVariable(var);
-              variableTokens.insert({var, tokenVar});
-
-              while (source.at(moving + 1) == ' ') { // move scoped cursor before equal sign
-                moving++;
-              }
-              moving++; // skip = sign
-
-              if (source.at(moving) != '=') {
-                std::string ss = std::string{source.at(moving)} + "-";
-                throw "After LHS and its following whitespace(s), assignment should have an '=' character. Got: " + ss;
-              }
-
-              while (source.at(moving + 1) == ' ') { // move scoped cursor before first word of RHS
-                moving++;
-              }
-              moving++;
-
-              // Check if var or const
-              bool rhsIsVarOrConst =
-                  true; // assume rhs is a simple expression ( in this case is a simple term, also in turn is a simple factor)
-              for (int i = moving; i < cursorEndSemiColon; i++) {
-                char charRHS = source.at(i);
-                if (charRHS == '+' || charRHS == '-' || charRHS == '/' || charRHS == '*' || charRHS == '%') {
-                  rhsIsVarOrConst = false;
-                  break;
-                }
-              }
-
-              Token *tokenRHS = nullptr;
-
-              if (rhsIsVarOrConst) {
-                int cursorStartOfSimpleWordRHS = moving;
-                char charStartOfSimpleWordRHS = source.at(cursorStartOfSimpleWordRHS);
-
-                while (source.at(moving + 1) != ';') { // move scoped cursor before whitespace (end of rhs word) or eol ;
-                  if(source.at(moving + 1) == ' ') break;
-                  moving++;
-                }
-
-                std::string rhs = source.substr(cursorStartOfSimpleWordRHS,
-                                                moving - cursorStartOfSimpleWordRHS + 1);
-                if (isdigit(charStartOfSimpleWordRHS)) { // rhs is a constant
-                  tokenRHS = new TokenConstant(rhs);
-                  constantTokens.insert({rhs, tokenRHS});
-                } else if (isalpha(charStartOfSimpleWordRHS)) { // rhs is a variable
-                } else {
-                  throw "Should not get here. Simple factor should start with alphanumeric" + std::string{charStartOfSimpleWordRHS} + "|" + rhs;
-                }
-                int thisLineNo = this->getNextLineNo();
-                auto *tokenAssignment =
-                    new TokenStatementAssignment(variableTokens.at(var), constantTokens.at(rhs), thisLineNo);
-                tokenAssignment->setBlockScope(tokenProcedure);
-                statementTokens.push_back(tokenAssignment);
-                tokenProcedure->addChildToken(tokenAssignment);
-
-              } else {
-
-              }
-
+            std::string rhs = source.substr(cursorStartOfSimpleWordRHS,
+                                            moving - cursorStartOfSimpleWordRHS + 1);
+            if (isdigit(charStartOfSimpleWordRHS)) { // rhs is a constant
+              tokenRHS = new TokenConstant(rhs);
+              constantTokens.insert({rhs, tokenRHS});
+            } else if (isalpha(charStartOfSimpleWordRHS)) { // rhs is a variable
+            } else {
+              throw "Should not get here. Simple factor should start with alphanumeric"
+                  + std::string{charStartOfSimpleWordRHS} + "|" + rhs;
             }
+            int thisLineNo = this->getNextLineNo();
+            auto *tokenAssignment =
+                new TokenStatementAssignment(variableTokens.at(var), constantTokens.at(rhs), thisLineNo);
+            tokenAssignment->setBlockScope(tokenProcedure);
+            statementTokens.push_back(tokenAssignment);
+            tokenProcedure->addChildToken(tokenAssignment);
+
+          } else {
           }
         }
       }
+      moveCursor(); // move cursor out of ; or }.
     }
-    moveCursor(); // move cursor to prevent endless loop;
   }
 }
 

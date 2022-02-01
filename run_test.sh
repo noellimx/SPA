@@ -2,7 +2,7 @@
 # Include input sets here.
 #SET_NAMES=("001")
 
-SET_NAMES=() # // TODO. for now no autotest test yet. implementing autotester.
+SET_NAMES=("001") # // TODO. for now no autotest test yet. implementing autotester.
 
 # Setup: binaries.
 
