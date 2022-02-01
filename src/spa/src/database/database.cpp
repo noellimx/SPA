@@ -1,5 +1,6 @@
 #include "database.hpp"
 #include "utils/StreamPlus.hpp"
+#include<stdio.h>
 
 sqlite3 *database::dbConnection;
 std::vector<std::vector<std::string>> database::dbResults = std::vector<std::vector<std::string>>();
@@ -14,49 +15,46 @@ void database::initializeConnection() {
   if (dbConnection != nullptr) {
     throw "initializeConnection should be invoked once.";
   }
+
   sqlite3_open(".database.db", &dbConnection);
 }
 
-
-void database::clearTables() {
-  for (Table *table : tables) {
-    std::string dropProcedureTableStatement = "DROP TABLE IF EXISTS " + table->getName() + ";";
-    sqlite3_exec(dbConnection, dropProcedureTableStatement.c_str(), NULL, 0, &errorMessage);
-    if (errorMessage != nullptr) {
-      std::cout << errorMessage << std::endl;
-      throw errorMessage;
-    }
-  }
-}
 void database::readyTables() {
   tables.push_back(&ProcedureTable::GET());
 }
-void database::createTables() {
+void database::recreateTables() {
   std::string attributes = std::string();
   for (Table *table : tables) {
     attributes.clear();
+    std::string dropProcedureTableStatement = "DROP TABLE IF EXISTS " + table->getName() + ";";
+
+    sqlite3_exec(dbConnection, dropProcedureTableStatement.c_str(), NULL, 0, &errorMessage);
+    if (errorMessage != nullptr) {
+      throw errorMessage + dropProcedureTableStatement;
+    }
+
     std::string createProcedureTableStatement = "CREATE TABLE " + table->getName() + " " + table->getAttributes() + ";";
+
     sqlite3_exec(dbConnection, createProcedureTableStatement.c_str(), NULL, 0, &errorMessage);
     if (errorMessage != nullptr) {
-      throw errorMessage;
+      throw errorMessage + createProcedureTableStatement;
     }
   }
 }
 
-void database::initializeTables(){
+void database::initializeTables() {
   // ready tables we want to create
   database::readyTables();
-  // remove tables if exist
-  database::clearTables();
-  // create tables
-  database::createTables();
+  // remove tables
+  database::recreateTables();
 }
 
 void database::initialize() {
   // open a database connection and store the pointer into dbConnection
-  try{
+  try {
     database::initializeConnection();
-  }catch (...) {
+
+  } catch (...) {
 
   }
 

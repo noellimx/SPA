@@ -11,9 +11,8 @@ protected:
 
 public:
 
-  explicit InterfaceTokenNamed(std::string _name) : name(std::move(_name)){}
-   std::string getName() {return name;} ;
-
+  explicit InterfaceTokenNamed(std::string _name) : name(std::move(_name)) {}
+  std::string getName() { return name; };
 
 };
 

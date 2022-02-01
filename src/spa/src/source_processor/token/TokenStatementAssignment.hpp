@@ -7,6 +7,9 @@
 #include "source_processor/token/interface/InterfaceStatementWithLineNo.hpp"
 #include "source_processor/token/interface/InterfaceTokenTyped.hpp"
 #include "source_processor/token/interface/InterfaceBlockScope.hpp"
+#include "source_processor/token/interface/InterfaceFactor.hpp"
+
+#include "TokenVariable.hpp"
 
 #include <iostream>
 #include <string>
@@ -15,12 +18,12 @@ class TokenStatementAssignment : public InterfaceStatementWithLineNo, public Int
 
 private:
 protected:
-  Token *lhs = nullptr;
+  TokenVariable *lhs = nullptr;
   Token *rhs = nullptr;
 
 public:
   TokenStatementAssignment() = default;
-  TokenStatementAssignment(Token *_lhs,Token *_rhs, int _lineNo) : InterfaceStatementWithLineNo(_lineNo) {
+  TokenStatementAssignment(TokenVariable *_lhs,Token *_rhs, int _lineNo) : InterfaceStatementWithLineNo(_lineNo) {
     lhs = _lhs;
     rhs = _rhs;
   }
@@ -31,7 +34,7 @@ public:
   std::string getType() final {
     return TokenStatementAssignment::TTYPE;
   }
-  Token *getLHS() {
+  TokenVariable *getLHS() {
     return lhs;
   }
   Token *getRHS() {

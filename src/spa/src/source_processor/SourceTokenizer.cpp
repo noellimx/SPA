@@ -83,7 +83,7 @@ void SourceTokenizer::moveToStatementBreakOrClosingBrace() {
 void SourceTokenizer::tokenize(std::vector<Token *> &procedureTokens,
                                std::vector<InterfaceStatementWithLineNo *> &statementTokens,
                                std::map<std::string, TokenVariable *> &variableTokens,
-                               std::map<std::string, Token *> &constantTokens) {
+                               std::map<std::string, TokenConstant *> &constantTokens) {
   procedureTokens.clear();
   while (isNotEndOfSource()) {
     if (isCursorAtWhitespace()) {
@@ -194,19 +194,18 @@ void SourceTokenizer::tokenize(std::vector<Token *> &procedureTokens,
               moving += 1;
             }
 
-            std::string rhs = source.substr(cursorStartOfSimpleWordRHS,
-                                            moving - cursorStartOfSimpleWordRHS + 1);
+            std::string rhsFactor = source.substr(cursorStartOfSimpleWordRHS,
+                                                  moving - cursorStartOfSimpleWordRHS + 1);
             if (isdigit(charStartOfSimpleWordRHS)) { // rhs is a constant
-              tokenRHS = new TokenConstant(rhs);
-              constantTokens.insert({rhs, tokenRHS});
+              constantTokens.insert({rhsFactor, new TokenConstant(rhsFactor)});
             } else if (isalpha(charStartOfSimpleWordRHS)) { // rhs is a variable
             } else {
               throw "Should not get here. Simple factor should start with alphanumeric"
-                  + std::string{charStartOfSimpleWordRHS} + "|" + rhs;
+                  + std::string{charStartOfSimpleWordRHS} + "|" + rhsFactor;
             }
             int thisLineNo = this->getNextLineNo();
             auto *tokenAssignment =
-                new TokenStatementAssignment(variableTokens.at(var), constantTokens.at(rhs), thisLineNo);
+                new TokenStatementAssignment(variableTokens.at(var), constantTokens.at(rhsFactor), thisLineNo);
             tokenAssignment->setBlockScope(tokenProcedure);
             statementTokens.push_back(tokenAssignment);
             tokenProcedure->addChildToken(tokenAssignment);

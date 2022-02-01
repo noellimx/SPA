@@ -29,7 +29,7 @@ TEST_CASE("[TestTokenizer] A variable token", "") {
   std::string expectedTokenType = "variable";
   std::string actualTokenType = token->getType();
 
-  std::map<std::string, Token *> variables = std::map<std::string, Token *>();
+  std::map<std::string, TokenVariable *> variables = std::map<std::string, TokenVariable *>();
 
   variables.insert({var1, token});
 

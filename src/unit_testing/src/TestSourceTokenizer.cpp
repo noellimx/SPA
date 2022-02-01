@@ -25,7 +25,7 @@ SCENARIO("[TestTokenizer]", "One Procedure With 1 assignment statement") {
       std::vector<Token *> procedureTokens;
       std::vector<InterfaceStatementWithLineNo *> statementTokens;
       std::map<std::string, TokenVariable *> variableTokens;
-      std::map<std::string, Token *> constantTokens;
+      std::map<std::string, TokenConstant *> constantTokens;
 
       SourceTokenizer tk(source);
       tk.tokenize(procedureTokens, statementTokens, variableTokens, constantTokens);

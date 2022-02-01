@@ -50,6 +50,6 @@ public:
   void tokenize(std::vector<Token *> &,
                 std::vector<InterfaceStatementWithLineNo *> &,
                 std::map<std::string, TokenVariable *> &,
-                std::map<std::string, Token *> &);
+                std::map<std::string, TokenConstant *> &);
 };
 

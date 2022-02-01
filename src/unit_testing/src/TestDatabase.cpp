@@ -12,6 +12,7 @@ TEST_CASE("[TestDatabase]Connection should throw if initialize connection twice.
   CHECK_THROWS(database::initializeConnection());
 }
 TEST_CASE("[TestDatabase]Table Procedure", "[Database.Procedure]") {
+  database::initialize();
 
   std::string procedureName1 = "procedure1";
   std::string procedureName2 = "procedure2";
@@ -21,6 +22,8 @@ TEST_CASE("[TestDatabase]Table Procedure", "[Database.Procedure]") {
 
   database::insertProcedure(proc1);
   database::insertProcedure(proc2);
+
+  CHECK("procedure1" == proc1->getName());
   CHECK(database::isProcedureExist(proc1->getName()));
   CHECK(database::isProcedureExist(proc2->getName()));
 
