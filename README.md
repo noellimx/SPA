@@ -1,38 +1,54 @@
-
 # Environment
 
 ## Operating System
+
 MacOS Monterey
+
 ## IDE
+
 CLion
+
 ## Build Tools
+
 CMake, ninja
 
-# Build Steps and Binary
+# Build Steps and Binaries
 
 The preconfigured build steps should run in CLion and (repository is a CLion project). \
-It is recommended to reload the project and build cache before development. See [CLion Development](#clion-development)
+It is recommended to reload the project and build before development. See [CLion Development](#clion-development)
 
-The binary will be found in debug or release directory. [//]: # (Where?)
+The binaries will be found in debug or release directory.
 
-# Autotester Execution
+- Unit testing [//]: # (Where?)
+- Autotester [//]: # (Where?)
 
-Run binary which takes in a set of 3 file paths:
+# Test Execution (Unit Testing & Autotester)
 
-## User Inputs
+## Unit Testing
+
+Rebuild and run binary.
+
+## Autotester
+
+Run binary which takes in a set of 3 file paths.
+
+### User Inputs
+
+#### User Inputs are placed in a common directory ```./tests/inputs```.
+
 1. Source script in SIMPLE (.simple)
 2. Queries in PQL and its expected results (.pql)
-User Inputs are placed in a common directory ```./tests/inputs```.
 
-## SPA Outputs
+### SPA Outputs
+
 3. Target output stores test result. (.xml)
 
-Output Folder: ```./tests/spa_logs```.  See [Viewing Test Result](#viewing-test-result). \
+Output Folder: ```./tests/spa_logs```. See [Viewing Test Result](#viewing-test-result). \
 Outputs will not be persistently stored in the repository. Run execution to obtain fresh logs.
 
 For simplicity file names in each set should have the same name and differentiated by its file extension.
 
-## Example - Execution
+## Autotester Execution Example
 
 ```
 #!/bin/bash
@@ -67,9 +83,9 @@ done
 
 # Test Tool
 
-## Running Multiple Executions
+## Running Multiple Autotester Executions
 
-```./run_test.sh``` Include set names to test in the array ```SET_NAMES```
+```./run_test.sh``` Include set names to test using autotester in the array ```SET_NAMES```
 
 [//]: # (Run multiple executions step)
 
@@ -79,7 +95,7 @@ If python is installed, run a simple local server in the wd. \
 analysis.xml is required in the same parent directory of test result file for nice formatting.
 
 - Run server (Default url should be localhost:8000) \
-``` python3 -m http.server ```
+  ``` python3 -m http.server ```
 
 # CLion Development
 
@@ -88,4 +104,5 @@ analysis.xml is required in the same parent directory of test result file for ni
 It is recommended to open the project in Clion.
 
 ## In Clion, Adding new cpp and header files
+
 Right click the project > Reload CMake Project 

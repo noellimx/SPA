@@ -4,19 +4,37 @@
 
 SET_NAMES=() # // TODO. for now no autotest test yet. implementing autotester.
 
-# Build path.
-BINARY_PATH="./cmake-build-debug/src/autotester/autotester"
+# Setup: binaries.
 
-rm -f "${BINARY_PATH}"
+# Build paths
+BINARY_PATH_AUTOTESTER="./cmake-build-debug/src/autotester/autotester"
+BINARY_PATH_UNIT_TESTING="./cmake-build-debug/src/unit_testing/unit_testing"
+
+rm -f "${BINARY_PATH_AUTOTESTER}"
+rm -f "${BINARY_PATH_UNIT_TESTING}"
+
 # Build Debug (Some magic here that needs deeper look)
 cmake --build ./cmake-build-debug --target all
 
-if [ ! -f "${BINARY_PATH}" ]; then
-  echo "ERROR: Binary not found"
+if [ ! -f "${BINARY_PATH_AUTOTESTER}" ]; then
+  echo "ERROR: BINARY_PATH_AUTOTESTER not found"
   exit 1
 fi
 
-# Path - Test Inputs and Test Outputs
+if [ ! -f "${BINARY_PATH_UNIT_TESTING}" ]; then
+  echo "ERROR: BINARY_PATH_UNIT_TESTING not found"
+  exit 1
+fi
+
+# Setup - unit testing
+
+# Run: unit_testing
+
+eval "${BINARY_PATH_UNIT_TESTING}"
+
+# Setup: autotester inputs
+
+# Paths - Test Inputs and Test Outputs
 DIRECTORY_TEST="./tests"
 
 SUBDIRECTORY_INPUTS="/inputs"
@@ -25,9 +43,9 @@ SUBDIRECTORY_OUTPUTS="/spa_logs"
 DIRECTORY_TEST_INPUT="${DIRECTORY_TEST}${SUBDIRECTORY_INPUTS}"
 DIRECTORY_TEST_OUTPUT="${DIRECTORY_TEST}${SUBDIRECTORY_OUTPUTS}"
 
-# Run autotest on input sets
+# Run autotester
 
 for t in "${SET_NAMES[@]}"; do
-  eval "${BINARY_PATH} ${DIRECTORY_TEST_INPUT}/${t}.simple ${DIRECTORY_TEST_INPUT}/${t}.pql ${DIRECTORY_TEST_OUTPUT}/${t}.xml"
+  eval "${BINARY_PATH_AUTOTESTER} ${DIRECTORY_TEST_INPUT}/${t}.simple ${DIRECTORY_TEST_INPUT}/${t}.pql ${DIRECTORY_TEST_OUTPUT}/${t}.xml"
   ## TO DO: Raise Failing Tests
 done
