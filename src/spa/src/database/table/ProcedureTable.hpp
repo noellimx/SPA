@@ -13,7 +13,6 @@ class ProcedureTable: public Table {
 private:
     ProcedureTable();
     std::string _name;
-
     std::string _col_name;
 
 public:

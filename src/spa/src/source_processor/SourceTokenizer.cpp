@@ -68,7 +68,7 @@ void SourceTokenizer::moveToStatementBreakOrClosingBrace() {
 // it should be extended as needed to handle additional SIMPLE / PQL grammar rules.
 void SourceTokenizer::tokenize(std::vector<Token *> &procedureTokens,
                                std::vector<InterfaceStatementWithLineNo *> &statementTokens,
-                               std::map<std::string, Token *> &variableTokens,
+                               std::map<std::string, TokenVariable *> &variableTokens,
                                std::map<std::string, Token *> &constantTokens) {
   procedureTokens.clear();
   while (isNotEndOfSource()) {
@@ -126,7 +126,7 @@ void SourceTokenizer::tokenize(std::vector<Token *> &procedureTokens,
               // LHS
               std::string var = lhs;
               auto *tokenVar = new TokenVariable(var);
-              variableTokens.insert(std::pair<std::string, Token *>(var, tokenVar));
+              variableTokens.insert({var, tokenVar});
 
               while (source.at(moving + 1) == ' ') { // move scoped cursor before equal sign
                 moving++;

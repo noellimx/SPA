@@ -42,11 +42,10 @@ private:
     // the error message from the database
     static char *errorMessage;
 
-    static void readyTables();
-
     static void clearTables();
-
+    static void readyTables();
     static void createTables();
+    static void initializeTables();
 
     // callback method to put one row of results from the database into the dbResults vector
     // This method is called each time a row of results is returned from the database
