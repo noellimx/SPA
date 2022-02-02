@@ -25,7 +25,7 @@ SCENARIO("[TestTokenizer]", "One Procedure With 1 assignment statement") {
     WHEN("The source is tokenized") {
 
       SourceTokenizer tk(program);
-      TokenBag tokenBag;
+      TokenSimpleBag tokenBag;
       tk.tokenize(tokenBag);
 
       THEN("Summary count of tokens") {
@@ -45,7 +45,7 @@ SCENARIO("[TestTokenizer]", "One Procedure With 1 assignment statement") {
         CHECK(proc_name_actual == proc_name);
         AND_THEN("The statement token has a block scope of the procedure.") {
 
-          auto *firstStatementOfProcedure = (TokenStatementAssignment *) tokenProcedurePtr->getChildAtPosition(0);
+          auto *firstStatementOfProcedure = (TokenSimpleAssignment *) tokenProcedurePtr->getChildAtPosition(0);
           auto *scopeOfFirstStatementOfProcedure = firstStatementOfProcedure->getBlockScope();
 
           CHECK(scopeOfFirstStatementOfProcedure == tokenProcedurePtr);
@@ -84,7 +84,7 @@ SCENARIO("[TestTokenizer] One Procedure with 1 read and 1 print statement uses t
     WHEN("The source is tokenized") {
 
       SourceTokenizer tk(program);
-      TokenBag tokenBag;
+      TokenSimpleBag tokenBag;
       tk.tokenize(tokenBag);
 
       THEN("Summary count of tokens") {
@@ -153,7 +153,7 @@ SCENARIO("[TestTokenizer] One Procedure With 2 identical assignment statements")
     WHEN("The source is tokenized") {
 
       SourceTokenizer tk(program);
-      TokenBag tokenBag;
+      TokenSimpleBag tokenBag;
       tk.tokenize(tokenBag);
 
       THEN("Summary count of tokens") {
@@ -174,7 +174,7 @@ SCENARIO("[TestTokenizer] One Procedure With 2 identical assignment statements")
         CHECK(actualProcedureName == proc_name);
         AND_THEN("The statement tokens has a block scope of the procedure.") {
 
-          auto *firstStatementOfProcedure = (TokenStatementAssignment *) tokenProcedurePtr->getChildAtPosition(0);
+          auto *firstStatementOfProcedure = (TokenSimpleAssignment *) tokenProcedurePtr->getChildAtPosition(0);
           auto *scopeOfFirstStatementOfProcedure = firstStatementOfProcedure->getBlockScope();
 
           CHECK(scopeOfFirstStatementOfProcedure == tokenProcedurePtr);
@@ -191,11 +191,11 @@ SCENARIO("[TestTokenizer] One Procedure With 2 identical assignment statements")
             std::string expectedLHSTtype = "variable";
             // sanity check
             CHECK(expectedLHSTtype == tokenVarFromMap->getType());
-            CHECK(((TokenStatementAssignment *) tokenLine1FromMap)->getLHS()->getName() == tokenVarFromMap->getName());
+            CHECK(((TokenSimpleAssignment *) tokenLine1FromMap)->getLHS()->getName() == tokenVarFromMap->getName());
 
             // check this
-            CHECK(tokenVarFromMap->isLHSOf((TokenStatementAssignment *) tokenLine1FromMap));
-            CHECK(tokenVarFromMap->isLHSOf((TokenStatementAssignment *) tokenLine2FromMap));
+            CHECK(tokenVarFromMap->isLHSOf((TokenSimpleAssignment *) tokenLine1FromMap));
+            CHECK(tokenVarFromMap->isLHSOf((TokenSimpleAssignment *) tokenLine2FromMap));
           }
         }
       }

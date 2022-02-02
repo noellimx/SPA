@@ -34,7 +34,7 @@ TEST_CASE("[Test PQL] A growing program", "") {
 
 
       SourceTokenizer tk(program);
-      TokenBag tokenBag;
+      TokenSimpleBag tokenBag;
       tk.tokenize(tokenBag);
       AND_THEN("The summary count of tokens"){
         CHECK(1 == tokenBag.countProcedure());

@@ -7,16 +7,16 @@
 #include "source_processor/token/interface/InterfaceSimpleLined.hpp"
 #include "source_processor/token/interface/InterfaceSimpleTyped.hpp"
 #include "source_processor/token/interface/InterfaceSimpleBlockScope.hpp"
-#include "source_processor/token/interface/InterfaceFactor.hpp"
+#include "source_processor/token/interface/InterfaceSimpleFactor.hpp"
 #include "source_processor/token/interface/InterfaceSimpleAssign.hpp"
 
-#include "TokenVariable.hpp"
+#include "TokenSimpleVariable.hpp"
 
 #include <iostream>
 #include <string>
 
-class TokenStatementAssignment
-    : public Token,
+class TokenSimpleAssignment
+    : public TokenSimple,
       public InterfaceSimpleAssign,
       public InterfaceSimpleLined,
       public InterfaceSimpleTyped,
@@ -25,9 +25,9 @@ class TokenStatementAssignment
 private:
 
 public:
-  TokenStatementAssignment() = delete;
-  TokenStatementAssignment(TokenVariable *_lhs, InterfaceFactor *_rhs, int _lineNo);
-  ~TokenStatementAssignment() = default;
+  TokenSimpleAssignment() = delete;
+  TokenSimpleAssignment(TokenSimpleVariable *_lhs, InterfaceSimpleFactor *_rhs, int _lineNo);
+  ~TokenSimpleAssignment() = default;
 
   static std::string TTYPE;
   std::string getType() final;

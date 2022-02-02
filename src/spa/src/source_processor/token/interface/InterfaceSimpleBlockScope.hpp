@@ -5,16 +5,16 @@
 
 #pragma once
 
-#include "source_processor/token/Token.hpp"
+#include "source_processor/token/TokenSimple.hpp"
 
 class InterfaceSimpleBlockScope {
-  Token *scope = nullptr;
+  TokenSimple *scope = nullptr;
 public:
   InterfaceSimpleBlockScope() = default;
-  void setBlockScope(Token *_scope) {
+  void setBlockScope(TokenSimple *_scope) {
     scope = _scope;
   }
-  Token *getBlockScope() {
+  TokenSimple *getBlockScope() {
     return scope;
   }
 };

@@ -5,8 +5,8 @@
 
 #pragma once
 
-class InterfaceFactor {
+class InterfaceSimpleFactor {
 public:
-  InterfaceFactor() = default;
+  InterfaceSimpleFactor() = default;
 };
 

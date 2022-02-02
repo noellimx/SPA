@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "source_processor/token/Token.hpp"
-#include "source_processor/token/TokenVariable.hpp"
+#include "source_processor/token/TokenSimple.hpp"
+#include "source_processor/token/TokenSimpleVariable.hpp"
 #include <iostream>
 #include <string>
 #include <utility>
@@ -14,16 +14,16 @@ class InterfaceSimpleAssign {
 private:
 
 protected:
-  TokenVariable *lhs = nullptr;
-  InterfaceFactor *rhs = nullptr;
+  TokenSimpleVariable *lhs = nullptr;
+  InterfaceSimpleFactor *rhs = nullptr;
 
 public:
   InterfaceSimpleAssign() = default;
   ~InterfaceSimpleAssign() = default;
-  TokenVariable *getLHS() {
+  TokenSimpleVariable *getLHS() {
     return lhs;
   }
-  InterfaceFactor *getRHS() {
+  InterfaceSimpleFactor *getRHS() {
     return rhs;
   }
 };

@@ -74,7 +74,7 @@ void SourceTokenizer::moveToStatementBreakOrClosingBrace() {
   }
 }
 
-void SourceTokenizer::tokenize(TokenBag &tokenBag) {
+void SourceTokenizer::tokenize(TokenSimpleBag &tokenBag) {
   while (isNotEndOfSource()) {
     if (isCursorAtWhitespace()) {
       moveCursorAtWhiteSpaceToAfterWhiteSpace();
@@ -93,7 +93,7 @@ void SourceTokenizer::tokenize(TokenBag &tokenBag) {
     int cursorEndProcedureEnd = cursor;
     std::string procedureName = source.substr(cursorStartProcedureName,
                                               cursorEndProcedureEnd - cursorStartProcedureName + 1);
-    auto *tokenProcedure = new TokenProcedure(procedureName);
+    auto *tokenProcedure = new TokenSimpleProcedure(procedureName);
     tokenBag.addProcedure(tokenProcedure); // The first token of every set is a procedure token.
     moveCursor(); // move out of procedure name
     char delimiterBetweenProcedureNameAndBody = source.at(cursor);
@@ -156,16 +156,16 @@ void SourceTokenizer::tokenize(TokenBag &tokenBag) {
 
           std::string var_name = source.substr(cursorStartReadableVar,
                                                moving - cursorStartReadableVar + 1);
-          auto *tokenVar = new TokenVariable(var_name);
+          auto *tokenVar = new TokenSimpleVariable(var_name);
 
           tokenBag.addVariable(tokenVar);
 
           auto *tokenTargetVariable = tokenBag.getVariable(var_name);
           if (firstWord == "read") {
-            auto *tokenRead = new TokenStatementRead(thisLineNo, tokenTargetVariable);
+            auto *tokenRead = new TokenSimpleRead(thisLineNo, tokenTargetVariable);
             tokenBag.addRead(tokenRead);
           } else if (firstWord == "print") {
-            auto *tokenPrint = new TokenStatementPrint(thisLineNo, tokenTargetVariable);
+            auto *tokenPrint = new TokenSimplePrint(thisLineNo, tokenTargetVariable);
             tokenBag.addPrint(tokenPrint);
           }
         } else {
@@ -174,7 +174,7 @@ void SourceTokenizer::tokenize(TokenBag &tokenBag) {
           // LHS
           std::string lhs = firstWord;
 
-          auto *tokenVarLHS = new TokenVariable(lhs);
+          auto *tokenVarLHS = new TokenSimpleVariable(lhs);
           tokenBag.addVariable(tokenVarLHS);
 
           moving += 1; // move out of alphanumeric word
@@ -219,7 +219,7 @@ void SourceTokenizer::tokenize(TokenBag &tokenBag) {
                                                   moving - cursorStartOfSimpleWordRHS + 1);
 
             if (isdigit(charStartOfSimpleWordRHS)) { // rhs is a constant
-              auto *tokenConstant = new TokenConstant(rhsFactor);
+              auto *tokenConstant = new TokenSimpleConstant(rhsFactor);
               tokenBag.addConstant(tokenConstant);
             } else if (isalpha(charStartOfSimpleWordRHS)) { // rhs is a variable
             } else {
@@ -229,7 +229,7 @@ void SourceTokenizer::tokenize(TokenBag &tokenBag) {
             int thisLineNo = this->getNextLineNo();
 
             auto *tokenAssignment =
-                new TokenStatementAssignment(tokenBag.getVariable(lhs), tokenBag.getFactor(rhsFactor), thisLineNo);
+                new TokenSimpleAssignment(tokenBag.getVariable(lhs), tokenBag.getFactor(rhsFactor), thisLineNo);
             tokenAssignment->setBlockScope(tokenProcedure);
             tokenBag.getVariable(lhs)->addAssignmentModifier(tokenAssignment);
 

@@ -6,7 +6,7 @@
 #include "sqlite3.h"
 #include "database/table/Table.hpp"
 #include "database/table/ProcedureTable.hpp"
-#include "source_processor/token/TokenProcedure.hpp"
+#include "source_processor/token/TokenSimpleProcedure.hpp"
 
 // The Database has to be a static class due to various constraints.
 // It is advisable to just add the insert / get functions based on the given examples.
@@ -24,7 +24,7 @@ public:
     static void close();
 
     // method to insert a procedure into the database
-    static void insertProcedure(TokenProcedure *);
+    static void insertProcedure(TokenSimpleProcedure *);
 
     static bool isProcedureExist(std::string procedureName);
 

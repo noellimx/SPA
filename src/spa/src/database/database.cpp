@@ -63,7 +63,7 @@ void database::initialize() {
 }
 
 // method to insert a procedure into the database
-void database::insertProcedure(TokenProcedure *procedure) {
+void database::insertProcedure(TokenSimpleProcedure *procedure) {
   std::string insertProcedureSQL =
       "INSERT INTO " + ProcedureTable::NAME() + " ('" + ProcedureTable::COLUMN_NAME() + "') VALUES ('"
           + procedure->getName() + "');";

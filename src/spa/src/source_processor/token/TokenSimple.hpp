@@ -9,12 +9,12 @@
 
 #include <utility>
 
-class Token {
+class TokenSimple {
 
 protected:
 public:
-  Token() = default;
-  ~Token() = default;
+  TokenSimple() = default;
+  ~TokenSimple() = default;
 };
 
 
