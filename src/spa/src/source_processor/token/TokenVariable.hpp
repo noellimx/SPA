@@ -21,9 +21,7 @@ public:
   TokenVariable() = delete;
   ~TokenVariable() = default;
   explicit TokenVariable(std::string _name) :InterfaceTokenNamed(std::move(_name)){}
-  std::string getType() override {
-    return TokenVariable::TTYPE;
-  };
+  std::string getType() override;
 };
 
 

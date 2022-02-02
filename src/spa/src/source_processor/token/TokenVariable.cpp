@@ -6,3 +6,6 @@
 #include "TokenVariable.hpp"
 
 std::string TokenVariable::TTYPE = "variable";
+std::string TokenVariable::getType()  {
+return TokenVariable::TTYPE;
+};
