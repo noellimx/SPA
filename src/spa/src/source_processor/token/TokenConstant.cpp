@@ -6,3 +6,6 @@
 #include "TokenConstant.hpp"
 
 std::string TokenConstant::TTYPE = "constant";
+std::string TokenConstant::getType() {
+return TokenConstant::TTYPE;
+};

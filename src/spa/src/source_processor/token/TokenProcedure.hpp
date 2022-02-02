@@ -20,12 +20,8 @@ public:
   TokenProcedure() = delete;
   explicit TokenProcedure(std::string _name) :InterfaceTokenNamed(std::move(_name)){}
   ~TokenProcedure() = default;
-  static std::string TYPE() {
-    return "procedure";
-  };
-  std::string getType() override {
-    return TokenProcedure::TYPE();
-  }
+  static std::string TTYPE;
+  std::string getType();
 
   void addChildToken(Token * tokenPtr){
     children.push_back(tokenPtr);

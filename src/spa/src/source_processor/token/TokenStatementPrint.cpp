@@ -4,10 +4,12 @@
 
 #include "TokenStatementPrint.hpp"
 
-TokenStatementPrint::TokenStatementPrint(int _lineNo, TokenVariable * readableVar) : InterfaceStatementWithLineNo(_lineNo), InterfacePrinter(readableVar) {
+std::string TokenStatementPrint::TTYPE = "print";
+
+TokenStatementPrint::TokenStatementPrint(int _lineNo, TokenVariable *readableVar)
+    : InterfaceStatementWithLineNo(_lineNo), InterfacePrinter(readableVar) {
 }
 
-std::string TokenStatementPrint::TTYPE = "print";
 std::string TokenStatementPrint::getType() {
   return TokenStatementPrint::TTYPE;
 }

@@ -4,7 +4,9 @@
 
 #include "TokenStatementAssignment.hpp"
 
-std::string TokenStatementAssignment::TTYPE = "assignment";
+std::string TokenStatementAssignment::TTYPE = "assign";
+
+
 TokenStatementAssignment::TokenStatementAssignment(TokenVariable *_lhs, InterfaceFactor *_rhs, int _lineNo)
     : InterfaceStatementWithLineNo(_lineNo) {
   lhs = _lhs;

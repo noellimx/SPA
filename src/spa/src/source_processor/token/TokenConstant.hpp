@@ -22,9 +22,7 @@ public:
   ~TokenConstant() = default;
   explicit TokenConstant(std::string _name) : InterfaceTokenNamed(std::move(_name)) {}
   static std::string TTYPE;
-  std::string getType() override {
-    return TokenConstant::TTYPE;
-  };
+  std::string getType() override;
 
 };
 
