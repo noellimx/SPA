@@ -12,13 +12,15 @@ void require(bool b, std::string &desc) {
 
 SCENARIO("[TestTokenizer]", "One Procedure With 1 assignment statement") {
   GIVEN("A simple source.") {
-    std::string expectedProcedureName = "main";
+    std::string proc_name = "main";
 
-    std::string expectedVar1Name = "var1";
-    std::string expectedConst = "0";
-    std::string statement1 = expectedVar1Name + " = " + expectedConst + ";"; // line 1
-    std::string source = /* procedure 'procedure' proc_name '{' stmt '}'*/
-        "procedure " + expectedProcedureName + " { " + statement1 + " }";
+    std::string var_name = "var1";
+    std::string const_value = "0";
+
+    /* stmt : assign */
+    std::string stmt_01_assign = var_name + " = " + const_value + ";"; // line 1
+    std::string program = /* procedure 'procedure' proc_name '{' stmt '}'*/
+        "procedure " + proc_name + " { " + stmt_01_assign + " }";
 
     WHEN("The source is tokenized") {
 
@@ -27,7 +29,7 @@ SCENARIO("[TestTokenizer]", "One Procedure With 1 assignment statement") {
       std::map<std::string, TokenVariable *> variableTokens;
       std::map<std::string, TokenConstant *> constantTokens;
 
-      SourceTokenizer tk(source);
+      SourceTokenizer tk(program);
       tk.tokenize(procedureTokens, statementTokens, variableTokens, constantTokens);
 
       THEN("Summary count of tokens") {
@@ -38,13 +40,13 @@ SCENARIO("[TestTokenizer]", "One Procedure With 1 assignment statement") {
         CHECK(1 == constantTokens.size());
       }
 
-      THEN("The procedure token has a name of: " + expectedProcedureName) {
+      THEN("The procedure token has a name of: " + proc_name) {
         auto *tokenProcedurePtr = (TokenProcedure *) procedureTokens.at(0);
-        std::string Token0typeActual = tokenProcedurePtr->getType();
-        std::string Token0ProcedureNameActual = tokenProcedurePtr->getName();
+        std::string actualProcedureType = tokenProcedurePtr->getType();
+        std::string proc_name_actual = tokenProcedurePtr->getName();
 
-        CHECK(Token0typeActual == "procedure");
-        CHECK(Token0ProcedureNameActual == expectedProcedureName);
+        CHECK(actualProcedureType == "procedure");
+        CHECK(proc_name_actual == proc_name);
         AND_THEN("The statement token has a block scope of the procedure.") {
 
           auto *firstStatementOfProcedure = (TokenStatementAssignment *) tokenProcedurePtr->getChildAtPosition(0);
@@ -58,7 +60,7 @@ SCENARIO("[TestTokenizer]", "One Procedure With 1 assignment statement") {
           }AND_THEN(
               "LHS of the first statement of the first procedure found by traversing is the same variable accessed by variable map.") {
             auto *lhsOfFirstStatement = firstStatementOfProcedure->getLHS();
-            auto *tokenLHSFromMap = variableTokens.at(expectedVar1Name);
+            auto *tokenLHSFromMap = variableTokens.at(var_name);
             std::string expectedLHSTtype = "variable";
             CHECK(expectedLHSTtype == tokenLHSFromMap->getType());
             CHECK(lhsOfFirstStatement
@@ -71,44 +73,113 @@ SCENARIO("[TestTokenizer]", "One Procedure With 1 assignment statement") {
   }
 }
 
-SCENARIO("[TestTokenizer] One Procedure With 2 identical assignment statements") {
+SCENARIO("[TestTokenizer] One Procedure with 1 read and 1 print statement") {
   GIVEN("A simple source.") {
-    std::string expectedProcedureName = "main";
+    std::string proc_name = "main";
 
-    std::string expectedVarName = "var1";
-    std::string expectedConst = "0";
-    std::string statement1 = expectedVarName + " = " + expectedConst + ";"; // line 1
-    std::string statement2 = statement1; // line 2
+    std::string var_name = "var1";
 
-    std::string source = /* procedure 'procedure' proc_name '{' stmt '}'*/
-        "procedure " + expectedProcedureName + " { " + statement1 + statement2 + " }";
+    /* stmtLst: : stmt[2] */
+    std::string stmt_01_read = "read " + var_name + ";"; // line 1
+    std::string stmt_02_print = "print " + var_name + ";"; // line 2
+
+    std::string program = /* procedure 'procedure' proc_name '{' stmt '}'*/
+        "procedure " + proc_name + " { " + stmt_01_read + stmt_02_print + " }";
 
     WHEN("The source is tokenized") {
 
       std::vector<TokenProcedure *> procedureTokens;
-      std::map<int, TokenStatementAssignment *> statementTokens;
+      std::map<int, TokenStatementAssignment *> assignmentTokens;
       std::map<std::string, TokenVariable *> variableTokens;
       std::map<std::string, TokenConstant *> constantTokens;
 
-      SourceTokenizer tk(source);
-      tk.tokenize(procedureTokens, statementTokens, variableTokens, constantTokens);
+      SourceTokenizer tk(program);
+      tk.tokenize(procedureTokens, assignmentTokens, variableTokens, constantTokens);
 
       THEN("Summary count of tokens") {
         // Count Summary Check
         CHECK(1 == procedureTokens.size());
-        CHECK(2 == statementTokens.size());
+        CHECK(0 == assignmentTokens.size());
         CHECK(1 == variableTokens.size());
         CHECK(1 == constantTokens.size());
       }
 
-      THEN("The procedure token has a name of: " + expectedProcedureName) {
+      THEN("The procedure token has a name of: " + proc_name) {
         auto *tokenProcedurePtr = (TokenProcedure *) procedureTokens.at(0);
-        std::string Token0typeActual = tokenProcedurePtr->getType();
-        std::string Token0ProcedureNameActual = tokenProcedurePtr->getName();
+        std::string tokenProcedure = tokenProcedurePtr->getType();
+        std::string actualProcedureName = tokenProcedurePtr->getName();
 
-        CHECK(Token0typeActual == "procedure");
-        CHECK(Token0ProcedureNameActual == expectedProcedureName);
-        AND_THEN("The statement token has a block scope of the procedure.") {
+        CHECK(tokenProcedure == "procedure");
+        CHECK(actualProcedureName == proc_name);
+
+        AND_THEN("The statement tokens has a block scope of the procedure.") {
+
+          auto *firstStatementOfProcedure = (TokenStatementAssignment *) tokenProcedurePtr->getChildAtPosition(0);
+          auto *scopeOfFirstStatementOfProcedure = firstStatementOfProcedure->getBlockScope();
+
+          CHECK(false);
+
+          AND_THEN("line 1 is found in readTokens and line 2 is found in printTokens and line number is recorded") {
+            CHECK(false);
+          }AND_THEN(
+              "Variable $" + var_name
+                  + "$ should be argument of read statement 1 and print statement 2. The relationship should be obtained from the variable token") {
+            auto *tokenVarFromMap = variableTokens.at(var_name);
+            //TODO sanity check
+            std::string expectedLHSTtype = "variable";
+            CHECK(false);
+            CHECK(false);
+
+            //TODO check this
+            CHECK(false);
+            CHECK(false);
+          }
+        }
+      }
+    }
+  }
+}
+SCENARIO("[TestTokenizer] One Procedure With 2 identical assignment statements") {
+  GIVEN("A simple source.") {
+    std::string proc_name = "main";
+
+    std::string var_name = "var1";
+    std::string const_value = "0";
+
+    /* stmt : assign */
+    /* stmtLst: : stmt[2] */
+    std::string stmt_01_assign = var_name + " = " + const_value + ";"; // line 1
+    std::string stmt_02_assign = stmt_01_assign; // line 2
+
+    std::string source = /* procedure 'procedure' proc_name '{' stmt '}'*/
+        "procedure " + proc_name + " { " + stmt_01_assign + stmt_02_assign + " }";
+
+    WHEN("The source is tokenized") {
+
+      std::vector<TokenProcedure *> procedureTokens;
+      std::map<int, TokenStatementAssignment *> assignmentTokens;
+      std::map<std::string, TokenVariable *> variableTokens;
+      std::map<std::string, TokenConstant *> constantTokens;
+
+      SourceTokenizer tk(source);
+      tk.tokenize(procedureTokens, assignmentTokens, variableTokens, constantTokens);
+
+      THEN("Summary count of tokens") {
+        // Count Summary Check
+        CHECK(1 == procedureTokens.size());
+        CHECK(2 == assignmentTokens.size());
+        CHECK(1 == variableTokens.size());
+        CHECK(1 == constantTokens.size());
+      }
+
+      THEN("The procedure token has a name of: " + proc_name) {
+        auto *tokenProcedurePtr = (TokenProcedure *) procedureTokens.at(0);
+        std::string actualTokenProcedureType = tokenProcedurePtr->getType();
+        std::string actualProcedureName = tokenProcedurePtr->getName();
+
+        CHECK(actualTokenProcedureType == "procedure");
+        CHECK(actualProcedureName == proc_name);
+        AND_THEN("The statement tokens has a block scope of the procedure.") {
 
           auto *firstStatementOfProcedure = (TokenStatementAssignment *) tokenProcedurePtr->getChildAtPosition(0);
           auto *scopeOfFirstStatementOfProcedure = firstStatementOfProcedure->getBlockScope();
@@ -117,13 +188,13 @@ SCENARIO("[TestTokenizer] One Procedure With 2 identical assignment statements")
 
           AND_THEN("Statement token is found in statementTokens and line number is recorded") {
             int targetStatementNo = 1;
-            CHECK(firstStatementOfProcedure == statementTokens.at(targetStatementNo));
+            CHECK(firstStatementOfProcedure == assignmentTokens.at(targetStatementNo));
           }AND_THEN(
-              "LHS $" + expectedVarName
+              "LHS $" + var_name
                   + "$ should be LHS of statement 1 and 2. The relationship should be obtained from the variable token") {
-            auto *tokenVarFromMap = variableTokens.at(expectedVarName);
-            auto *tokenLine1FromMap = statementTokens.at(1);
-            auto *tokenLine2FromMap = statementTokens.at(2);
+            auto *tokenVarFromMap = variableTokens.at(var_name);
+            auto *tokenLine1FromMap = assignmentTokens.at(1);
+            auto *tokenLine2FromMap = assignmentTokens.at(2);
             std::string expectedLHSTtype = "variable";
             // sanity check
             CHECK(expectedLHSTtype == tokenVarFromMap->getType());
@@ -139,6 +210,7 @@ SCENARIO("[TestTokenizer] One Procedure With 2 identical assignment statements")
     }
   }
 }
+
 }
 
 
