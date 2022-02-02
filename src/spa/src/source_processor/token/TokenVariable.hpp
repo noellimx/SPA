@@ -13,12 +13,12 @@
 #include <vector>
 #include <utility>
 
-class TokenVariable : public InterfaceTokenTyped, public InterfaceTokenNamed, public InterfaceFactor {
+class TokenVariable : public Token, public InterfaceTokenTyped, public InterfaceTokenNamed, public InterfaceFactor {
 protected:
   std::string name;
   static std::string TTYPE;
 public:
-  TokenVariable() = delete;
+  TokenVariable() = default;
   ~TokenVariable() = default;
   explicit TokenVariable(std::string _name) :InterfaceTokenNamed(std::move(_name)){}
   std::string getType() override;
