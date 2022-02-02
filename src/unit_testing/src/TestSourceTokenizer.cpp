@@ -55,8 +55,7 @@ SCENARIO("[TestTokenizer]", "One Procedure With 1 assignment statement") {
           AND_THEN("Statement token is found in statementTokens and line number is recorded") {
             int targetStatementNo = 1;
             CHECK(firstStatementOfProcedure == statementTokens.at(targetStatementNo));
-          }
-          AND_THEN(
+          }AND_THEN(
               "LHS of the first statement of the first procedure found by traversing is the same variable accessed by variable map.") {
             auto *lhsOfFirstStatement = firstStatementOfProcedure->getLHS();
             auto *tokenLHSFromMap = variableTokens.at(expectedVar1Name);
@@ -119,20 +118,20 @@ SCENARIO("[TestTokenizer] One Procedure With 2 identical assignment statements")
           AND_THEN("Statement token is found in statementTokens and line number is recorded") {
             int targetStatementNo = 1;
             CHECK(firstStatementOfProcedure == statementTokens.at(targetStatementNo));
-          }
-          AND_THEN(
-              "LHS $" + expectedVarName + "$ should be LHS of statement 1 and 2. The relationship should be obtained from the variable token") {
+          }AND_THEN(
+              "LHS $" + expectedVarName
+                  + "$ should be LHS of statement 1 and 2. The relationship should be obtained from the variable token") {
             auto *tokenVarFromMap = variableTokens.at(expectedVarName);
             auto *tokenLine1FromMap = statementTokens.at(1);
             auto *tokenLine2FromMap = statementTokens.at(2);
             std::string expectedLHSTtype = "variable";
-
-            // Sanity Check
+            // sanity check
             CHECK(expectedLHSTtype == tokenVarFromMap->getType());
+            CHECK(((TokenStatementAssignment *) tokenLine1FromMap)->getLHS()->getName() == tokenVarFromMap->getName());
 
-            //
-//            CHECK(tokenVarFromMap->isLHSOfStatement(tokenLine1FromMap));
-//            CHECK(tokenVarFromMap->isLHSOfStatement(tokenLine2FromMap));
+            // check this
+            CHECK(tokenVarFromMap->isLHSOf((TokenStatementAssignment *) tokenLine1FromMap));
+            CHECK(tokenVarFromMap->isLHSOf((TokenStatementAssignment *) tokenLine2FromMap));
           }
 
         }

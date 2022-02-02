@@ -204,10 +204,14 @@ void SourceTokenizer::tokenize(std::vector<TokenProcedure *> &procedureTokens,
                   + std::string{charStartOfSimpleWordRHS} + "|" + rhsFactor;
             }
             int thisLineNo = this->getNextLineNo();
+
+            auto * tokenVar = variableTokens.at(var);
             auto *tokenAssignment =
-                new TokenStatementAssignment(variableTokens.at(var), constantTokens.at(rhsFactor), thisLineNo);
+                new TokenStatementAssignment(tokenVar, constantTokens.at(rhsFactor), thisLineNo);
             tokenAssignment->setBlockScope(tokenProcedure);
+            tokenVar->addAssignmentModifier(tokenAssignment);
             statementTokens.insert({thisLineNo,tokenAssignment});
+
             tokenProcedure->addChildToken(tokenAssignment);
 
           } else {
