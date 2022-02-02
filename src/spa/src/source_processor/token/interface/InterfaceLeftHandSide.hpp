@@ -5,8 +5,8 @@
 
 #pragma once
 
-class InterfaceLHS {
+class InterfaceLeftHandSide {
 public:
-  InterfaceLHS() = default;
+  InterfaceLeftHandSide() = default;
 };
 
