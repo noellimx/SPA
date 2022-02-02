@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "source_processor/token/interface/InterfaceStatementWithLineNo.hpp"
+#include "source_processor/token/interface/InterfaceSimpleLined.hpp"
 #include "source_processor/token/interface/InterfaceTokenTyped.hpp"
 #include "source_processor/token/interface/InterfaceBlockScope.hpp"
 #include "source_processor/token/interface/InterfaceFactor.hpp"
@@ -18,7 +18,7 @@
 class TokenStatementAssignment
     : public Token,
       public InterfaceAssignment,
-      public InterfaceStatementWithLineNo,
+      public InterfaceSimpleLined,
       public InterfaceTokenTyped,
       public InterfaceBlockScope {
 

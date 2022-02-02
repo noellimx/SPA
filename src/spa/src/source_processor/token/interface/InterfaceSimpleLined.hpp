@@ -9,13 +9,13 @@
 #include <string>
 #include <utility>
 
-class InterfaceStatementWithLineNo {
+class InterfaceSimpleLined {
 private:
   int lineNo = 0;
 public:
-  InterfaceStatementWithLineNo() = default;
-  explicit InterfaceStatementWithLineNo(int _lineNo) : lineNo(_lineNo){}
-  ~InterfaceStatementWithLineNo() = default;
+  InterfaceSimpleLined() = default;
+  explicit InterfaceSimpleLined(int _lineNo) : lineNo(_lineNo){}
+  ~InterfaceSimpleLined() = default;
 
   [[nodiscard]] int getLineNo() const{
     return lineNo;

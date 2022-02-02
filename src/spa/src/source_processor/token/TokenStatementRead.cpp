@@ -6,7 +6,7 @@
 
 std::string TokenStatementRead::TTYPE = "read";
 
-TokenStatementRead::TokenStatementRead(int _lineNo, TokenVariable * readableVar) : InterfaceStatementWithLineNo(_lineNo), InterfaceReader(readableVar) {
+TokenStatementRead::TokenStatementRead(int _lineNo, TokenVariable * readableVar) : InterfaceSimpleLined(_lineNo), InterfaceReader(readableVar) {
 }
 
 std::string TokenStatementRead::getType() {

@@ -8,7 +8,7 @@ std::string TokenStatementAssignment::TTYPE = "assign";
 
 
 TokenStatementAssignment::TokenStatementAssignment(TokenVariable *_lhs, InterfaceFactor *_rhs, int _lineNo)
-    : InterfaceStatementWithLineNo(_lineNo) {
+    : InterfaceSimpleLined(_lineNo) {
   lhs = _lhs;
   rhs = _rhs;
 }
