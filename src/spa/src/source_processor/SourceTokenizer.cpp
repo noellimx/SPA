@@ -85,7 +85,7 @@ void SourceTokenizer::tokenize(std::vector<TokenProcedure *> &procedureTokens,
                                std::map<int, TokenStatementAssignment *> &assignmentStatementTokens,
                                std::map<std::string, TokenVariable *> &variableTokens,
                                std::map<std::string, TokenConstant *> &constantTokens,
-                               std::map<int, TokenStatementRead *> &readStatementTokens) {
+                               std::map<int, TokenStatementRead *> &readStatementTokens,std::map<int, TokenStatementPrint *> &printStatementTokens) {
   procedureTokens.clear();
   while (isNotEndOfSource()) {
     if (isCursorAtWhitespace()) {
@@ -145,9 +145,9 @@ void SourceTokenizer::tokenize(std::vector<TokenProcedure *> &procedureTokens,
         // LHS
         std::string firstWord = source.substr(cursorFirstAlphaNumericCharacter,
                                               moving - cursorFirstAlphaNumericCharacter + 1);
-        if (firstWord == "read") {
+        if (firstWord == "read" || firstWord == "print") {
 
-          int lineNo = this->getNextLineNo();
+          int thisLineNo = this->getNextLineNo();
 
           moving += 1; // move to first whitespace after keyword read
           while (isspace(source.at(moving))) { // move scoped cursor to first alphanumeric of RHS
@@ -161,18 +161,24 @@ void SourceTokenizer::tokenize(std::vector<TokenProcedure *> &procedureTokens,
             throw "first character of variable to read should be alphabet";
           }
 
-          while (!isspace(source.at(moving + 1))) { // move scoped cursor to last alphanumeric of RHS
+          while (isalpha(source.at(moving + 1))
+              || isdigit(source.at(moving + 1))) { // move scoped cursor to last alphanumeric of RHS
             moving += 1;
           }
 
-          std::string readableVar = source.substr(cursorStartReadableVar,
-                                                  moving - cursorStartReadableVar + 1);
-          auto *tokenVar = new TokenVariable(readableVar);
-          variableTokens.insert({readableVar, tokenVar});
-          auto *token = new TokenStatementRead(lineNo);
-          readStatementTokens.insert({lineNo, token});
-        } else if (firstWord == "print") {
-        } else {
+          std::string var_name = source.substr(cursorStartReadableVar,
+                                               moving - cursorStartReadableVar + 1);
+          auto *tokenVar = new TokenVariable(var_name);
+          variableTokens.insert({var_name, tokenVar});
+          if(firstWord == "read"){
+            auto *token = new TokenStatementRead(thisLineNo, variableTokens.at(var_name));
+            readStatementTokens.insert({thisLineNo, token});
+          }else if(firstWord == "print"){
+            auto *token = new TokenStatementPrint(thisLineNo, variableTokens.at(var_name));
+            printStatementTokens.insert({thisLineNo, token});
+          }
+        }
+         else {
           // assignment statement found .
 
           // LHS
