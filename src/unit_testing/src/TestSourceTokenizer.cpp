@@ -22,8 +22,8 @@ SCENARIO("[TestTokenizer]", "One Procedure With 1 assignment statement") {
 
     WHEN("The source is tokenized") {
 
-      std::vector<Token *> procedureTokens;
-      std::vector<InterfaceStatementWithLineNo *> statementTokens;
+      std::vector<TokenProcedure *> procedureTokens;
+      std::map<int, InterfaceStatementWithLineNo *> statementTokens;
       std::map<std::string, TokenVariable *> variableTokens;
       std::map<std::string, TokenConstant *> constantTokens;
 
@@ -52,7 +52,10 @@ SCENARIO("[TestTokenizer]", "One Procedure With 1 assignment statement") {
 
           CHECK(scopeOfFirstStatementOfProcedure == tokenProcedurePtr);
 
-          AND_THEN(
+          AND_THEN("Statement token is found in statementTokens and line number is recorded") {
+            int targetStatementNo = 1;
+            CHECK(firstStatementOfProcedure == statementTokens.at(targetStatementNo));
+          }AND_THEN(
               "LHS of the first statement of the first procedure found by traversing is the same variable accessed by variable map.") {
             auto *lhsOfFirstStatement = firstStatementOfProcedure->getLHS();
             auto *tokenLHSFromMap = variableTokens.at(expectedVar1Name);
@@ -62,11 +65,6 @@ SCENARIO("[TestTokenizer]", "One Procedure With 1 assignment statement") {
                       == tokenLHSFromMap);
           }
 
-          AND_THEN("Statement token is found in statementTokens and line number is recorded") {
-            int expectedStatement1LineNo = 1;
-            int statementTokenIndex = expectedStatement1LineNo - 1; // zero-based
-            CHECK(expectedStatement1LineNo == statementTokens.at(statementTokenIndex)->getLineNo());
-          }
         }
       }
     }

@@ -47,8 +47,8 @@ public:
   // destructor
   ~SourceTokenizer();
 
-  void tokenize(std::vector<Token *> &,
-                std::vector<InterfaceStatementWithLineNo *> &,
+  void tokenize(std::vector<TokenProcedure *> &,
+                std::map<int, InterfaceStatementWithLineNo *> &,
                 std::map<std::string, TokenVariable *> &,
                 std::map<std::string, TokenConstant *> &);
 };
