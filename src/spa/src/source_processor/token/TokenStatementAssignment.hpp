@@ -23,20 +23,15 @@ protected:
 
 public:
   TokenStatementAssignment() = default;
-  TokenStatementAssignment(TokenVariable *_lhs,Token *_rhs, int _lineNo) : InterfaceStatementWithLineNo(_lineNo) {
-    lhs = _lhs;
-    rhs = _rhs;
-  }
+  TokenStatementAssignment(TokenVariable *_lhs,Token *_rhs, int _lineNo);
   ~TokenStatementAssignment() = default;
 
   static std::string TTYPE;
-
-  std::string getType() final {
-    return TokenStatementAssignment::TTYPE;
-  }
+  std::string getType() final;
   TokenVariable *getLHS() {
     return lhs;
   }
+
   Token *getRHS() {
     return rhs;
   }
