@@ -5,8 +5,6 @@
 
 #pragma once
 
-#include "source_processor/token/Token.hpp"
-
 class InterfaceFactor {
 public:
   InterfaceFactor() = default;
