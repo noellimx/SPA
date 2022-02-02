@@ -21,7 +21,7 @@ protected:
   std::string name;
   static std::string TTYPE;
 public:
-  TokenVariable() = default;
+  TokenVariable() = delete;
   ~TokenVariable() = default;
   explicit TokenVariable(std::string _name) :InterfaceTokenNamed(std::move(_name)){}
   std::string getType() override;

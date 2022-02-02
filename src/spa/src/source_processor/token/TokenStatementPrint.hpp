@@ -20,7 +20,7 @@ class TokenStatementPrint
 private:
 
 public:
-  TokenStatementPrint() = default;
+  TokenStatementPrint() = delete;
   explicit TokenStatementPrint(int _lineNo, TokenVariable * readableVar);
   ~TokenStatementPrint() = default;
 

@@ -25,7 +25,7 @@ class TokenStatementAssignment
 private:
 
 public:
-  TokenStatementAssignment() = default;
+  TokenStatementAssignment() = delete;
   TokenStatementAssignment(TokenVariable *_lhs, InterfaceFactor *_rhs, int _lineNo);
   ~TokenStatementAssignment() = default;
 

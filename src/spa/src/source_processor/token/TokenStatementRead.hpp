@@ -21,7 +21,7 @@ class TokenStatementRead
 private:
 
 public:
-  TokenStatementRead() = default;
+  TokenStatementRead() = delete;
   explicit TokenStatementRead(int _lineNo, TokenVariable * readableVar);
   ~TokenStatementRead() = default;
 
