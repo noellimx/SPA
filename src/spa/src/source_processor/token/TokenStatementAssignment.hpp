@@ -8,7 +8,7 @@
 #include "source_processor/token/interface/InterfaceTokenTyped.hpp"
 #include "source_processor/token/interface/InterfaceBlockScope.hpp"
 #include "source_processor/token/interface/InterfaceFactor.hpp"
-#include "source_processor/token/interface/InterfaceAssignment.hpp"
+#include "source_processor/token/interface/InterfaceSimpleAssign.hpp"
 
 #include "TokenVariable.hpp"
 
@@ -17,7 +17,7 @@
 
 class TokenStatementAssignment
     : public Token,
-      public InterfaceAssignment,
+      public InterfaceSimpleAssign,
       public InterfaceSimpleLined,
       public InterfaceTokenTyped,
       public InterfaceBlockScope {

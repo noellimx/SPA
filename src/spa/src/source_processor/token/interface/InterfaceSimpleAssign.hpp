@@ -10,7 +10,7 @@
 #include <string>
 #include <utility>
 
-class InterfaceAssignment {
+class InterfaceSimpleAssign {
 private:
 
 protected:
@@ -18,8 +18,8 @@ protected:
   InterfaceFactor *rhs = nullptr;
 
 public:
-  InterfaceAssignment() = default;
-  ~InterfaceAssignment() = default;
+  InterfaceSimpleAssign() = default;
+  ~InterfaceSimpleAssign() = default;
   TokenVariable *getLHS() {
     return lhs;
   }
