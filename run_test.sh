@@ -32,6 +32,11 @@ fi
 
 eval "${BINARY_PATH_UNIT_TESTING}"
 
+if [ $? -ne 0 ]; then
+  echo "Unit test failed... :("
+  exit 1
+fi
+
 # Setup: autotester inputs
 
 # Paths - Test Inputs and Test Outputs
