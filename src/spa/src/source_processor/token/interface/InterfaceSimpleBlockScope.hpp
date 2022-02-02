@@ -7,10 +7,10 @@
 
 #include "source_processor/token/Token.hpp"
 
-class InterfaceBlockScope {
+class InterfaceSimpleBlockScope {
   Token *scope = nullptr;
 public:
-  InterfaceBlockScope() = default;
+  InterfaceSimpleBlockScope() = default;
   void setBlockScope(Token *_scope) {
     scope = _scope;
   }

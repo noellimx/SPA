@@ -6,7 +6,7 @@
 
 #include "source_processor/token/interface/InterfaceSimpleLined.hpp"
 #include "source_processor/token/interface/InterfaceTokenTyped.hpp"
-#include "source_processor/token/interface/InterfaceBlockScope.hpp"
+#include "source_processor/token/interface/InterfaceSimpleBlockScope.hpp"
 #include "source_processor/token/interface/InterfacePrinter.hpp"
 
 #include "TokenVariable.hpp"
@@ -15,7 +15,7 @@
 #include <string>
 
 class TokenStatementPrint
-    : public Token, public InterfaceSimpleLined, public InterfaceTokenTyped, public InterfaceBlockScope, public InterfacePrinter {
+    : public Token, public InterfaceSimpleLined, public InterfaceTokenTyped, public InterfaceSimpleBlockScope, public InterfacePrinter {
 
 private:
 

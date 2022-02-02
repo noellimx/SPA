@@ -6,7 +6,7 @@
 
 #include "source_processor/token/interface/InterfaceSimpleLined.hpp"
 #include "source_processor/token/interface/InterfaceTokenTyped.hpp"
-#include "source_processor/token/interface/InterfaceBlockScope.hpp"
+#include "source_processor/token/interface/InterfaceSimpleBlockScope.hpp"
 #include "source_processor/token/interface/InterfaceFactor.hpp"
 #include "source_processor/token/interface/InterfaceSimpleAssign.hpp"
 
@@ -20,7 +20,7 @@ class TokenStatementAssignment
       public InterfaceSimpleAssign,
       public InterfaceSimpleLined,
       public InterfaceTokenTyped,
-      public InterfaceBlockScope {
+      public InterfaceSimpleBlockScope {
 
 private:
 
