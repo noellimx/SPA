@@ -7,6 +7,9 @@
 #include "source_processor/token/interface/InterfaceFactor.hpp"
 #include "source_processor/token/interface/InterfaceTokenTyped.hpp"
 #include "source_processor/token/interface/InterfaceTokenNamed.hpp"
+
+#include "source_processor/token/Token.hpp"
+
 #include <iostream>
 #include <string>
 #include <vector>
