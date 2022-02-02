@@ -55,7 +55,8 @@ SCENARIO("[TestTokenizer]", "One Procedure With 1 assignment statement") {
           AND_THEN("Statement token is found in statementTokens and line number is recorded") {
             int targetStatementNo = 1;
             CHECK(firstStatementOfProcedure == statementTokens.at(targetStatementNo));
-          }AND_THEN(
+          }
+          AND_THEN(
               "LHS of the first statement of the first procedure found by traversing is the same variable accessed by variable map.") {
             auto *lhsOfFirstStatement = firstStatementOfProcedure->getLHS();
             auto *tokenLHSFromMap = variableTokens.at(expectedVar1Name);

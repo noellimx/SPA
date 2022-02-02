@@ -26,8 +26,7 @@ void TestWrapper::parse(std::string filename) {
   buffer << fs.rdbuf();
   std::string program = buffer.str();
 
-  SourceProcessor sp;
-  sp.process(program);
+  SourceProcessor::process(program);
 }
 
 

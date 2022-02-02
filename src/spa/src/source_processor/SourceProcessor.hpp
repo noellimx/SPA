@@ -15,5 +15,5 @@
 class SourceProcessor {
 public:
     // method for processing the source program
-    void process(const std::string& program);
+    static void process(const std::string& program);
 };
