@@ -8,7 +8,7 @@ void SourceProcessor::process(const std::string& program) {
   // tokenize the program
   SourceTokenizer tk(program);
   std::vector<TokenProcedure *> tokens;
-  std::map<int, InterfaceStatementWithLineNo *> dummy;
+  std::map<int, TokenStatementAssignment *> dummy;
   std::map<std::string, TokenVariable *> dummy2;
   std::map<std::string, TokenConstant *> dummy3;
   tk.tokenize(tokens,dummy,dummy2,dummy3);

@@ -48,7 +48,7 @@ public:
   ~SourceTokenizer();
 
   void tokenize(std::vector<TokenProcedure *> &,
-                std::map<int, InterfaceStatementWithLineNo *> &,
+                std::map<int, TokenStatementAssignment *> &,
                 std::map<std::string, TokenVariable *> &,
                 std::map<std::string, TokenConstant *> &);
 };

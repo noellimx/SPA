@@ -23,7 +23,7 @@ SCENARIO("[TestTokenizer]", "One Procedure With 1 assignment statement") {
     WHEN("The source is tokenized") {
 
       std::vector<TokenProcedure *> procedureTokens;
-      std::map<int, InterfaceStatementWithLineNo *> statementTokens;
+      std::map<int, TokenStatementAssignment *> statementTokens;
       std::map<std::string, TokenVariable *> variableTokens;
       std::map<std::string, TokenConstant *> constantTokens;
 
@@ -86,7 +86,7 @@ SCENARIO("[TestTokenizer] One Procedure With 2 identical assignment statements")
     WHEN("The source is tokenized") {
 
       std::vector<TokenProcedure *> procedureTokens;
-      std::map<int, InterfaceStatementWithLineNo *> statementTokens;
+      std::map<int, TokenStatementAssignment *> statementTokens;
       std::map<std::string, TokenVariable *> variableTokens;
       std::map<std::string, TokenConstant *> constantTokens;
 
