@@ -9,7 +9,7 @@
 #include <string>
 #include <utility>
 
-class InterfaceStatementWithLineNo : public Token {
+class InterfaceStatementWithLineNo {
 private:
   int lineNo = 0;
 public:

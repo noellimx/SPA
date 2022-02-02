@@ -14,7 +14,7 @@
 #include <iostream>
 #include <string>
 
-class TokenStatementAssignment : public InterfaceStatementWithLineNo, public InterfaceTokenTyped, public InterfaceBlockScope{
+class TokenStatementAssignment : public Token, public InterfaceStatementWithLineNo, public InterfaceTokenTyped, public InterfaceBlockScope{
 
 private:
 protected:

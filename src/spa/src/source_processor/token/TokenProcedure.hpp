@@ -27,8 +27,6 @@ public:
     return TokenProcedure::TYPE();
   }
 
-
-
   void addChildToken(Token * tokenPtr){
     children.push_back(tokenPtr);
   }
