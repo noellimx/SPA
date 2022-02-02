@@ -5,7 +5,7 @@
 #pragma once
 
 #include "source_processor/token/interface/InterfaceSimpleLined.hpp"
-#include "source_processor/token/interface/InterfaceTokenTyped.hpp"
+#include "source_processor/token/interface/InterfaceSimpleTyped.hpp"
 #include "source_processor/token/interface/InterfaceSimpleBlockScope.hpp"
 #include "source_processor/token/interface/InterfaceFactor.hpp"
 #include "source_processor/token/interface/InterfaceReader.hpp"
@@ -16,7 +16,7 @@
 #include <string>
 
 class TokenStatementRead
-    : public Token, public InterfaceSimpleLined, public InterfaceTokenTyped, public InterfaceSimpleBlockScope, public InterfaceReader {
+    : public Token, public InterfaceSimpleLined, public InterfaceSimpleTyped, public InterfaceSimpleBlockScope, public InterfaceReader {
 
 private:
 

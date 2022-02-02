@@ -5,7 +5,7 @@
 #pragma once
 
 #include <string>
-class InterfaceTokenTyped {
+class InterfaceSimpleTyped {
   virtual std::string getType() = 0;
 };
 

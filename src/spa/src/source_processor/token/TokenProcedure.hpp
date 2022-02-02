@@ -5,7 +5,7 @@
 #pragma once
 
 #include "source_processor/token/Token.hpp"
-#include "source_processor/token/interface/InterfaceTokenTyped.hpp"
+#include "source_processor/token/interface/InterfaceSimpleTyped.hpp"
 #include "source_processor/token/interface/InterfaceSimpleNamed.hpp"
 
 #include <iostream>
@@ -13,7 +13,7 @@
 #include <vector>
 #include <utility>
 
-class TokenProcedure : public Token, public InterfaceTokenTyped, public InterfaceSimpleNamed{
+class TokenProcedure : public Token, public InterfaceSimpleTyped, public InterfaceSimpleNamed{
 protected:
   std::vector<Token *> children;
 public:

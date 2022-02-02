@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "source_processor/token/interface/InterfaceTokenTyped.hpp"
+#include "source_processor/token/interface/InterfaceSimpleTyped.hpp"
 #include "source_processor/token/interface/InterfaceSimpleNamed.hpp"
 #include "source_processor/token/interface/InterfaceFactor.hpp"
 #include "source_processor/token/interface/InterfaceLeftHandSide.hpp"
@@ -16,7 +16,7 @@
 #include <vector>
 #include <utility>
 
-class TokenVariable : public Token, public InterfaceTokenTyped, public InterfaceSimpleNamed, public InterfaceFactor, public InterfaceLeftHandSide {
+class TokenVariable : public Token, public InterfaceSimpleTyped, public InterfaceSimpleNamed, public InterfaceFactor, public InterfaceLeftHandSide {
 protected:
   std::string name;
   static std::string TTYPE;
