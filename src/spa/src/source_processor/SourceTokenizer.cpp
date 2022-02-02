@@ -1,4 +1,5 @@
 #include "SourceTokenizer.hpp"
+#include "source_processor/token/TokenStatementRead.hpp"
 
 // constructor
 SourceTokenizer::SourceTokenizer(const std::string &_source) : source(std::move(_source)) {
@@ -83,7 +84,8 @@ void SourceTokenizer::moveToStatementBreakOrClosingBrace() {
 void SourceTokenizer::tokenize(std::vector<TokenProcedure *> &procedureTokens,
                                std::map<int, TokenStatementAssignment *> &assignmentStatementTokens,
                                std::map<std::string, TokenVariable *> &variableTokens,
-                               std::map<std::string, TokenConstant *> &constantTokens) {
+                               std::map<std::string, TokenConstant *> &constantTokens,
+                               std::map<int, TokenStatementRead *> &readStatementTokens) {
   procedureTokens.clear();
   while (isNotEndOfSource()) {
     if (isCursorAtWhitespace()) {
@@ -141,17 +143,43 @@ void SourceTokenizer::tokenize(std::vector<TokenProcedure *> &procedureTokens,
         }
 
         // LHS
-        std::string lhs = source.substr(cursorFirstAlphaNumericCharacter,
-                                        moving - cursorFirstAlphaNumericCharacter + 1);
+        std::string firstWord = source.substr(cursorFirstAlphaNumericCharacter,
+                                              moving - cursorFirstAlphaNumericCharacter + 1);
+        if (firstWord == "read") {
 
-        if (lhs != "read" || lhs != "print") {
+          int lineNo = this->getNextLineNo();
+
+          moving += 1; // move to first whitespace after keyword read
+          while (isspace(source.at(moving))) { // move scoped cursor to first alphanumeric of RHS
+            moving += 1;
+          }
+
+          int cursorStartReadableVar = moving;
+          char charRHS = source.at(cursorStartReadableVar);
+          if (isalpha(charRHS)) {
+          } else {
+            throw "first character of variable to read should be alphabet";
+          }
+
+          while (!isspace(source.at(moving + 1))) { // move scoped cursor to last alphanumeric of RHS
+            moving += 1;
+          }
+
+          std::string readableVar = source.substr(cursorStartReadableVar,
+                                                  moving - cursorStartReadableVar + 1);
+          auto *tokenVar = new TokenVariable(readableVar);
+          variableTokens.insert({readableVar, tokenVar});
+          auto *token = new TokenStatementRead(lineNo);
+          readStatementTokens.insert({lineNo, token});
+        } else if (firstWord == "print") {
+        } else {
           // assignment statement found .
 
           // LHS
-          std::string var = lhs;
+          std::string lhs = firstWord;
 
-          auto *tokenVar = new TokenVariable(var);
-          variableTokens.insert({var, tokenVar});
+          auto *tokenVar = new TokenVariable(lhs);
+          variableTokens.insert({lhs, tokenVar});
 
           moving += 1; // move out of alphanumeric word
           while (isspace(source.at(moving))) { // move scoped cursor from end of alphanumeric word to equal sign
@@ -160,8 +188,8 @@ void SourceTokenizer::tokenize(std::vector<TokenProcedure *> &procedureTokens,
 
           if (source.at(moving) != '=') {
             std::string ss = "|" + std::to_string(moving) + "|";
-            throw " 167 After LHS and its following whitespace(s), assignment should have an '=' character. Got: "
-                + ss;
+            throw " 167 After LHS and its following whitespace(s), assignment should have an '=' character. Got: |"
+                + firstWord + "|";
           }
 
           moving += 1; // skip = sign
@@ -180,9 +208,6 @@ void SourceTokenizer::tokenize(std::vector<TokenProcedure *> &procedureTokens,
               break;
             }
           }
-
-          Token *tokenRHS = nullptr;
-
           if (rhsIsVarOrConst) {
             int cursorStartOfSimpleWordRHS = moving;
             char charStartOfSimpleWordRHS = source.at(cursorStartOfSimpleWordRHS);
@@ -205,7 +230,7 @@ void SourceTokenizer::tokenize(std::vector<TokenProcedure *> &procedureTokens,
             }
             int thisLineNo = this->getNextLineNo();
 
-            auto * tokenVar = variableTokens.at(var);
+            auto *tokenVar = variableTokens.at(lhs);
             auto *tokenAssignment =
                 new TokenStatementAssignment(tokenVar, constantTokens.at(rhsFactor), thisLineNo);
             tokenAssignment->setBlockScope(tokenProcedure);

@@ -28,9 +28,10 @@ SCENARIO("[TestTokenizer]", "One Procedure With 1 assignment statement") {
       std::map<int, TokenStatementAssignment *> statementTokens;
       std::map<std::string, TokenVariable *> variableTokens;
       std::map<std::string, TokenConstant *> constantTokens;
+      std::map<int, TokenStatementRead *> readTokens;
 
       SourceTokenizer tk(program);
-      tk.tokenize(procedureTokens, statementTokens, variableTokens, constantTokens);
+      tk.tokenize(procedureTokens, statementTokens, variableTokens, constantTokens, readTokens);
 
       THEN("Summary count of tokens") {
         // Count Summary Check
@@ -85,23 +86,24 @@ SCENARIO("[TestTokenizer] One Procedure with 1 read and 1 print statement") {
 
     std::string program = /* procedure 'procedure' proc_name '{' stmt '}'*/
         "procedure " + proc_name + " { " + stmt_01_read + stmt_02_print + " }";
-
     WHEN("The source is tokenized") {
 
       std::vector<TokenProcedure *> procedureTokens;
       std::map<int, TokenStatementAssignment *> assignmentTokens;
       std::map<std::string, TokenVariable *> variableTokens;
       std::map<std::string, TokenConstant *> constantTokens;
+      std::map<int, TokenStatementRead *> readTokens;
 
       SourceTokenizer tk(program);
-      tk.tokenize(procedureTokens, assignmentTokens, variableTokens, constantTokens);
+      tk.tokenize(procedureTokens, assignmentTokens, variableTokens, constantTokens, readTokens);
 
       THEN("Summary count of tokens") {
         // Count Summary Check
         CHECK(1 == procedureTokens.size());
-        CHECK(0 == assignmentTokens.size());
+        CHECK(assignmentTokens.empty());
         CHECK(1 == variableTokens.size());
-        CHECK(1 == constantTokens.size());
+        CHECK(constantTokens.empty());
+        CHECK(1 == readTokens.size());
       }
 
       THEN("The procedure token has a name of: " + proc_name) {
@@ -112,29 +114,29 @@ SCENARIO("[TestTokenizer] One Procedure with 1 read and 1 print statement") {
         CHECK(tokenProcedure == "procedure");
         CHECK(actualProcedureName == proc_name);
 
-        AND_THEN("The statement tokens has a block scope of the procedure.") {
-
-          auto *firstStatementOfProcedure = (TokenStatementAssignment *) tokenProcedurePtr->getChildAtPosition(0);
-          auto *scopeOfFirstStatementOfProcedure = firstStatementOfProcedure->getBlockScope();
-
-          CHECK(false);
-
-          AND_THEN("line 1 is found in readTokens and line 2 is found in printTokens and line number is recorded") {
-            CHECK(false);
-          }AND_THEN(
-              "Variable $" + var_name
-                  + "$ should be argument of read statement 1 and print statement 2. The relationship should be obtained from the variable token") {
-            auto *tokenVarFromMap = variableTokens.at(var_name);
-            //TODO sanity check
-            std::string expectedLHSTtype = "variable";
-            CHECK(false);
-            CHECK(false);
-
-            //TODO check this
-            CHECK(false);
-            CHECK(false);
-          }
-        }
+//        AND_THEN("The statement tokens has a block scope of the procedure.") {
+//
+//          auto *firstStatementOfProcedure = (TokenStatementAssignment *) tokenProcedurePtr->getChildAtPosition(0);
+//          auto *scopeOfFirstStatementOfProcedure = firstStatementOfProcedure->getBlockScope();
+//
+//          CHECK(false);
+//
+//          AND_THEN("line 1 is found in readTokens and line 2 is found in printTokens and line number is recorded") {
+//            CHECK(false);
+//          }AND_THEN(
+//              "Variable $" + var_name
+//                  + "$ should be argument of read statement 1 and print statement 2. The relationship should be obtained from the variable token") {
+//            auto *tokenVarFromMap = variableTokens.at(var_name);
+//            //TODO sanity check
+//            std::string expectedLHSTtype = "variable";
+//            CHECK(false);
+//            CHECK(false);
+//
+//            //TODO check this
+//            CHECK(false);
+//            CHECK(false);
+//          }
+//        }
       }
     }
   }
@@ -160,9 +162,10 @@ SCENARIO("[TestTokenizer] One Procedure With 2 identical assignment statements")
       std::map<int, TokenStatementAssignment *> assignmentTokens;
       std::map<std::string, TokenVariable *> variableTokens;
       std::map<std::string, TokenConstant *> constantTokens;
+      std::map<int, TokenStatementRead *> readTokens;
 
       SourceTokenizer tk(source);
-      tk.tokenize(procedureTokens, assignmentTokens, variableTokens, constantTokens);
+      tk.tokenize(procedureTokens, assignmentTokens, variableTokens, constantTokens, readTokens);
 
       THEN("Summary count of tokens") {
         // Count Summary Check
@@ -204,7 +207,6 @@ SCENARIO("[TestTokenizer] One Procedure With 2 identical assignment statements")
             CHECK(tokenVarFromMap->isLHSOf((TokenStatementAssignment *) tokenLine1FromMap));
             CHECK(tokenVarFromMap->isLHSOf((TokenStatementAssignment *) tokenLine2FromMap));
           }
-
         }
       }
     }

@@ -10,6 +10,7 @@
 #include "source_processor/token/TokenStatementAssignment.hpp"
 #include "source_processor/token/TokenVariable.hpp"
 #include "source_processor/token/TokenConstant.hpp"
+#include "source_processor/token/TokenStatementRead.hpp"
 
 // A class to tokenize a program / query string into a vector of tokens
 class SourceTokenizer {
@@ -50,6 +51,6 @@ public:
   void tokenize(std::vector<TokenProcedure *> &,
                 std::map<int, TokenStatementAssignment *> &,
                 std::map<std::string, TokenVariable *> &,
-                std::map<std::string, TokenConstant *> &);
+                std::map<std::string, TokenConstant *> &,std::map<int, TokenStatementRead* > &);
 };
 
