@@ -8,18 +8,17 @@
 #include "source_processor/token/interface/InterfaceTokenTyped.hpp"
 #include "source_processor/token/interface/InterfaceBlockScope.hpp"
 #include "source_processor/token/interface/InterfaceFactor.hpp"
+#include "source_processor/token/interface/InterfaceAssignment.hpp"
 
 #include "TokenVariable.hpp"
 
 #include <iostream>
 #include <string>
 
-class TokenStatementAssignment : public Token, public InterfaceStatementWithLineNo, public InterfaceTokenTyped, public InterfaceBlockScope{
+class TokenStatementAssignment : public Token, public InterfaceAssignment, public InterfaceStatementWithLineNo, public InterfaceTokenTyped, public InterfaceBlockScope{
 
 private:
-protected:
-  TokenVariable *lhs = nullptr;
-  Token *rhs = nullptr;
+
 
 public:
   TokenStatementAssignment() = default;
@@ -28,13 +27,7 @@ public:
 
   static std::string TTYPE;
   std::string getType() final;
-  TokenVariable *getLHS() {
-    return lhs;
-  }
 
-  Token *getRHS() {
-    return rhs;
-  }
 };
 
 
