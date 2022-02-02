@@ -15,14 +15,18 @@
 #include <iostream>
 #include <string>
 
-class TokenStatementAssignment : public Token, public InterfaceAssignment, public InterfaceStatementWithLineNo, public InterfaceTokenTyped, public InterfaceBlockScope{
+class TokenStatementAssignment
+    : public Token,
+      public InterfaceAssignment,
+      public InterfaceStatementWithLineNo,
+      public InterfaceTokenTyped,
+      public InterfaceBlockScope {
 
 private:
 
-
 public:
   TokenStatementAssignment() = default;
-  TokenStatementAssignment(TokenVariable *_lhs,Token *_rhs, int _lineNo);
+  TokenStatementAssignment(TokenVariable *_lhs, InterfaceFactor *_rhs, int _lineNo);
   ~TokenStatementAssignment() = default;
 
   static std::string TTYPE;

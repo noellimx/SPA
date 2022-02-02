@@ -1,5 +1,4 @@
 #include "SourceTokenizer.hpp"
-#include "source_processor/token/TokenStatementRead.hpp"
 
 // constructor
 SourceTokenizer::SourceTokenizer(const std::string &_source) : source(std::move(_source)) {
@@ -81,12 +80,7 @@ void SourceTokenizer::moveToStatementBreakOrClosingBrace() {
 // numbers (any numeric sequence of characters, e.g., "1001"),
 // and punctuations (any other non-space characters, e.g., "=", ";", "{", "}").
 // it should be extended as needed to handle additional SIMPLE / PQL grammar rules.
-void SourceTokenizer::tokenize(std::vector<TokenProcedure *> &procedureTokens,
-                               std::map<int, TokenStatementAssignment *> &assignmentStatementTokens,
-                               std::map<std::string, TokenVariable *> &variableTokens,
-                               std::map<std::string, TokenConstant *> &constantTokens,
-                               std::map<int, TokenStatementRead *> &readStatementTokens,std::map<int, TokenStatementPrint *> &printStatementTokens) {
-  procedureTokens.clear();
+void SourceTokenizer::tokenize(TokenBag &tokenBag) {
   while (isNotEndOfSource()) {
     if (isCursorAtWhitespace()) {
       moveCursorAtWhiteSpaceToAfterWhiteSpace();
@@ -106,7 +100,7 @@ void SourceTokenizer::tokenize(std::vector<TokenProcedure *> &procedureTokens,
     std::string procedureName = source.substr(cursorStartProcedureName,
                                               cursorEndProcedureEnd - cursorStartProcedureName + 1);
     auto *tokenProcedure = new TokenProcedure(procedureName);
-    procedureTokens.push_back(tokenProcedure); // The first token of every set is a procedure token.
+    tokenBag.addProcedure(tokenProcedure); // The first token of every set is a procedure token.
     moveCursor(); // move out of procedure name
     char delimiterBetweenProcedureNameAndBody = source.at(cursor);
     if (!isspace(delimiterBetweenProcedureNameAndBody)) {
@@ -169,23 +163,25 @@ void SourceTokenizer::tokenize(std::vector<TokenProcedure *> &procedureTokens,
           std::string var_name = source.substr(cursorStartReadableVar,
                                                moving - cursorStartReadableVar + 1);
           auto *tokenVar = new TokenVariable(var_name);
-          variableTokens.insert({var_name, tokenVar});
-          if(firstWord == "read"){
-            auto *token = new TokenStatementRead(thisLineNo, variableTokens.at(var_name));
-            readStatementTokens.insert({thisLineNo, token});
-          }else if(firstWord == "print"){
-            auto *token = new TokenStatementPrint(thisLineNo, variableTokens.at(var_name));
-            printStatementTokens.insert({thisLineNo, token});
+
+          tokenBag.addVariable(tokenVar);
+
+          auto *tokenTargetVariable = tokenBag.getVariable(var_name);
+          if (firstWord == "read") {
+            auto *tokenRead = new TokenStatementRead(thisLineNo, tokenTargetVariable);
+            tokenBag.addRead(tokenRead);
+          } else if (firstWord == "print") {
+            auto *tokenPrint = new TokenStatementPrint(thisLineNo, tokenTargetVariable);
+            tokenBag.addPrint(tokenPrint);
           }
-        }
-         else {
+        } else {
           // assignment statement found .
 
           // LHS
           std::string lhs = firstWord;
 
-          auto *tokenVar = new TokenVariable(lhs);
-          variableTokens.insert({lhs, tokenVar});
+          auto *tokenVarLHS = new TokenVariable(lhs);
+          tokenBag.addVariable(tokenVarLHS);
 
           moving += 1; // move out of alphanumeric word
           while (isspace(source.at(moving))) { // move scoped cursor from end of alphanumeric word to equal sign
@@ -227,8 +223,10 @@ void SourceTokenizer::tokenize(std::vector<TokenProcedure *> &procedureTokens,
 
             std::string rhsFactor = source.substr(cursorStartOfSimpleWordRHS,
                                                   moving - cursorStartOfSimpleWordRHS + 1);
+
             if (isdigit(charStartOfSimpleWordRHS)) { // rhs is a constant
-              constantTokens.insert({rhsFactor, new TokenConstant(rhsFactor)});
+              auto *tokenConstant = new TokenConstant(rhsFactor);
+              tokenBag.addConstant(tokenConstant);
             } else if (isalpha(charStartOfSimpleWordRHS)) { // rhs is a variable
             } else {
               throw "Should not get here. Simple factor should start with alphanumeric"
@@ -236,13 +234,12 @@ void SourceTokenizer::tokenize(std::vector<TokenProcedure *> &procedureTokens,
             }
             int thisLineNo = this->getNextLineNo();
 
-            auto *tokenVar = variableTokens.at(lhs);
             auto *tokenAssignment =
-                new TokenStatementAssignment(tokenVar, constantTokens.at(rhsFactor), thisLineNo);
+                new TokenStatementAssignment(tokenBag.getVariable(lhs), tokenBag.getFactor(rhsFactor), thisLineNo);
             tokenAssignment->setBlockScope(tokenProcedure);
-            tokenVar->addAssignmentModifier(tokenAssignment);
-            assignmentStatementTokens.insert({thisLineNo, tokenAssignment});
+            tokenBag.getVariable(lhs)->addAssignmentModifier(tokenAssignment);
 
+            tokenBag.addAssign(tokenAssignment);
             tokenProcedure->addChildToken(tokenAssignment);
 
           } else {

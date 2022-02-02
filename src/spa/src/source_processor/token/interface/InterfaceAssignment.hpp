@@ -4,7 +4,6 @@
 
 #pragma once
 
-
 #include "source_processor/token/Token.hpp"
 #include "source_processor/token/TokenVariable.hpp"
 #include <iostream>
@@ -16,7 +15,7 @@ private:
 
 protected:
   TokenVariable *lhs = nullptr;
-  Token *rhs = nullptr;
+  InterfaceFactor *rhs = nullptr;
 
 public:
   InterfaceAssignment() = default;
@@ -24,7 +23,7 @@ public:
   TokenVariable *getLHS() {
     return lhs;
   }
-  Token *getRHS() {
+  InterfaceFactor *getRHS() {
     return rhs;
   }
 };
