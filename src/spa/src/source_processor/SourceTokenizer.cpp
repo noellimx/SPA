@@ -74,12 +74,6 @@ void SourceTokenizer::moveToStatementBreakOrClosingBrace() {
   }
 }
 
-// method to tokenize a program / query std::string
-// it currently tokenizes the std::string into a vector of 
-// words (any alphanumeric sequence of characters starting with a letter, e.g., "num1"),
-// numbers (any numeric sequence of characters, e.g., "1001"),
-// and punctuations (any other non-space characters, e.g., "=", ";", "{", "}").
-// it should be extended as needed to handle additional SIMPLE / PQL grammar rules.
 void SourceTokenizer::tokenize(TokenBag &tokenBag) {
   while (isNotEndOfSource()) {
     if (isCursorAtWhitespace()) {
@@ -246,7 +240,7 @@ void SourceTokenizer::tokenize(TokenBag &tokenBag) {
           }
         }
       }
-      moveCursor(); // move cursor out of ; or }.
+      moveCursor(); // move cursor out of declaration ; or scope }.
     }
   }
 }
