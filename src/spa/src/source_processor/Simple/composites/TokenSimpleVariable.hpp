@@ -4,10 +4,10 @@
 
 #pragma once
 
-#include "source_processor/Simple/interface/InterfaceSimpleTyped.hpp"
-#include "source_processor/Simple/interface/InterfaceSimpleNamed.hpp"
-#include "source_processor/Simple/interface/InterfaceSimpleFactor.hpp"
-#include "source_processor/Simple/interface/InterfaceSimpleLHS.hpp"
+#include "source_processor/Simple/composites/interface/InterfaceSimpleTyped.hpp"
+#include "source_processor/Simple/composites/interface/InterfaceSimpleNamed.hpp"
+#include "source_processor/Simple/composites/interface/InterfaceSimpleFactor.hpp"
+#include "source_processor/Simple/composites/interface/InterfaceSimpleLHS.hpp"
 
 #include "TokenSimple.hpp"
 

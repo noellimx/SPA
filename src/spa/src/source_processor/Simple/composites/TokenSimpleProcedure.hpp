@@ -5,8 +5,8 @@
 #pragma once
 
 #include "TokenSimple.hpp"
-#include "source_processor/Simple/interface/InterfaceSimpleTyped.hpp"
-#include "source_processor/Simple/interface/InterfaceSimpleNamed.hpp"
+#include "source_processor/Simple/composites/interface/InterfaceSimpleTyped.hpp"
+#include "source_processor/Simple/composites/interface/InterfaceSimpleNamed.hpp"
 
 #include <iostream>
 #include <string>
