@@ -18,7 +18,7 @@
 class Simple {
 private:
   std::vector<SimpleProcedure *> *procedures = new std::vector<SimpleProcedure *>();
-  std::map<int, SimpleAssign *> assigns;
+  std::map<int, SimpleAssign *> * assigns = new std::map<int, SimpleAssign *>();
   std::map<std::string, SimpleVariable *> variables;
   std::map<std::string, SimpleConstant *> constants;
   std::map<int, SimpleRead *> reads;
@@ -31,6 +31,10 @@ public:
 
   std::vector<SimpleProcedure *> *getProcedures() {
     return procedures;
+  }
+
+  std::map<int, SimpleAssign *>  *getAssigns() {
+    return assigns;
   }
   SimpleProcedure *getProcedure(int i) {
     return procedures->at(i);
@@ -73,16 +77,16 @@ public:
   }
   void addAssign(SimpleAssign *sA) {
     int lineNo = sA->getLineNo();
-    assigns.insert({lineNo, sA});
+    assigns->insert({lineNo, sA});
   }
   SimpleAssign *getAssign(int lineNo) {
-    return assigns.at(lineNo);
+    return assigns->at(lineNo);
   }
   unsigned long countProcedure() {
     return procedures->size();
   }
   unsigned long countAssign() {
-    return assigns.size();
+    return assigns->size();
   }
   unsigned long countVariable() {
     return variables.size();

@@ -6,6 +6,7 @@
 #include "sqlite3.h"
 #include "database/table/Schema.hpp"
 #include "database/table/ProcedureTable.hpp"
+#include "database/table/AssignTable.hpp"
 #include "source_processor/Simple/composites/SimpleProcedure.hpp"
 #include "source_processor/Simple/Simple.hpp"
 
@@ -43,15 +44,18 @@ public:
   static void insertSimple(Simple &);
 
   static void insertProcedure(SimpleProcedure *);
+  static void insertAssign(SimpleAssign *);
 
   // CRUD - READ
   static void queryAllNamesOf(std::string design_entity, std::vector<std::string> &results) {
 
     std::vector<std::string> thisResults;
     if (design_entity == "procedure") {
-
       database::selectProcedureNamesAll(thisResults);
+    } else if (design_entity == "assign") {
+      database::selectAssignLinesAll(thisResults);
     }
+
     for (std::string &thisResult : thisResults) {
       results.push_back(thisResult);
     }
@@ -60,6 +64,8 @@ public:
   static bool isProcedureExist(const std::string &procedureName);
   static int getProcedureCount();
   static void selectProcedureNamesAll(std::vector<std::string> &);
+  static void selectAssignLinesAll(std::vector<std::string> &);
 
+  static int getAssignCount();
 };
 
