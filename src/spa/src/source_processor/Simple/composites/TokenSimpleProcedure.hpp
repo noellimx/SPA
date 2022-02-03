@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "source_processor/Simple/TokenSimple.hpp"
+#include "TokenSimple.hpp"
 #include "source_processor/Simple/interface/InterfaceSimpleTyped.hpp"
 #include "source_processor/Simple/interface/InterfaceSimpleNamed.hpp"
 

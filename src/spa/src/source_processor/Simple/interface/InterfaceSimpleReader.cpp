@@ -4,7 +4,7 @@
 
 
 #include "InterfaceSimpleReader.hpp"
-#include "source_processor/Simple/TokenSimpleVariable.hpp"
+#include "source_processor/Simple/composites/TokenSimpleVariable.hpp"
 
 InterfaceSimpleReader::InterfaceSimpleReader(TokenSimpleVariable * _token): readableVar(_token){};
 

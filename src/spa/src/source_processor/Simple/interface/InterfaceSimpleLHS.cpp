@@ -5,7 +5,7 @@
 
 
 #include "InterfaceSimpleLHS.hpp"
-#include "source_processor/Simple/TokenSimpleAssignment.hpp"
+#include "source_processor/Simple/composites/TokenSimpleAssignment.hpp"
 
 
 bool InterfaceSimpleLHS::isLHSOf(TokenSimpleAssignment * token){

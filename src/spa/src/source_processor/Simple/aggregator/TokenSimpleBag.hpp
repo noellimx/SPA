@@ -7,12 +7,12 @@
 #include <iostream>
 #include <map>
 
-#include "source_processor/Simple/TokenSimpleProcedure.hpp"
-#include "source_processor/Simple/TokenSimpleAssignment.hpp"
-#include "source_processor/Simple/TokenSimpleVariable.hpp"
-#include "source_processor/Simple/TokenSimpleConstant.hpp"
-#include "source_processor/Simple/TokenSimpleRead.hpp"
-#include "source_processor/Simple/TokenSimplePrint.hpp"
+#include "source_processor/Simple/composites/TokenSimpleProcedure.hpp"
+#include "source_processor/Simple/composites/TokenSimpleAssignment.hpp"
+#include "source_processor/Simple/composites/TokenSimpleVariable.hpp"
+#include "source_processor/Simple/composites/TokenSimpleConstant.hpp"
+#include "source_processor/Simple/composites/TokenSimpleRead.hpp"
+#include "source_processor/Simple/composites/TokenSimplePrint.hpp"
 
 class TokenSimpleBag {
 private:

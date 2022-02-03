@@ -9,7 +9,7 @@
 #include "source_processor/Simple/interface/InterfaceSimpleFactor.hpp"
 #include "source_processor/Simple/interface/InterfaceSimpleLHS.hpp"
 
-#include "source_processor/Simple/TokenSimple.hpp"
+#include "TokenSimple.hpp"
 
 #include <iostream>
 #include <string>

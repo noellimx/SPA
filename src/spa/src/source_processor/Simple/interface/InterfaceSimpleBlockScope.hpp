@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include "source_processor/Simple/TokenSimple.hpp"
+#include "source_processor/Simple/composites/TokenSimple.hpp"
 
 class InterfaceSimpleBlockScope {
   TokenSimple *scope = nullptr;
