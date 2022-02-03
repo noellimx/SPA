@@ -15,7 +15,7 @@
 #include <string>
 
 class SimplePrint
-    : public TokenSimple, public InterfaceSimpleLined, public InterfaceSimpleTyped, public InterfaceSimpleBlockScope, public InterfaceSimplePrinter {
+    : public SimpleNode, public InterfaceSimpleLined, public InterfaceSimpleTyped, public InterfaceSimpleBlockScope, public InterfaceSimplePrinter {
 
 private:
 

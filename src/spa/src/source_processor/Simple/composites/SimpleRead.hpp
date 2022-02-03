@@ -16,7 +16,7 @@
 #include <string>
 
 class SimpleRead
-    : public TokenSimple, public InterfaceSimpleLined, public InterfaceSimpleTyped, public InterfaceSimpleBlockScope, public InterfaceSimpleReader {
+    : public SimpleNode, public InterfaceSimpleLined, public InterfaceSimpleTyped, public InterfaceSimpleBlockScope, public InterfaceSimpleReader {
 
 private:
 

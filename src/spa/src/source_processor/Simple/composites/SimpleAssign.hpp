@@ -16,7 +16,7 @@
 #include <string>
 
 class SimpleAssign
-    : public TokenSimple,
+    : public SimpleNode,
       public InterfaceSimpleAssign,
       public InterfaceSimpleLined,
       public InterfaceSimpleTyped,

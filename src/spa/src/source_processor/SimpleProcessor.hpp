@@ -6,7 +6,7 @@
 #include <vector>
 
 #include "SimpleParser.hpp"
-#include "source_processor/Simple/composites/TokenSimple.hpp"
+#include "source_processor/Simple/composites/SimpleNode.hpp"
 
 #include "database/database.hpp"
 #include "utils/StreamPlus.hpp"

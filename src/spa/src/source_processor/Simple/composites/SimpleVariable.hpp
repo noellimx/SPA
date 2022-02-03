@@ -9,14 +9,14 @@
 #include "source_processor/Simple/composites/interface/InterfaceSimpleFactor.hpp"
 #include "source_processor/Simple/composites/interface/InterfaceSimpleLHS.hpp"
 
-#include "TokenSimple.hpp"
+#include "SimpleNode.hpp"
 
 #include <iostream>
 #include <string>
 #include <vector>
 #include <utility>
 
-class SimpleVariable : public TokenSimple, public InterfaceSimpleTyped, public InterfaceSimpleNamed, public InterfaceSimpleFactor, public InterfaceSimpleLHS {
+class SimpleVariable : public SimpleNode, public InterfaceSimpleTyped, public InterfaceSimpleNamed, public InterfaceSimpleFactor, public InterfaceSimpleLHS {
 protected:
   std::string name;
   static std::string TTYPE;

@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "TokenSimple.hpp"
+#include "SimpleNode.hpp"
 #include "source_processor/Simple/composites/interface/InterfaceSimpleTyped.hpp"
 #include "source_processor/Simple/composites/interface/InterfaceSimpleNamed.hpp"
 
@@ -13,9 +13,9 @@
 #include <vector>
 #include <utility>
 
-class SimpleProcedure : public TokenSimple, public InterfaceSimpleTyped, public InterfaceSimpleNamed{
+class SimpleProcedure : public SimpleNode, public InterfaceSimpleTyped, public InterfaceSimpleNamed{
 protected:
-  std::vector<TokenSimple *> children;
+  std::vector<SimpleNode *> children;
 public:
   SimpleProcedure() = delete;
   explicit SimpleProcedure(std::string _name) : InterfaceSimpleNamed(std::move(_name)){}
@@ -23,11 +23,11 @@ public:
   static std::string TTYPE;
   std::string getType();
 
-  void addChildToken(TokenSimple * tokenPtr){
+  void addChildToken(SimpleNode * tokenPtr){
     children.push_back(tokenPtr);
   }
 
-  TokenSimple * getChildAtPosition(int npos){
+  SimpleNode * getChildAtPosition(int npos){
     return children.at(npos);
   }
 };

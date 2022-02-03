@@ -9,12 +9,12 @@
 
 #include <utility>
 
-class TokenSimple {
+class SimpleNode {
 
 protected:
 public:
-  TokenSimple() = default;
-  ~TokenSimple() = default;
+  SimpleNode() = default;
+  ~SimpleNode() = default;
 };
 
 

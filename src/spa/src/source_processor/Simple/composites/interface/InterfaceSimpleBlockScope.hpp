@@ -5,16 +5,16 @@
 
 #pragma once
 
-#include "source_processor/Simple/composites/TokenSimple.hpp"
+#include "source_processor/Simple/composites/SimpleNode.hpp"
 
 class InterfaceSimpleBlockScope {
-  TokenSimple *scope = nullptr;
+  SimpleNode *scope = nullptr;
 public:
   InterfaceSimpleBlockScope() = default;
-  void setBlockScope(TokenSimple *_scope) {
+  void setBlockScope(SimpleNode *_scope) {
     scope = _scope;
   }
-  TokenSimple *getBlockScope() {
+  SimpleNode *getBlockScope() {
     return scope;
   }
 };

@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "source_processor/Simple/composites/TokenSimple.hpp"
+#include "source_processor/Simple/composites/SimpleNode.hpp"
 #include <iostream>
 #include <string>
 #include <utility>

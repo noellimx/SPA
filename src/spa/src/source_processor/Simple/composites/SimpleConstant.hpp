@@ -8,14 +8,14 @@
 #include "source_processor/Simple/composites/interface/InterfaceSimpleTyped.hpp"
 #include "source_processor/Simple/composites/interface/InterfaceSimpleNamed.hpp"
 
-#include "TokenSimple.hpp"
+#include "SimpleNode.hpp"
 
 #include <iostream>
 #include <string>
 #include <vector>
 #include <utility>
 
-class SimpleConstant : public TokenSimple, public InterfaceSimpleTyped, public InterfaceSimpleNamed, public InterfaceSimpleFactor {
+class SimpleConstant : public SimpleNode, public InterfaceSimpleTyped, public InterfaceSimpleNamed, public InterfaceSimpleFactor {
 
 public:
   SimpleConstant() = delete;
