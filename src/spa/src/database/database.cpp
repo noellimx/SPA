@@ -1,9 +1,8 @@
 #include "database.hpp"
 #include "utils/StreamPlus.hpp"
-#include<stdio.h>
 
 sqlite3 *database::dbConnection;
-std::vector<std::vector<std::string>> database::dbResults = std::vector<std::vector<std::string>>();
+std::vector<std::vector<std::string>> database::_db_results = std::vector<std::vector<std::string>>();
 
 std::vector<Table *> tables = std::vector<Table *>();
 
@@ -71,7 +70,7 @@ void database::insertProcedure(SimpleProcedure *procedure) {
 }
 
 bool database::isProcedureExist(std::string procedureName) {
-  dbResults.clear();
+  _db_results.clear();
   std::string statement =
       "SELECT EXISTS(SELECT 1 FROM " + ProcedureTable::NAME() + " WHERE " + ProcedureTable::COLUMN_NAME() + "=\""
           + procedureName + "\" LIMIT 1)";
@@ -79,33 +78,33 @@ bool database::isProcedureExist(std::string procedureName) {
   if (errorMessage != nullptr) {
     return errorMessage;
   }
-  return dbResults[0][0] == "1";
+  return _db_results[0][0] == "1";
 }
-// method to get all the procedures from the database
-void database::getProcedures(std::vector<std::string> &results) {
-  // clear the existing results
-  dbResults.clear();
 
-  // retrieve the procedures from the procedure table
-  // The callback method is only used when there are results to be returned.
+void database::selectProcedureNamesAll(std::vector<std::string> &results) {
+  _db_results.clear();
+
   std::string getProceduresSQL = "SELECT * FROM procedures;";
+
   sqlite3_exec(dbConnection, getProceduresSQL.c_str(), callback, 0, &errorMessage);
 
-  // postprocess the results from the database so that the output is just a vector of procedure names
-  for (std::vector<std::string> dbRow : dbResults) {
+  for (std::vector<std::string> dbRow : _db_results) {
     std::string result;
     result = dbRow.at(0);
     results.push_back(result);
   }
 }
-std::string database::getProcedureCount() {
-  dbResults.clear();
+int database::getProcedureCount() {
+  _db_results.clear();
   std::string getProceduresSQL = "SELECT COUNT(*) FROM procedures;";
   sqlite3_exec(dbConnection, getProceduresSQL.c_str(), callback, 0, &errorMessage);
   if (errorMessage != nullptr) {
-    return errorMessage;
+    return -1;
   }
-  return dbResults[0][0];
+
+  auto firstRow = _db_results[0];
+  auto firstRowFirstColumnVal = firstRow[0];
+  return std::stoi(firstRowFirstColumnVal);
 }
 // callback method to put one row of results from the database into the dbResults vector
 // This method is called each time a row of results is returned from the database
@@ -121,7 +120,7 @@ int database::callback(void *NotUsed, int argc, char **argv, char **azColName) {
   }
 
   // The row is pushed to the vector for storing all rows of results
-  dbResults.push_back(dbRow);
+  _db_results.push_back(dbRow);
 
   return 0;
 }

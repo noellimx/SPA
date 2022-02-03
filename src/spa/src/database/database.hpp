@@ -16,29 +16,22 @@ public:
 
     // method to connect to the database and initialize tables in the database
     static void initializeConnection();
-
-
     static void initialize();
 
-    // method to close the database connection
     static void close();
 
-    // method to insert a procedure into the database
     static void insertProcedure(SimpleProcedure *);
 
     static bool isProcedureExist(std::string procedureName);
-
-    // method to get all the procedures from the database
-    static void getProcedures(std::vector<std::string> &results);
-
-    static std::string getProcedureCount();
+    static void selectProcedureNamesAll(std::vector<std::string> &);
+    static int getProcedureCount();
 
 private:
 
     // the connection pointer to the database
     static sqlite3 *dbConnection;
     // a vector containing the results from the database
-    static std::vector<std::vector<std::string>> dbResults;
+    static std::vector<std::vector<std::string>> _db_results;
     // the error message from the database
     static char *errorMessage;
 
