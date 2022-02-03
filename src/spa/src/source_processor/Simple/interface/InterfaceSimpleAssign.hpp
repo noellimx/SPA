@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "source_processor/token/TokenSimple.hpp"
-#include "source_processor/token/TokenSimpleVariable.hpp"
+#include "source_processor/Simple/TokenSimple.hpp"
+#include "source_processor/Simple/TokenSimpleVariable.hpp"
 #include <iostream>
 #include <string>
 #include <utility>

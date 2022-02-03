@@ -7,7 +7,7 @@
 #include <vector>
 
 #include "SourceTokenizer.hpp"
-#include "source_processor/token/TokenSimple.hpp"
+#include "source_processor/Simple/TokenSimple.hpp"
 
 #include "database/database.hpp"
 #include "utils/StreamPlus.hpp"

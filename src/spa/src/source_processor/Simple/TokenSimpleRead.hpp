@@ -4,11 +4,11 @@
 
 #pragma once
 
-#include "source_processor/token/interface/InterfaceSimpleLined.hpp"
-#include "source_processor/token/interface/InterfaceSimpleTyped.hpp"
-#include "source_processor/token/interface/InterfaceSimpleBlockScope.hpp"
-#include "source_processor/token/interface/InterfaceSimpleFactor.hpp"
-#include "source_processor/token/interface/InterfaceSimpleReader.hpp"
+#include "source_processor/Simple/interface/InterfaceSimpleLined.hpp"
+#include "source_processor/Simple/interface/InterfaceSimpleTyped.hpp"
+#include "source_processor/Simple/interface/InterfaceSimpleBlockScope.hpp"
+#include "source_processor/Simple/interface/InterfaceSimpleFactor.hpp"
+#include "source_processor/Simple/interface/InterfaceSimpleReader.hpp"
 
 #include "TokenSimpleVariable.hpp"
 
