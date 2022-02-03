@@ -1,23 +1,23 @@
 #include "QueryProcessor.hpp"
+
+#include <utility>
 #include "QueryParser.hpp"
 #include "query_processor/Query/Query.hpp"
 
-// constructor
-QueryProcessor::QueryProcessor() = default;
-
-// destructor
 QueryProcessor::~QueryProcessor() = default;
 
-void QueryProcessor::evaluate(std::string query, std::vector<std::string> &output) {
-  output.clear();
+void QueryProcessor::parseAndEvaluate(std::string select_cl_text, std::vector<std::string> &results) {
+  results.clear();
 
-  QueryParser tk(query);
+  // parse select_cl_text -> Query
+  QueryParser tk(select_cl_text);
   Query qr;
   tk.tokenize(qr);
 
+  //todo execute Query
   std::vector<std::string> databaseResults;
 
   for (const std::string &databaseResult : databaseResults) {
-    output.push_back(databaseResult);
+    results.push_back(databaseResult);
   }
 }

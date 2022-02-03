@@ -45,7 +45,7 @@ TEST_CASE("[Test Iteration]", "001") {
             std::string design_entity = "procedure";
             std::string synonym = "q";
             std::string declaration = design_entity + " " + synonym + ";";
-            std::string select_cl = declaration + "Select " + synonym;
+            std::string select_cl_text = declaration + "Select " + synonym;
 
             int expectedCountDeclarations = 1;
             int expectedCountSynonymInTuple = 1;
@@ -54,7 +54,7 @@ TEST_CASE("[Test Iteration]", "001") {
                 "Query has " + std::to_string(expectedCountDeclarations) + " synonym " + synonym + "declared as type "
                     + expectedSynonymToRepresentType + " and tuple has "
                     + std::to_string(expectedCountSynonymInTuple) + " synonym.") {
-              QueryParser tkQry(select_cl);
+              QueryParser tkQry(select_cl_text);
               Query qr;
               tkQry.tokenize(qr);
               CHECK(qr.countDeclarations() == expectedCountDeclarations);
@@ -63,8 +63,7 @@ TEST_CASE("[Test Iteration]", "001") {
 
               AND_THEN("Query returns a vector with one element ") {
                 std::vector<std::string> results;
-                QueryProcessor qp;
-                qp.evaluate(select_cl, results);
+                QueryProcessor::parseAndEvaluate(select_cl_text, results);
               }
             }
           }

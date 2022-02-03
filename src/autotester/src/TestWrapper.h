@@ -13,24 +13,20 @@ class TestWrapper : public AbstractWrapper {
 
 private:
 
-  static std::string getSimpleText(std::string & filePath){
+  static std::string getSimpleText(std::string &filePath) {
     std::ifstream fs(filePath);
     std::stringstream buffer;
     buffer << fs.rdbuf();
     return buffer.str();
   }
- public:
-  // default constructor
+public:
   TestWrapper();
-  
-  // destructor
-  ~TestWrapper();
-  
-  // method for parsing the SIMPLE source
-  virtual void parse(std::string simpleFileName);
-  
-  // method for evaluating a query
-  virtual void evaluate(std::string query, std::list<std::string>& results);
+  ~TestWrapper() = default;
+
+  // SIMPLE
+  void parse(std::string) override;
+  // SQL
+  void evaluate(std::string, std::list<std::string> &) override;
 };
 
 #endif

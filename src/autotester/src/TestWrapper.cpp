@@ -16,16 +16,15 @@ TestWrapper::TestWrapper() = default;
 
 void TestWrapper::parse(std::string simpleFilePath) {
   std::string simpleText = TestWrapper::getSimpleText(simpleFilePath);
-  SimpleProcessor::process(simpleText);
+  SimpleProcessor::parseAndPersist(simpleText);
 }
 
-void TestWrapper::evaluate(std::string query, std::list<std::string> &results) {
+// query_text is select-cl
+void TestWrapper::evaluate(std::string select_cl, std::list<std::string> &results) {
   std::vector<std::string> output;
+  QueryProcessor::parseAndEvaluate(select_cl, output);
 
-  QueryProcessor qp;
-//  qp.evaluate(query, output);
-
-  for (std::string result : output) {
+  for (const std::string &result : output) {
     results.push_back(result);
   }
 }

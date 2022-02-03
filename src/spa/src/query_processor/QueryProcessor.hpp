@@ -4,15 +4,10 @@
 #include <vector>
 #include "database/database.hpp"
 
-
 class QueryProcessor {
 public:
-	// default constructor
-	QueryProcessor();
+  QueryProcessor() = delete;
+  ~QueryProcessor();
 
-	// destructor
-	~QueryProcessor();
-
-	// method for evaluating a query
-	void evaluate(std::string query, std::vector<std::string>& results);
+  static void parseAndEvaluate(std::string select_cl_text, std::vector<std::string> &results);
 };

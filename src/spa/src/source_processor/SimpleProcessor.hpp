@@ -14,5 +14,5 @@
 class SimpleProcessor {
 public:
     // method for processing the source program
-    static void process(const std::string& simple_text);
+    static void parseAndPersist(const std::string& simple_text);
 };
