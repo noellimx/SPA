@@ -1,5 +1,5 @@
 #include "TestWrapper.h"
-#include "source_processor/SourceProcessor.hpp"
+#include "source_processor/SimpleProcessor.hpp"
 #include "database/database.hpp"
 #include "query_processor/QueryProcessor.hpp"
 
@@ -16,7 +16,7 @@ TestWrapper::TestWrapper() = default;
 
 void TestWrapper::parse(std::string simpleFilePath) {
   std::string simpleText = TestWrapper::getSimpleText(simpleFilePath);
-  SourceProcessor::process(simpleText);
+  SimpleProcessor::process(simpleText);
 }
 
 void TestWrapper::evaluate(std::string query, std::list<std::string> &results) {

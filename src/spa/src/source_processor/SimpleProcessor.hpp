@@ -5,13 +5,13 @@
 
 #include <vector>
 
-#include "SourceParser.hpp"
+#include "SimpleParser.hpp"
 #include "source_processor/Simple/composites/TokenSimple.hpp"
 
 #include "database/database.hpp"
 #include "utils/StreamPlus.hpp"
 
-class SourceProcessor {
+class SimpleProcessor {
 public:
     // method for processing the source program
     static void process(const std::string& simple_text);

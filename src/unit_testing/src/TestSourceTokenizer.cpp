@@ -1,7 +1,7 @@
 
 
 #include "catch.hpp"
-#include "source_processor/SourceParser.hpp"
+#include "source_processor/SimpleParser.hpp"
 
 #include <string>
 
@@ -24,7 +24,7 @@ SCENARIO("[TestTokenizer]", "One Procedure With 1 assignment statement") {
 
     WHEN("The source is tokenized") {
 
-      SourceParser tk(program);
+      SimpleParser tk(program);
       TokenSimpleBag tokenBag;
       tk.tokenize(tokenBag);
 
@@ -83,7 +83,7 @@ SCENARIO("[TestTokenizer] One Procedure with 1 read and 1 print statement uses t
         "procedure " + proc_name + " { " + stmtLst + " }";
     WHEN("The source is tokenized") {
 
-      SourceParser tk(program);
+      SimpleParser tk(program);
       TokenSimpleBag tokenBag;
       tk.tokenize(tokenBag);
 
@@ -152,7 +152,7 @@ SCENARIO("[TestTokenizer] One Procedure With 2 identical assignment statements")
 
     WHEN("The source is tokenized") {
 
-      SourceParser tk(program);
+      SimpleParser tk(program);
       TokenSimpleBag tokenBag;
       tk.tokenize(tokenBag);
 

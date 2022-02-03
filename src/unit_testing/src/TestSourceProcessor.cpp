@@ -1,7 +1,7 @@
 
 
 #include "catch.hpp"
-#include "source_processor/SourceProcessor.hpp"
+#include "source_processor/SimpleProcessor.hpp"
 #include "database/database.hpp"
 
 #include <string>

@@ -1,7 +1,7 @@
 
 
 #include "catch.hpp"
-#include "source_processor/SourceParser.hpp"
+#include "source_processor/SimpleParser.hpp"
 
 #include <string>
 

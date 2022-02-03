@@ -5,7 +5,7 @@
 #pragma once
 #include "catch.hpp"
 #include "database/database.hpp"
-#include "source_processor/SourceParser.hpp"
+#include "source_processor/SimpleParser.hpp"
 #include "query_processor/QueryProcessor.hpp"
 #include "query_processor/QueryParser.hpp"
 
@@ -30,7 +30,7 @@ TEST_CASE("[Test Iteration]", "001") {
       std::string procedure_01 = "procedure " + proc_name_01 + " { " + stmtLst + " }";
       std::string program = procedure_01;
 
-      SourceParser tkSrc(program);
+      SimpleParser tkSrc(program);
       TokenSimpleBag tokenBag;
       tkSrc.tokenize(tokenBag);
       AND_THEN("The summary count of tokens") {

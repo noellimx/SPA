@@ -1,21 +1,21 @@
-#include "SourceParser.hpp"
+#include "SimpleParser.hpp"
 
 // constructor
-SourceParser::SourceParser(const std::string &_source) : source(std::move(_source)) {
+SimpleParser::SimpleParser(const std::string &_source) : source(std::move(_source)) {
 }
 
 // destructor
-SourceParser::~SourceParser() = default;
+SimpleParser::~SimpleParser() = default;
 
-bool SourceParser::isNotEndOfSource() {
+bool SimpleParser::isNotEndOfSource() {
   return cursor < source.length();
 }
 
-bool SourceParser::isCursorAtWhitespace() {
+bool SimpleParser::isCursorAtWhitespace() {
   return isspace(source.at(cursor));
 }
 
-void SourceParser::moveCursorAtBeforeWhiteSpaceToAfterWhiteSpace() {
+void SimpleParser::moveCursorAtBeforeWhiteSpaceToAfterWhiteSpace() {
 
   char ch = source.at(cursor);
   if (isspace(ch)) {
@@ -31,7 +31,7 @@ void SourceParser::moveCursorAtBeforeWhiteSpaceToAfterWhiteSpace() {
     ch = source.at(cursor);
   }
 }
-void SourceParser::moveCursorAtWhiteSpaceToAfterWhiteSpace() {
+void SimpleParser::moveCursorAtWhiteSpaceToAfterWhiteSpace() {
   char ch = source.at(cursor);
   if (!isspace(ch)) {
     throw "Character at cursor should be a white space";
@@ -42,11 +42,11 @@ void SourceParser::moveCursorAtWhiteSpaceToAfterWhiteSpace() {
   }
 }
 
-void SourceParser::moveCursor() {
+void SimpleParser::moveCursor() {
   cursor += 1;
 }
 
-void SourceParser::moveCursorToEndOfWord() {
+void SimpleParser::moveCursorToEndOfWord() {
   char ch = source.at(cursor + 1); // look ahead so cursor will stop at the final alphanumeric of the word.
   while (isalpha(ch) || isdigit(ch)) {
     moveCursor();
@@ -54,11 +54,11 @@ void SourceParser::moveCursorToEndOfWord() {
   }
 }
 
-void SourceParser::moveCursorToEndOfProcedureName() {
-  SourceParser::moveCursorToEndOfWord();
+void SimpleParser::moveCursorToEndOfProcedureName() {
+  SimpleParser::moveCursorToEndOfWord();
 }
 
-void SourceParser::moveCursorToNextBrace() {
+void SimpleParser::moveCursorToNextBrace() {
   char ch = source.at(cursor); // look ahead so cursor will stop at the final alphanumeric of the word.
   while (!(ch == '{' || ch == '}')) {
     moveCursor();
@@ -66,7 +66,7 @@ void SourceParser::moveCursorToNextBrace() {
   }
 }
 
-void SourceParser::moveToStatementBreakOrClosingBrace() {
+void SimpleParser::moveToStatementBreakOrClosingBrace() {
   char ch = source.at(cursor); // look ahead so cursor will stop at the final alphanumeric of the word.
   while (!(ch == ';' || ch == '}')) {
     moveCursor();
@@ -74,7 +74,7 @@ void SourceParser::moveToStatementBreakOrClosingBrace() {
   }
 }
 
-void SourceParser::tokenize(TokenSimpleBag &tokenBag) {
+void SimpleParser::tokenize(TokenSimpleBag &tokenBag) {
   while (isNotEndOfSource()) {
     if (isCursorAtWhitespace()) {
       moveCursorAtWhiteSpaceToAfterWhiteSpace();
