@@ -7,6 +7,7 @@
 #include "database/table/Schema.hpp"
 #include "database/table/ProcedureTable.hpp"
 #include "source_processor/Simple/composites/SimpleProcedure.hpp"
+#include "source_processor/Simple/Simple.hpp"
 
 // The Database has to be a static class due to various constraints.
 
@@ -26,6 +27,7 @@ public:
   static void close();
 
   // CRUD - CREATE
+  static void insertSimple(TokenSimpleBag &){}
   static void insertProcedure(SimpleProcedure *);
   // CRUD - READ
   static bool isProcedureExist(const std::string &procedureName);

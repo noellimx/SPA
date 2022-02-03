@@ -14,6 +14,8 @@
 #include "source_processor/Simple/composites/SimpleRead.hpp"
 #include "source_processor/Simple/composites/SimplePrint.hpp"
 
+
+#pragma once
 class TokenSimpleBag {
 private:
   std::vector<SimpleProcedure *> procedureTokens;

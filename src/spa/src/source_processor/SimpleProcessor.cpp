@@ -8,5 +8,5 @@ void SimpleProcessor::parseAndPersist(const std::string &simple_text) {
   simpleParser.parse(simple);
 
   //todo persisting simple_text into sql
-
+  database::insertSimple(simple);
 }
