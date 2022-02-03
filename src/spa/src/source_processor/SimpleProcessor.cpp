@@ -7,6 +7,6 @@ void SimpleProcessor::parseAndPersist(const std::string &simple_text) {
   TokenSimpleBag simple;
   simpleParser.tokenize(simple);
 
-  //todo persisting simple_text -> Simple instance
+  //todo persisting simple_text into sql
 
 }
