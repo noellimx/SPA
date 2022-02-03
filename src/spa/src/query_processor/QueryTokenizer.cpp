@@ -1,58 +1,113 @@
 #include "QueryTokenizer.hpp"
+#include "Declaration.hpp"
 
-// constructor
-QueryTokenizer::QueryTokenizer() {}
+QueryTokenizer::~QueryTokenizer() = default;
 
-// destructor
-QueryTokenizer::~QueryTokenizer() {}
+// NOTE: this is inner help function for tokenize()
+// returns when cursor is at 't' of Select
+void QueryTokenizer::_tokenizeDeclarations(Query &qr) {
 
-// method to tokenize a program / query string
-// it currently tokenizes the string into a vector of 
-// words (any alphanumeric sequence of characters starting with a letter, e.g., "num1"),
-// numbers (any numeric sequence of characters, e.g., "1001"),
-// and punctuations (any other non-space characters, e.g., "=", ";", "{", "}").
-// it should be extended as needed to handle additional SIMPLE / PQL grammar rules.
-void QueryTokenizer::tokenize(std::string &text, Query &qr) {
+  bool isSelectKeyWordFound = false;
+  int cc = 0;
+  while (!isSelectKeyWordFound) {
+    cc++;
 
-  int cursor = 0;
-  while (cursor < text.length()) {
-    // parse declaration by declaration
-    while (isspace(cursor)) { // move to first alphanumeric of design entity
-      cursor++;
+    while (isspace(text.at(_cursor))) { // move to first alphanumeric of design entity
+      _cursor++;
     }
 
-    int cursorFirstCharacterOfDesignEntity = cursor;
+    int cursorFirstCharacterOfDesignEntity = _cursor;
+
     if (!isalpha(text.at(cursorFirstCharacterOfDesignEntity))) {
       throw "Design Entity starts with alphanumeric character";
     }
 
-    while (isalpha(text.at(cursor + 1)) || isdigit(text.at(cursor + 1))) { // move to last alphanumeric of design entity
-      cursor++;
+    while (isalpha(text.at(_cursor + 1))
+        || isdigit(text.at(_cursor + 1))) { // move to last alphanumeric of design entity
+      _cursor++;
     }
 
-    int cursorLastCharacterOfDesignEntity = cursor;
+    int cursorLastCharacterOfDesignEntity = _cursor;
 
-    std::string design_entity = text.substr(cursorFirstCharacterOfDesignEntity,
-                                            cursorLastCharacterOfDesignEntity - cursorFirstCharacterOfDesignEntity + 1);
+    std::string firstWordOfQueryLine = text.substr(cursorFirstCharacterOfDesignEntity,
+                                                   cursorLastCharacterOfDesignEntity
+                                                       - cursorFirstCharacterOfDesignEntity + 1);
+    if (firstWordOfQueryLine == "Select") {
+      return;
+    }
 
-    cursor++; // move out of design-entity
-    while (text.at(cursor) != ';') {
-      while (isspace(text.at(cursor))) { // move to first alphanumeric next synonym
-        cursor++;
+    std::string design_entity = firstWordOfQueryLine;
+    _cursor++; // move out of design-entity
+    while (true) {
+      while (isspace(text.at(_cursor))) { // move to first alphanumeric next synonym
+        _cursor++;
       }
-      int cursorFirstCharacterOfSynonym = cursor;
+      int cursorFirstCharacterOfSynonym = _cursor;
       if (!isalpha(text.at(cursorFirstCharacterOfSynonym))) {
         throw "Synonym starts with alphanumeric character";
       }
-      while (isalpha(text.at(cursor + 1)) || isdigit(text.at(cursor + 1))) { // move to last alphanumeric of synonym
-        cursor++;
+      while (isalpha(text.at(_cursor + 1)) || isdigit(text.at(_cursor + 1))) { // move to last alphanumeric of synonym
+        _cursor++;
       }
-      int cursorLastCharacterOfSynonym = cursor;
+      int cursorLastCharacterOfSynonym = _cursor;
 
       std::string synonym = text.substr(cursorFirstCharacterOfSynonym,
-                                              cursorLastCharacterOfSynonym - cursorFirstCharacterOfSynonym + 1);
+                                        cursorLastCharacterOfSynonym - cursorFirstCharacterOfSynonym + 1);
 
+      auto *declaration = new Declaration(design_entity, synonym);
+      qr.addDeclaration(declaration);
+
+      _cursor++; // move out of synonym
+
+      while (!(text.at(_cursor) == ',' || text.at(_cursor) == ';')) { // go to next demarcator
+        _cursor++;
+      }
+
+      char demarcator = text.at(_cursor);
+
+      _cursor++; // move out of declaration
+
+      if (demarcator == ',') {
+      } else if (demarcator == ';') {
+
+        break; // no more synonyms
+      } else {
+
+      }
     }
   }
+}
+// NOTE: this is inner help function for tokenize()
+void QueryTokenizer::_tokenizeSelectCl(Query &qr) {
+  if (text.at(_cursor) != 't') {
+    throw "This method should only be invoked when cursor position is at 't' of Select keyword";
+  }
+  _cursor++;
 
+  if (!isspace(text.at(_cursor))) {
+    throw "After Select keyword should be whitespace";
+  }
+  while (isspace(text.at(_cursor))) { // go to start of tuple
+    _cursor++;
+  }
+
+  int cursorStartOfTuple = _cursor;
+
+  if (text.at(cursorStartOfTuple) == '<') {
+
+  } else { // tuple has one synonym
+    int cursorStartOfSelectSynonym = cursorStartOfTuple;
+    int moving = cursorStartOfSelectSynonym;
+
+    while ((moving + 1) < text.length() && isalpha(text.at(moving + 1))) { // move to last alphanumeric of synonym
+      moving++;
+    }
+
+    std::string selectSyn = text.substr(cursorStartOfSelectSynonym, moving - cursorStartOfSelectSynonym + 1);
+    qr.addSynonymToResultCl(selectSyn);
+  }
+}
+void QueryTokenizer::tokenize(Query &qr) {
+  QueryTokenizer::_tokenizeDeclarations(qr);
+  QueryTokenizer::_tokenizeSelectCl(qr);
 }

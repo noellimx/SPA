@@ -11,17 +11,13 @@ QueryProcessor::~QueryProcessor() = default;
 void QueryProcessor::evaluate(std::string query, std::vector<std::string> &output) {
   output.clear();
 
-  QueryTokenizer tk;
+  QueryTokenizer tk(query);
   Query qr;
-  tk.tokenize(query, qr);
-
+  tk.tokenize(qr);
 
   std::vector<std::string> databaseResults;
 
-
-
-  // post process the results to fill in the output vector
-  for (std::string databaseResult : databaseResults) {
+  for (const std::string &databaseResult : databaseResults) {
     output.push_back(databaseResult);
   }
 }
