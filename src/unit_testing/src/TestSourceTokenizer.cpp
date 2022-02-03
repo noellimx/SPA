@@ -45,7 +45,7 @@ SCENARIO("[TestTokenizer]", "One Procedure With 1 assignment statement") {
         CHECK(proc_name_actual == proc_name);
         AND_THEN("The statement token has a block scope of the procedure.") {
 
-          auto *firstStatementOfProcedure = (TokenSimpleAssignment *) tokenProcedurePtr->getChildAtPosition(0);
+          auto *firstStatementOfProcedure = (SimpleAssign *) tokenProcedurePtr->getChildAtPosition(0);
           auto *scopeOfFirstStatementOfProcedure = firstStatementOfProcedure->getBlockScope();
 
           CHECK(scopeOfFirstStatementOfProcedure == tokenProcedurePtr);
@@ -174,7 +174,7 @@ SCENARIO("[TestTokenizer] One Procedure With 2 identical assignment statements")
         CHECK(actualProcedureName == proc_name);
         AND_THEN("The statement tokens has a block scope of the procedure.") {
 
-          auto *firstStatementOfProcedure = (TokenSimpleAssignment *) tokenProcedurePtr->getChildAtPosition(0);
+          auto *firstStatementOfProcedure = (SimpleAssign *) tokenProcedurePtr->getChildAtPosition(0);
           auto *scopeOfFirstStatementOfProcedure = firstStatementOfProcedure->getBlockScope();
 
           CHECK(scopeOfFirstStatementOfProcedure == tokenProcedurePtr);
@@ -191,11 +191,11 @@ SCENARIO("[TestTokenizer] One Procedure With 2 identical assignment statements")
             std::string expectedLHSTtype = "variable";
             // sanity check
             CHECK(expectedLHSTtype == tokenVarFromMap->getType());
-            CHECK(((TokenSimpleAssignment *) tokenLine1FromMap)->getLHS()->getName() == tokenVarFromMap->getName());
+            CHECK(((SimpleAssign *) tokenLine1FromMap)->getLHS()->getName() == tokenVarFromMap->getName());
 
             // check this
-            CHECK(tokenVarFromMap->isLHSOf((TokenSimpleAssignment *) tokenLine1FromMap));
-            CHECK(tokenVarFromMap->isLHSOf((TokenSimpleAssignment *) tokenLine2FromMap));
+            CHECK(tokenVarFromMap->isLHSOf((SimpleAssign *) tokenLine1FromMap));
+            CHECK(tokenVarFromMap->isLHSOf((SimpleAssign *) tokenLine2FromMap));
           }
         }
       }

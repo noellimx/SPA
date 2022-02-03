@@ -7,16 +7,16 @@
 
 #include <map>
 
-class TokenSimpleAssignment;
+class SimpleAssign;
 class InterfaceSimpleLHS {
 
 private:
-  std::map<int, TokenSimpleAssignment *> assign_modifiers;
+  std::map<int, SimpleAssign *> assign_modifiers;
 public:
   InterfaceSimpleLHS() = default;
 
-  bool isLHSOf(TokenSimpleAssignment * token);
-  void addAssignmentModifier(TokenSimpleAssignment * token);
+  bool isLHSOf(SimpleAssign * token);
+  void addAssignmentModifier(SimpleAssign * token);
 
 };
 

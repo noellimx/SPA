@@ -15,7 +15,7 @@
 #include <iostream>
 #include <string>
 
-class TokenSimpleAssignment
+class SimpleAssign
     : public TokenSimple,
       public InterfaceSimpleAssign,
       public InterfaceSimpleLined,
@@ -25,9 +25,9 @@ class TokenSimpleAssignment
 private:
 
 public:
-  TokenSimpleAssignment() = delete;
-  TokenSimpleAssignment(SimpleVariable *_lhs, InterfaceSimpleFactor *_rhs, int _lineNo);
-  ~TokenSimpleAssignment() = default;
+  SimpleAssign() = delete;
+  SimpleAssign(SimpleVariable *_lhs, InterfaceSimpleFactor *_rhs, int _lineNo);
+  ~SimpleAssign() = default;
 
   static std::string TTYPE;
   std::string getType() final;

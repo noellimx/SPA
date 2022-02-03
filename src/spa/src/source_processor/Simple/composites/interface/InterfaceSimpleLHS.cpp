@@ -5,15 +5,15 @@
 
 
 #include "InterfaceSimpleLHS.hpp"
-#include "source_processor/Simple/composites/TokenSimpleAssignment.hpp"
+#include "source_processor/Simple/composites/SimpleAssign.hpp"
 
 
-bool InterfaceSimpleLHS::isLHSOf(TokenSimpleAssignment * token){
+bool InterfaceSimpleLHS::isLHSOf(SimpleAssign * token){
   int lineNo = token->getLineNo();
   return assign_modifiers.count(lineNo) > 0;
 }
 
-void InterfaceSimpleLHS::addAssignmentModifier(TokenSimpleAssignment * token){
+void InterfaceSimpleLHS::addAssignmentModifier(SimpleAssign * token){
   int lineNo = token->getLineNo();
 
   assign_modifiers.insert({lineNo,token});

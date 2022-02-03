@@ -8,18 +8,18 @@
 #include <map>
 
 #include "source_processor/Simple/composites/TokenSimpleProcedure.hpp"
-#include "source_processor/Simple/composites/TokenSimpleAssignment.hpp"
+#include "source_processor/Simple/composites/SimpleAssign.hpp"
 #include "source_processor/Simple/composites/SimpleVariable.hpp"
-#include "source_processor/Simple/composites/TokenSimpleConstant.hpp"
+#include "source_processor/Simple/composites/SimpleConstant.hpp"
 #include "source_processor/Simple/composites/TokenSimpleRead.hpp"
 #include "source_processor/Simple/composites/TokenSimplePrint.hpp"
 
 class TokenSimpleBag {
 private:
   std::vector<TokenSimpleProcedure *> procedureTokens;
-  std::map<int, TokenSimpleAssignment *> assignTokens;
+  std::map<int, SimpleAssign *> assignTokens;
   std::map<std::string, SimpleVariable *> variableTokens;
-  std::map<std::string, TokenSimpleConstant *> constantTokens;
+  std::map<std::string, SimpleConstant *> constantTokens;
   std::map<int, TokenSimpleRead *> readTokens;
   std::map<int, TokenSimplePrint *> printTokens;
 public:
@@ -54,7 +54,7 @@ public:
     printTokens.insert({lineNo, token});
   }
 
-  void addConstant(TokenSimpleConstant *token) {
+  void addConstant(SimpleConstant *token) {
     std::string name = token->getName();
     constantTokens.insert({name, token});
   }
@@ -67,11 +67,11 @@ public:
       return variableTokens.at(factor);
     }
   }
-  void addAssign(TokenSimpleAssignment *token) {
+  void addAssign(SimpleAssign *token) {
     int lineNo = token->getLineNo();
     assignTokens.insert({lineNo, token});
   }
-  TokenSimpleAssignment *getAssign(int lineNo) {
+  SimpleAssign *getAssign(int lineNo) {
     return assignTokens.at(lineNo);
   }
   unsigned long countProcedure() {

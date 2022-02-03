@@ -13,7 +13,7 @@ void require(bool b, std::string &desc) {
 TEST_CASE("[TestTokenizer] A constant token", "") {
   std::string var1 = "b";
 
-  auto *token = new TokenSimpleConstant(var1);
+  auto *token = new SimpleConstant(var1);
   std::string expectedTokenType = "constant";
   std::string actualTokenType = token->getType();
 

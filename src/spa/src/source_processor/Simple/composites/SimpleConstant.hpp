@@ -15,12 +15,12 @@
 #include <vector>
 #include <utility>
 
-class TokenSimpleConstant : public TokenSimple, public InterfaceSimpleTyped, public InterfaceSimpleNamed, public InterfaceSimpleFactor {
+class SimpleConstant : public TokenSimple, public InterfaceSimpleTyped, public InterfaceSimpleNamed, public InterfaceSimpleFactor {
 
 public:
-  TokenSimpleConstant() = delete;
-  ~TokenSimpleConstant() = default;
-  explicit TokenSimpleConstant(std::string _name) : InterfaceSimpleNamed(std::move(_name)) {}
+  SimpleConstant() = delete;
+  ~SimpleConstant() = default;
+  explicit SimpleConstant(std::string _name) : InterfaceSimpleNamed(std::move(_name)) {}
   static std::string TTYPE;
   std::string getType() override;
 

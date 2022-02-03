@@ -219,7 +219,7 @@ void SourceTokenizer::tokenize(TokenSimpleBag &tokenBag) {
                                                   moving - cursorStartOfSimpleWordRHS + 1);
 
             if (isdigit(charStartOfSimpleWordRHS)) { // rhs is a constant
-              auto *tokenConstant = new TokenSimpleConstant(rhsFactor);
+              auto *tokenConstant = new SimpleConstant(rhsFactor);
               tokenBag.addConstant(tokenConstant);
             } else if (isalpha(charStartOfSimpleWordRHS)) { // rhs is a variable
             } else {
@@ -229,7 +229,7 @@ void SourceTokenizer::tokenize(TokenSimpleBag &tokenBag) {
             int thisLineNo = this->getNextLineNo();
 
             auto *tokenAssignment =
-                new TokenSimpleAssignment(tokenBag.getVariable(lhs), tokenBag.getFactor(rhsFactor), thisLineNo);
+                new SimpleAssign(tokenBag.getVariable(lhs), tokenBag.getFactor(rhsFactor), thisLineNo);
             tokenAssignment->setBlockScope(tokenProcedure);
             tokenBag.getVariable(lhs)->addAssignmentModifier(tokenAssignment);
 
