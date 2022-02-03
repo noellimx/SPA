@@ -25,7 +25,7 @@ public:
 
   // SIMPLE
   void parse(std::string) override;
-  // SQL
+  // PQL
   void evaluate(std::string, std::list<std::string> &) override;
 };
 
