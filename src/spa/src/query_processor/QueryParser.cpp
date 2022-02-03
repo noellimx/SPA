@@ -1,11 +1,11 @@
-#include "QueryTokenizer.hpp"
+#include "QueryParser.hpp"
 #include "Declaration.hpp"
 
-QueryTokenizer::~QueryTokenizer() = default;
+QueryParser::~QueryParser() = default;
 
 // NOTE: this is inner help function for tokenize()
 // returns when cursor is at 't' of Select
-void QueryTokenizer::_tokenizeDeclarations(Query &qr) {
+void QueryParser::_tokenizeDeclarations(Query &qr) {
 
   bool isSelectKeyWordFound = false;
   int cc = 0;
@@ -78,7 +78,7 @@ void QueryTokenizer::_tokenizeDeclarations(Query &qr) {
   }
 }
 // NOTE: this is inner help function for tokenize()
-void QueryTokenizer::_tokenizeSelectCl(Query &qr) {
+void QueryParser::_tokenizeSelectCl(Query &qr) {
   if (text.at(_cursor) != 't') {
     throw "This method should only be invoked when cursor position is at 't' of Select keyword";
   }
@@ -107,7 +107,7 @@ void QueryTokenizer::_tokenizeSelectCl(Query &qr) {
     qr.addSynonymToResultCl(selectSyn);
   }
 }
-void QueryTokenizer::tokenize(Query &qr) {
-  QueryTokenizer::_tokenizeDeclarations(qr);
-  QueryTokenizer::_tokenizeSelectCl(qr);
+void QueryParser::tokenize(Query &qr) {
+  QueryParser::_tokenizeDeclarations(qr);
+  QueryParser::_tokenizeSelectCl(qr);
 }

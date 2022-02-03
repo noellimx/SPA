@@ -7,7 +7,7 @@
 #include "database/database.hpp"
 #include "source_processor/SourceTokenizer.hpp"
 #include "query_processor/QueryProcessor.hpp"
-#include "query_processor/QueryTokenizer.hpp"
+#include "query_processor/QueryParser.hpp"
 
 namespace TestIteration001_001 {
 
@@ -54,7 +54,7 @@ TEST_CASE("[Test Iteration]", "001") {
                 "Query has " + std::to_string(expectedCountDeclarations) + " synonym " + synonym + "declared as type "
                     + expectedSynonymToRepresentType + " and tuple has "
                     + std::to_string(expectedCountSynonymInTuple) + " synonym.") {
-              QueryTokenizer tkQry(select_cl);
+              QueryParser tkQry(select_cl);
               Query qr;
               tkQry.tokenize(qr);
               CHECK(qr.countDeclarations() == expectedCountDeclarations);
