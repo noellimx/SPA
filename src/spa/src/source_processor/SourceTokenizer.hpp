@@ -5,7 +5,7 @@
 #include <iostream>
 #include <map>
 
-#include "source_processor/Simple/aggregator/TokenSimpleBag.hpp"
+#include "source_processor/Simple/Simple.hpp"
 
 // A class to tokenize a program / query string into a vector of tokens
 class SourceTokenizer {
