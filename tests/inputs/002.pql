@@ -1,5 +1,5 @@
-001 - Hello
+002 - Hello
 procedure p;
 Select p
-main
+main, main2
 5000

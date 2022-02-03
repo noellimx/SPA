@@ -1,0 +1,7 @@
+procedure main {
+    x = 1;
+}
+
+procedure main2 {
+    x = 1;
+}
