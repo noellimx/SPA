@@ -55,6 +55,14 @@ void database::initialize() {
   database::initializeTables();
 }
 
+// Mother of All inserts
+void database::insertSimple(Simple & simple){
+  std::vector<SimpleProcedure *> * procedures = simple.getProcedures();
+  for (auto it = procedures->begin(); it != procedures->end(); ++it){
+    database::insertProcedure(*it);
+  }
+
+}
 // method to insert a procedure into the database
 void database::insertProcedure(SimpleProcedure *procedure) {
   std::string insertProcedureSQL =
@@ -74,7 +82,18 @@ bool database::isProcedureExist(const std::string &procedureName) {
   }
   return _db_results[0][0] == "1";
 }
+int database::getProcedureCount() {
+  _db_results.clear();
+  std::string getProceduresSQL = "SELECT COUNT(*) FROM procedures;";
+  sqlite3_exec(dbConnection, getProceduresSQL.c_str(), resultCallback, 0, &errorMessage);
+  if (errorMessage != nullptr) {
+    return -1;
+  }
 
+  auto firstRow = _db_results[0];
+  auto firstRowFirstColumnVal = firstRow[0];
+  return std::stoi(firstRowFirstColumnVal);
+}
 void database::selectProcedureNamesAll(std::vector<std::string> &results) {
   results.clear();
 
@@ -89,18 +108,9 @@ void database::selectProcedureNamesAll(std::vector<std::string> &results) {
     results.push_back(result);
   }
 }
-int database::getProcedureCount() {
-  _db_results.clear();
-  std::string getProceduresSQL = "SELECT COUNT(*) FROM procedures;";
-  sqlite3_exec(dbConnection, getProceduresSQL.c_str(), resultCallback, 0, &errorMessage);
-  if (errorMessage != nullptr) {
-    return -1;
-  }
 
-  auto firstRow = _db_results[0];
-  auto firstRowFirstColumnVal = firstRow[0];
-  return std::stoi(firstRowFirstColumnVal);
-}
+
+
 // callback method to put one row of results from the database into the dbResults vector
 // This method is called each time a row of results is returned from the database
 int database::resultCallback(void *NotUsed, int columnCount, char **argv, char **azColName) {

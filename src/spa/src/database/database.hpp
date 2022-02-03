@@ -40,12 +40,25 @@ public:
   static void close();
 
   // CRUD - CREATE
-  static void insertSimple(Simple &) {}
+  static void insertSimple(Simple &);
+
   static void insertProcedure(SimpleProcedure *);
+
   // CRUD - READ
+  static void queryAllNamesOf(std::string design_entity, std::vector<std::string> & results){
+
+    std::vector<std::string> thisResults;
+    if(design_entity == "procedure"){
+        database::selectProcedureNamesAll(thisResults);
+    }
+    for(std::string & thisResult: thisResults){
+      results.push_back(thisResult);
+    }
+  }
+
   static bool isProcedureExist(const std::string &procedureName);
-  static void selectProcedureNamesAll(std::vector<std::string> &);
   static int getProcedureCount();
+  static void selectProcedureNamesAll(std::vector<std::string> &);
 
 };
 

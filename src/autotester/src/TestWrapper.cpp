@@ -21,10 +21,12 @@ void TestWrapper::parse(std::string simpleFilePath) {
 
 // query_text is select-cl
 void TestWrapper::evaluate(std::string select_cl, std::list<std::string> &results) {
-  std::vector<std::string> output;
-  QueryProcessor::parseAndEvaluate(select_cl, output);
 
-  for (const std::string &result : output) {
-    results.push_back(result);
+
+  std::vector<std::string> thisResults;
+  QueryProcessor::parseAndEvaluate(select_cl, thisResults);
+
+  for (const std::string &thisResult : thisResults) {
+    results.push_back(thisResult);
   }
 }

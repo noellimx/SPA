@@ -14,32 +14,34 @@
 #include "source_processor/Simple/composites/SimpleRead.hpp"
 #include "source_processor/Simple/composites/SimplePrint.hpp"
 
-
 #pragma once
 class Simple {
 private:
-  std::vector<SimpleProcedure *> procedureTokens;
+  std::vector<SimpleProcedure *> *procedureTokens = new std::vector<SimpleProcedure *>();
   std::map<int, SimpleAssign *> assignTokens;
   std::map<std::string, SimpleVariable *> variableTokens;
   std::map<std::string, SimpleConstant *> constantTokens;
   std::map<int, SimpleRead *> readTokens;
   std::map<int, SimplePrint *> printTokens;
 public:
+
   void addProcedure(SimpleProcedure *token) {
-    procedureTokens.push_back(token);
+    procedureTokens->push_back(token);
+  }
+
+  std::vector<SimpleProcedure *> *getProcedures() {
+    return procedureTokens;
   }
   SimpleProcedure *getProcedure(int i) {
-    return procedureTokens.at(i);
+    return procedureTokens->at(i);
   }
   void addVariable(SimpleVariable *token) {
     std::string var_name = token->getName();
     variableTokens.insert({var_name, token});
   }
-
   SimpleVariable *getVariable(const std::string &var_name) {
     return variableTokens.at(var_name);
   }
-
   void addRead(SimpleRead *token) {
     int lineNo = token->getLineNo();
     readTokens.insert({lineNo, token});
@@ -77,7 +79,7 @@ public:
     return assignTokens.at(lineNo);
   }
   unsigned long countProcedure() {
-    return procedureTokens.size();
+    return procedureTokens->size();
   }
   unsigned long countAssign() {
     return assignTokens.size();

@@ -15,7 +15,7 @@ TEST_CASE("[Test Iteration]", "001") {
   GIVEN("A connection to the database") {
     database::initialize();
 
-    WHEN("Source is processed into tokens") {
+    WHEN("Source is processed into Simple instance") {
 
       std::string proc_name_01 = "main1";
       std::string var_name_01 = "var1";
@@ -28,43 +28,48 @@ TEST_CASE("[Test Iteration]", "001") {
 
       std::string stmtLst = stmt_01_assign + stmt_02_assign;
       std::string procedure_01 = "procedure " + proc_name_01 + " { " + stmtLst + " }";
-      std::string program = procedure_01;
+      std::string simple_text = procedure_01;
 
-      SimpleParser tkSrc(program);
-      Simple tokenBag;
-      tkSrc.parse(tokenBag);
-      AND_THEN("The summary count of tokens") {
-        CHECK(1 == tokenBag.countProcedure());
-        CHECK(2 == tokenBag.countAssign());
-        CHECK(2 == tokenBag.countVariable());
-        CHECK(2 == tokenBag.countConstant());
+      SimpleParser simpleParser(simple_text);
+      Simple simple;
+      simpleParser.parse(simple);
+      AND_THEN("The summary count of composites in simple instance") {
+        CHECK(1 == simple.countProcedure());
+        CHECK(2 == simple.countAssign());
+        CHECK(2 == simple.countVariable());
+        CHECK(2 == simple.countConstant());
 
-        AND_THEN("SQL queries") {
-          AND_WHEN("Query instance is to select all procedure") {
+        AND_WHEN("Query instance is to select all procedure") {
 
-            std::string design_entity = "procedure";
-            std::string synonym = "q";
-            std::string declaration = design_entity + " " + synonym + ";";
-            std::string select_cl_text = declaration + "Select " + synonym;
+          std::string design_entity = "procedure";
+          std::string synonym = "q";
+          std::string declaration = design_entity + " " + synonym + ";";
+          std::string select_cl_text_SelectProcedureNames = declaration + "Select " + synonym;
 
-            int expectedCountDeclarations = 1;
-            int expectedCountSynonymInTuple = 1;
-            std::string expectedSynonymToRepresentType = "procedure";
-            AND_THEN(
-                "Query has " + std::to_string(expectedCountDeclarations) + " synonym " + synonym + "declared as type "
-                    + expectedSynonymToRepresentType + " and tuple has "
-                    + std::to_string(expectedCountSynonymInTuple) + " synonym.") {
-              QueryParser tkQry(select_cl_text);
-              Query qr;
-              tkQry.parse(qr);
-              CHECK(qr.countDeclarations() == expectedCountDeclarations);
-              CHECK(qr.getEntityOf(synonym) == expectedSynonymToRepresentType);
-              CHECK(qr.countSynonymsInTuple() == expectedCountSynonymInTuple);
+          int expectedCountDeclarations = 1;
+          int expectedCountSynonymInTuple = 1;
+          std::string expectedSynonymToRepresentType = "procedure";
+          AND_THEN(
+              "Query instance has " + std::to_string(expectedCountDeclarations) + " synonym " + synonym
+                  + "declared as type "
+                  + expectedSynonymToRepresentType + " and tuple has "
+                  + std::to_string(expectedCountSynonymInTuple) + " synonym(s).") {
+            QueryParser tkQry(select_cl_text_SelectProcedureNames);
+            Query qr;
+            tkQry.parse(qr);
+            CHECK(qr.countDeclarations() == expectedCountDeclarations);
+            CHECK(qr.getEntityOf(synonym) == expectedSynonymToRepresentType);
+            CHECK(qr.countSynonymsInTuple() == expectedCountSynonymInTuple);
 
-              AND_THEN("Query returns a vector with one element ") {
+            AND_WHEN("Simple instance is inserted into database") {
+              database::insertSimple(simple);
+              AND_THEN("The query result is " + proc_name_01) {
                 std::vector<std::string> results;
-                QueryProcessor::parseAndEvaluate(select_cl_text, results);
+                QueryProcessor::parseAndEvaluate(select_cl_text_SelectProcedureNames, results);
+
+                CHECK(results.size() == 1);
               }
+
             }
           }
         }

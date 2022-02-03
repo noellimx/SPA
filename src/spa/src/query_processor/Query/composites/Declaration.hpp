@@ -7,7 +7,7 @@
 #include <string>
 class Declaration {
 private:
-  std::string type;
+  std::string type; // the design entity this represents
   std::string synonym;
 public:
   Declaration() = delete;

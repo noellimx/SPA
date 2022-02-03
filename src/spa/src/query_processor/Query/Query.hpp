@@ -40,7 +40,10 @@ public:
 
   std::string getEntityOf(std::string synonym) {
     return declarations.at(synonym)->getType();
+  }
 
+  std::string getEntityOfResultCl(int i){
+    return result_cl.at(i)->getType();
   }
 };
 
