@@ -13,13 +13,13 @@
 #include <vector>
 #include <utility>
 
-class TokenSimpleProcedure : public TokenSimple, public InterfaceSimpleTyped, public InterfaceSimpleNamed{
+class SimpleProcedure : public TokenSimple, public InterfaceSimpleTyped, public InterfaceSimpleNamed{
 protected:
   std::vector<TokenSimple *> children;
 public:
-  TokenSimpleProcedure() = delete;
-  explicit TokenSimpleProcedure(std::string _name) : InterfaceSimpleNamed(std::move(_name)){}
-  ~TokenSimpleProcedure() = default;
+  SimpleProcedure() = delete;
+  explicit SimpleProcedure(std::string _name) : InterfaceSimpleNamed(std::move(_name)){}
+  ~SimpleProcedure() = default;
   static std::string TTYPE;
   std::string getType();
 

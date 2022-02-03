@@ -1,21 +1,21 @@
-#include "SourceTokenizer.hpp"
+#include "SourceParser.hpp"
 
 // constructor
-SourceTokenizer::SourceTokenizer(const std::string &_source) : source(std::move(_source)) {
+SourceParser::SourceParser(const std::string &_source) : source(std::move(_source)) {
 }
 
 // destructor
-SourceTokenizer::~SourceTokenizer() = default;
+SourceParser::~SourceParser() = default;
 
-bool SourceTokenizer::isNotEndOfSource() {
+bool SourceParser::isNotEndOfSource() {
   return cursor < source.length();
 }
 
-bool SourceTokenizer::isCursorAtWhitespace() {
+bool SourceParser::isCursorAtWhitespace() {
   return isspace(source.at(cursor));
 }
 
-void SourceTokenizer::moveCursorAtBeforeWhiteSpaceToAfterWhiteSpace() {
+void SourceParser::moveCursorAtBeforeWhiteSpaceToAfterWhiteSpace() {
 
   char ch = source.at(cursor);
   if (isspace(ch)) {
@@ -31,7 +31,7 @@ void SourceTokenizer::moveCursorAtBeforeWhiteSpaceToAfterWhiteSpace() {
     ch = source.at(cursor);
   }
 }
-void SourceTokenizer::moveCursorAtWhiteSpaceToAfterWhiteSpace() {
+void SourceParser::moveCursorAtWhiteSpaceToAfterWhiteSpace() {
   char ch = source.at(cursor);
   if (!isspace(ch)) {
     throw "Character at cursor should be a white space";
@@ -42,11 +42,11 @@ void SourceTokenizer::moveCursorAtWhiteSpaceToAfterWhiteSpace() {
   }
 }
 
-void SourceTokenizer::moveCursor() {
+void SourceParser::moveCursor() {
   cursor += 1;
 }
 
-void SourceTokenizer::moveCursorToEndOfWord() {
+void SourceParser::moveCursorToEndOfWord() {
   char ch = source.at(cursor + 1); // look ahead so cursor will stop at the final alphanumeric of the word.
   while (isalpha(ch) || isdigit(ch)) {
     moveCursor();
@@ -54,11 +54,11 @@ void SourceTokenizer::moveCursorToEndOfWord() {
   }
 }
 
-void SourceTokenizer::moveCursorToEndOfProcedureName() {
-  SourceTokenizer::moveCursorToEndOfWord();
+void SourceParser::moveCursorToEndOfProcedureName() {
+  SourceParser::moveCursorToEndOfWord();
 }
 
-void SourceTokenizer::moveCursorToNextBrace() {
+void SourceParser::moveCursorToNextBrace() {
   char ch = source.at(cursor); // look ahead so cursor will stop at the final alphanumeric of the word.
   while (!(ch == '{' || ch == '}')) {
     moveCursor();
@@ -66,7 +66,7 @@ void SourceTokenizer::moveCursorToNextBrace() {
   }
 }
 
-void SourceTokenizer::moveToStatementBreakOrClosingBrace() {
+void SourceParser::moveToStatementBreakOrClosingBrace() {
   char ch = source.at(cursor); // look ahead so cursor will stop at the final alphanumeric of the word.
   while (!(ch == ';' || ch == '}')) {
     moveCursor();
@@ -74,7 +74,7 @@ void SourceTokenizer::moveToStatementBreakOrClosingBrace() {
   }
 }
 
-void SourceTokenizer::tokenize(TokenSimpleBag &tokenBag) {
+void SourceParser::tokenize(TokenSimpleBag &tokenBag) {
   while (isNotEndOfSource()) {
     if (isCursorAtWhitespace()) {
       moveCursorAtWhiteSpaceToAfterWhiteSpace();
@@ -93,7 +93,7 @@ void SourceTokenizer::tokenize(TokenSimpleBag &tokenBag) {
     int cursorEndProcedureEnd = cursor;
     std::string procedureName = source.substr(cursorStartProcedureName,
                                               cursorEndProcedureEnd - cursorStartProcedureName + 1);
-    auto *tokenProcedure = new TokenSimpleProcedure(procedureName);
+    auto *tokenProcedure = new SimpleProcedure(procedureName);
     tokenBag.addProcedure(tokenProcedure); // The first token of every set is a procedure token.
     moveCursor(); // move out of procedure name
     char delimiterBetweenProcedureNameAndBody = source.at(cursor);
@@ -162,10 +162,10 @@ void SourceTokenizer::tokenize(TokenSimpleBag &tokenBag) {
 
           auto *tokenTargetVariable = tokenBag.getVariable(var_name);
           if (firstWord == "read") {
-            auto *tokenRead = new TokenSimpleRead(thisLineNo, tokenTargetVariable);
+            auto *tokenRead = new SimpleRead(thisLineNo, tokenTargetVariable);
             tokenBag.addRead(tokenRead);
           } else if (firstWord == "print") {
-            auto *tokenPrint = new TokenSimplePrint(thisLineNo, tokenTargetVariable);
+            auto *tokenPrint = new SimplePrint(thisLineNo, tokenTargetVariable);
             tokenBag.addPrint(tokenPrint);
           }
         } else {

@@ -17,8 +17,8 @@ TEST_CASE("[TestDatabase]Table Procedure", "[Database.Procedure]") {
   std::string procedureName1 = "procedure1";
   std::string procedureName2 = "procedure2";
 
-  auto *proc1 = new TokenSimpleProcedure(procedureName1);
-  auto *proc2 = new TokenSimpleProcedure(procedureName2);
+  auto *proc1 = new SimpleProcedure(procedureName1);
+  auto *proc2 = new SimpleProcedure(procedureName2);
 
   database::insertProcedure(proc1);
   database::insertProcedure(proc2);

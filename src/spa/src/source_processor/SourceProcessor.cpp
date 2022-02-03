@@ -3,6 +3,6 @@
 
 void SourceProcessor::process(const std::string& program) {
 
-  SourceTokenizer tk(program);
-  std::vector<TokenSimpleProcedure *> tokens;
+  SourceParser tk(program);
+  std::vector<SimpleProcedure *> tokens;
 }

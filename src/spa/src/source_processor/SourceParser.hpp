@@ -8,7 +8,7 @@
 #include "source_processor/Simple/Simple.hpp"
 
 // A class to tokenize a program / query string into a vector of tokens
-class SourceTokenizer {
+class SourceParser {
 
 private:
   int lineNo = 1;
@@ -34,12 +34,12 @@ protected:
   }
 public:
   // default constructor
-  SourceTokenizer() = delete;
+  SourceParser() = delete;
 
-  explicit SourceTokenizer(const std::string &source);
+  explicit SourceParser(const std::string &source);
 
   // destructor
-  ~SourceTokenizer();
+  ~SourceParser();
 
   void tokenize(TokenSimpleBag &);
 };

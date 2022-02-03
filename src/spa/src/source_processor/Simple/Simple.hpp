@@ -7,26 +7,26 @@
 #include <iostream>
 #include <map>
 
-#include "source_processor/Simple/composites/TokenSimpleProcedure.hpp"
+#include "source_processor/Simple/composites/SimpleProcedure.hpp"
 #include "source_processor/Simple/composites/SimpleAssign.hpp"
 #include "source_processor/Simple/composites/SimpleVariable.hpp"
 #include "source_processor/Simple/composites/SimpleConstant.hpp"
-#include "source_processor/Simple/composites/TokenSimpleRead.hpp"
-#include "source_processor/Simple/composites/TokenSimplePrint.hpp"
+#include "source_processor/Simple/composites/SimpleRead.hpp"
+#include "source_processor/Simple/composites/SimplePrint.hpp"
 
 class TokenSimpleBag {
 private:
-  std::vector<TokenSimpleProcedure *> procedureTokens;
+  std::vector<SimpleProcedure *> procedureTokens;
   std::map<int, SimpleAssign *> assignTokens;
   std::map<std::string, SimpleVariable *> variableTokens;
   std::map<std::string, SimpleConstant *> constantTokens;
-  std::map<int, TokenSimpleRead *> readTokens;
-  std::map<int, TokenSimplePrint *> printTokens;
+  std::map<int, SimpleRead *> readTokens;
+  std::map<int, SimplePrint *> printTokens;
 public:
-  void addProcedure(TokenSimpleProcedure *token) {
+  void addProcedure(SimpleProcedure *token) {
     procedureTokens.push_back(token);
   }
-  TokenSimpleProcedure *getProcedure(int i) {
+  SimpleProcedure *getProcedure(int i) {
     return procedureTokens.at(i);
   }
   void addVariable(SimpleVariable *token) {
@@ -38,18 +38,18 @@ public:
     return variableTokens.at(var_name);
   }
 
-  void addRead(TokenSimpleRead *token) {
+  void addRead(SimpleRead *token) {
     int lineNo = token->getLineNo();
     readTokens.insert({lineNo, token});
   }
-  TokenSimpleRead *getRead(int i) {
+  SimpleRead *getRead(int i) {
     return readTokens.at(i);
   }
 
-  TokenSimplePrint *getPrint(int i) {
+  SimplePrint *getPrint(int i) {
     return printTokens.at(i);
   }
-  void addPrint(TokenSimplePrint *token) {
+  void addPrint(SimplePrint *token) {
     int lineNo = token->getLineNo();
     printTokens.insert({lineNo, token});
   }
