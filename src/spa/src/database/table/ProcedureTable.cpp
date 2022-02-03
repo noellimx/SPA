@@ -6,7 +6,7 @@
 #include <string>
 
 // Static
-ProcedureTable& ProcedureTable::GET() {
+ProcedureTable& ProcedureTable::GET() { // returns a singleton
     static ProcedureTable table;
     return table;
 }
@@ -34,7 +34,7 @@ std::string ProcedureTable::getColName(){
 }
 
 std::string ProcedureTable::getAttributes(){
-    std::string attributeName = _col_name + " VARCHAR(255) PRIMARY KEY";
+    std::string attributeName = "name VARCHAR(255) PRIMARY KEY";
     std::string attributes = "( " + attributeName + " )";
     return attributes;
 };

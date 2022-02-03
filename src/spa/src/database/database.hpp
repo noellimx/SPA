@@ -4,7 +4,7 @@
 #include <vector>
 #include <iostream>
 #include "sqlite3.h"
-#include "database/table/Table.hpp"
+#include "database/table/Schema.hpp"
 #include "database/table/ProcedureTable.hpp"
 #include "source_processor/Simple/composites/SimpleProcedure.hpp"
 
@@ -22,7 +22,7 @@ public:
 
     static void insertProcedure(SimpleProcedure *);
 
-    static bool isProcedureExist(std::string procedureName);
+    static bool isProcedureExist(const std::string& procedureName);
     static void selectProcedureNamesAll(std::vector<std::string> &);
     static int getProcedureCount();
 

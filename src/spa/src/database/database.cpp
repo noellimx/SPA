@@ -4,11 +4,9 @@
 sqlite3 *database::dbConnection;
 std::vector<std::vector<std::string>> database::_db_results = std::vector<std::vector<std::string>>();
 
-std::vector<Table *> tables = std::vector<Table *>();
+std::vector<Schema *> tables = std::vector<Schema *>();
 
 char *database::errorMessage;
-
-// method to connect to the database and initialize tables in the database
 
 void database::initializeConnection() {
   if (dbConnection != nullptr) {
@@ -23,7 +21,7 @@ void database::readyTables() {
 }
 void database::recreateTables() {
   std::string attributes = std::string();
-  for (Table *table : tables) {
+  for (Schema *table : tables) {
     attributes.clear();
     std::string dropProcedureTableStatement = "DROP TABLE IF EXISTS " + table->getName() + ";";
 
@@ -69,7 +67,7 @@ void database::insertProcedure(SimpleProcedure *procedure) {
   sqlite3_exec(dbConnection, insertProcedureSQL.c_str(), NULL, 0, &errorMessage);
 }
 
-bool database::isProcedureExist(std::string procedureName) {
+bool database::isProcedureExist(const std::string &procedureName) {
   _db_results.clear();
   std::string statement =
       "SELECT EXISTS(SELECT 1 FROM " + ProcedureTable::NAME() + " WHERE " + ProcedureTable::COLUMN_NAME() + "=\""
@@ -82,11 +80,12 @@ bool database::isProcedureExist(std::string procedureName) {
 }
 
 void database::selectProcedureNamesAll(std::vector<std::string> &results) {
+  results.clear();
+
   _db_results.clear();
+  std::string getProceduresSQL = "SELECT " + ProcedureTable::COLUMN_NAME() + " FROM procedures;";
 
-  std::string getProceduresSQL = "SELECT * FROM procedures;";
-
-  sqlite3_exec(dbConnection, getProceduresSQL.c_str(), callback, 0, &errorMessage);
+  sqlite3_exec(dbConnection, getProceduresSQL.c_str(), database::callback, 0, &errorMessage);
 
   for (std::vector<std::string> dbRow : _db_results) {
     std::string result;

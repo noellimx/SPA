@@ -5,7 +5,7 @@
 #include <vector>
 
 
-class Table {
+class Schema {
 
 public:
     virtual std::string getName() = 0;

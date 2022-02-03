@@ -4,26 +4,26 @@
 
 #pragma once
 
-#include "database/table/Table.hpp"
+#include "database/table/Schema.hpp"
 
 #include <string>
 
-class ProcedureTable: public Table {
+class ProcedureTable : public Schema {
 
 private:
-    ProcedureTable();
-    std::string _name;
-    std::string _col_name;
+  ProcedureTable();
+  std::string _name;
+  std::string _col_name;
 
 public:
-    ProcedureTable(ProcedureTable const&) = delete;              // Don't Implement
-    void operator=(ProcedureTable const&) = delete; // Don't implement
-    static ProcedureTable& GET();
-    static std::string NAME();
-    static std::string COLUMN_NAME();
-    std::string getAttributes();
-     std::string getName();
-     std::string getColName();
+  ProcedureTable(ProcedureTable const &) = delete;              // Don't Implement
+  void operator=(ProcedureTable const &) = delete; // Don't implement
+  static ProcedureTable &GET();
+  static std::string NAME();
+  static std::string COLUMN_NAME();
+  std::string getAttributes() override;
+  std::string getName() override;
+  std::string getColName();
 };
 
 
