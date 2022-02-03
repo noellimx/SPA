@@ -51,8 +51,8 @@ TEST_CASE("[Test PQL] A growing program", "") {
               std::string synonym = "p";
               std::string select_cl = declaration + " " + synonym + ";" + "Select " + synonym;
               std::vector<std::string> result;
-              QueryProcessor qp;
-              qp.evaluate(select_cl,result);
+//              QueryProcessor qp;
+//              qp.evaluate(select_cl,result);
 //              CHECK(result.size() == 1); //TODO
             }
 

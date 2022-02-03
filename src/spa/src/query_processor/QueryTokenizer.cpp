@@ -12,59 +12,47 @@ QueryTokenizer::~QueryTokenizer() {}
 // numbers (any numeric sequence of characters, e.g., "1001"),
 // and punctuations (any other non-space characters, e.g., "=", ";", "{", "}").
 // it should be extended as needed to handle additional SIMPLE / PQL grammar rules.
-void QueryTokenizer::tokenize(std::string text, std::vector<std::string>& tokens) {
-	tokens.clear();
-  std::string token;
-	
-	unsigned int i = 0;
-	while (i < text.length()) {
-		char ch = text.at(i);
-		
-		if (isdigit(ch)) { // scan for a numeric sequence
-			token.push_back(ch);
-			i++;
+void QueryTokenizer::tokenize(std::string &text, Query &qr) {
 
-			while (i < text.length()) {
-				ch = text.at(i);
-				if (isdigit(ch)) {
-					token.push_back(ch);
-					i++;
-				}
-				else {
-					break;
-				}
-			}
+  int cursor = 0;
+  while (cursor < text.length()) {
+    // parse declaration by declaration
+    while (isspace(cursor)) { // move to first alphanumeric of design entity
+      cursor++;
+    }
 
-			tokens.push_back(token);
-			token.clear();
-		}
-		else if (isalpha(ch)) { // scan for an alphanumeric sequence starting with a letter 
-			token.push_back(ch);
-			i++;
+    int cursorFirstCharacterOfDesignEntity = cursor;
+    if (!isalpha(text.at(cursorFirstCharacterOfDesignEntity))) {
+      throw "Design Entity starts with alphanumeric character";
+    }
 
-			while (i < text.length()) {
-				ch = text.at(i);
-				if (isalpha(ch) || isdigit(ch)) {
-					token.push_back(ch);
-					i++;
-				}
-				else {
-					break;
-				}
-			}
+    while (isalpha(text.at(cursor + 1)) || isdigit(text.at(cursor + 1))) { // move to last alphanumeric of design entity
+      cursor++;
+    }
 
-			tokens.push_back(token);
-			token.clear();
-		}
-		else if (!isspace(ch)) { // scan for punctuations
-			token.push_back(ch);
-			i++;
+    int cursorLastCharacterOfDesignEntity = cursor;
 
-			tokens.push_back(token);
-			token.clear();
-		}
-		else {
-			i++;
-		}
-	}
+    std::string design_entity = text.substr(cursorFirstCharacterOfDesignEntity,
+                                            cursorLastCharacterOfDesignEntity - cursorFirstCharacterOfDesignEntity + 1);
+
+    cursor++; // move out of design-entity
+    while (text.at(cursor) != ';') {
+      while (isspace(text.at(cursor))) { // move to first alphanumeric next synonym
+        cursor++;
+      }
+      int cursorFirstCharacterOfSynonym = cursor;
+      if (!isalpha(text.at(cursorFirstCharacterOfSynonym))) {
+        throw "Synonym starts with alphanumeric character";
+      }
+      while (isalpha(text.at(cursor + 1)) || isdigit(text.at(cursor + 1))) { // move to last alphanumeric of synonym
+        cursor++;
+      }
+      int cursorLastCharacterOfSynonym = cursor;
+
+      std::string synonym = text.substr(cursorFirstCharacterOfSynonym,
+                                              cursorLastCharacterOfSynonym - cursorFirstCharacterOfSynonym + 1);
+
+    }
+  }
+
 }

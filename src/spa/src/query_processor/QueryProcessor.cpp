@@ -1,5 +1,6 @@
 #include "QueryProcessor.hpp"
 #include "QueryTokenizer.hpp"
+#include "query_processor/aggregator/Query.hpp"
 
 // constructor
 QueryProcessor::QueryProcessor() = default;
@@ -7,29 +8,20 @@ QueryProcessor::QueryProcessor() = default;
 // destructor
 QueryProcessor::~QueryProcessor() = default;
 
+void QueryProcessor::evaluate(std::string query, std::vector<std::string> &output) {
+  output.clear();
 
-void QueryProcessor::evaluate(std::string query, std::vector<std::string>& output) {
-	output.clear();
+  QueryTokenizer tk;
+  Query qr;
+  tk.tokenize(query, qr);
 
-    QueryTokenizer tk;
-  std::vector<std::string> tokens;
-	tk.tokenize(query, tokens);
 
-	// check what type of synonym is being declared
-  std::string synonymType = tokens.at(0);
-
-	// create a vector for storing the results from database
   std::vector<std::string> databaseResults;
 
-	// call the method in database to retrieve the results
-	// This logic is highly simplified based on iteration 1 requirements and
-	// the assumption that the queries are valid.
-	if (synonymType == "procedure") {
-		database::getProcedures(databaseResults);
-	}
 
-	// post process the results to fill in the output vector
-	for (std::string databaseResult : databaseResults) {
-		output.push_back(databaseResult);
-	}
+
+  // post process the results to fill in the output vector
+  for (std::string databaseResult : databaseResults) {
+    output.push_back(databaseResult);
+  }
 }
