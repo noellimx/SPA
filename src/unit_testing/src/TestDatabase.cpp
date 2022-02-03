@@ -30,10 +30,10 @@ TEST_CASE("[TestDatabase]Table Procedure", "Simple Procedures") {
     std::vector<std::string> procedureNames;
 
     database::selectProcedureNamesAll(procedureNames);
-    AND_THEN("two counts of procedure names"){
+    AND_THEN("two counts of procedure names") {
       CHECK(procedureNames.size() == 2);
       CHECK(database::getProcedureCount() == 2);
-      AND_THEN("The procedure names are returned"){
+      AND_THEN("The procedure names are returned") {
         if (procedureNames.at(0) == procedureName1) { // without loss of generality
           CHECK(procedureNames.at(0) == procedureName1);
           CHECK(procedureNames.at(1) == procedureName2);
@@ -43,9 +43,6 @@ TEST_CASE("[TestDatabase]Table Procedure", "Simple Procedures") {
         }
       }
     }
-
-
-
   }
 }
 

@@ -17,85 +17,85 @@
 #pragma once
 class Simple {
 private:
-  std::vector<SimpleProcedure *> *procedureTokens = new std::vector<SimpleProcedure *>();
-  std::map<int, SimpleAssign *> assignTokens;
-  std::map<std::string, SimpleVariable *> variableTokens;
-  std::map<std::string, SimpleConstant *> constantTokens;
-  std::map<int, SimpleRead *> readTokens;
-  std::map<int, SimplePrint *> printTokens;
+  std::vector<SimpleProcedure *> *procedures = new std::vector<SimpleProcedure *>();
+  std::map<int, SimpleAssign *> assigns;
+  std::map<std::string, SimpleVariable *> variables;
+  std::map<std::string, SimpleConstant *> constants;
+  std::map<int, SimpleRead *> reads;
+  std::map<int, SimplePrint *> prints;
 public:
 
-  void addProcedure(SimpleProcedure *token) {
-    procedureTokens->push_back(token);
+  void addProcedure(SimpleProcedure *sP) {
+    procedures->push_back(sP);
   }
 
   std::vector<SimpleProcedure *> *getProcedures() {
-    return procedureTokens;
+    return procedures;
   }
   SimpleProcedure *getProcedure(int i) {
-    return procedureTokens->at(i);
+    return procedures->at(i);
   }
-  void addVariable(SimpleVariable *token) {
-    std::string var_name = token->getName();
-    variableTokens.insert({var_name, token});
+  void addVariable(SimpleVariable *sV) {
+    std::string var_name = sV->getName();
+    variables.insert({var_name, sV});
   }
   SimpleVariable *getVariable(const std::string &var_name) {
-    return variableTokens.at(var_name);
+    return variables.at(var_name);
   }
-  void addRead(SimpleRead *token) {
-    int lineNo = token->getLineNo();
-    readTokens.insert({lineNo, token});
+  void addRead(SimpleRead *sR) {
+    int lineNo = sR->getLineNo();
+    reads.insert({lineNo, sR});
   }
   SimpleRead *getRead(int i) {
-    return readTokens.at(i);
+    return reads.at(i);
   }
 
   SimplePrint *getPrint(int i) {
-    return printTokens.at(i);
+    return prints.at(i);
   }
-  void addPrint(SimplePrint *token) {
-    int lineNo = token->getLineNo();
-    printTokens.insert({lineNo, token});
+  void addPrint(SimplePrint *sP) {
+    int lineNo = sP->getLineNo();
+    prints.insert({lineNo, sP});
   }
 
-  void addConstant(SimpleConstant *token) {
-    std::string name = token->getName();
-    constantTokens.insert({name, token});
+  void addConstant(SimpleConstant *sC) {
+    std::string name = sC->getName();
+    constants.insert({name, sC});
   }
 
   InterfaceSimpleFactor *getFactor(const std::string &factor) {
     char firstChar = factor.at(0);
     if (isdigit(firstChar)) {
-      return constantTokens.at(factor);
+      return constants.at(factor);
     } else {
-      return variableTokens.at(factor);
+      return variables.at(factor);
     }
   }
-  void addAssign(SimpleAssign *token) {
-    int lineNo = token->getLineNo();
-    assignTokens.insert({lineNo, token});
+  void addAssign(SimpleAssign *sA) {
+    int lineNo = sA->getLineNo();
+    assigns.insert({lineNo, sA});
   }
   SimpleAssign *getAssign(int lineNo) {
-    return assignTokens.at(lineNo);
+    return assigns.at(lineNo);
   }
   unsigned long countProcedure() {
-    return procedureTokens->size();
+    return procedures->size();
   }
   unsigned long countAssign() {
-    return assignTokens.size();
+    return assigns.size();
   }
   unsigned long countVariable() {
-    return variableTokens.size();
+    return variables.size();
   }
 
   unsigned long countConstant() {
-    return constantTokens.size();
+    return constants.size();
   }
 
   unsigned long countRead() {
-    return readTokens.size();
+    return reads.size();
   }
   unsigned long countPrint() {
-    return printTokens.size();
+    return prints.size();
   }
 };

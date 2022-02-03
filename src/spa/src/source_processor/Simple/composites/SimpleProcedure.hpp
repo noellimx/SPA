@@ -21,10 +21,10 @@ public:
   explicit SimpleProcedure(std::string _name) : InterfaceSimpleNamed(std::move(_name)){}
   ~SimpleProcedure() = default;
   static std::string TTYPE;
-  std::string getType();
+  std::string getType() override;
 
-  void addChildToken(SimpleNode * tokenPtr){
-    children.push_back(tokenPtr);
+  void addChildNode(SimpleNode * sN_ptr){
+    children.push_back(sN_ptr);
   }
 
   SimpleNode * getChildAtPosition(int npos){

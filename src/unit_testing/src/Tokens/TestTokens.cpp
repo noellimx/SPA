@@ -5,12 +5,12 @@
 
 #include <string>
 
-namespace TestTokens {
+namespace TestSimpleConstructs {
 void require(bool b, std::string &desc) {
   REQUIRE(b);
 }
 
-TEST_CASE("[TestTokenizer] A constant token", "") {
+TEST_CASE("[TestSimpleConstructs] A constant token", "") {
   std::string var1 = "b";
 
   auto *token = new SimpleConstant(var1);
@@ -21,7 +21,7 @@ TEST_CASE("[TestTokenizer] A constant token", "") {
 }
 }
 
-TEST_CASE("[TestTokenizer] A variable token", "") {
+TEST_CASE("[TestSimpleConstructs] A variable token", "") {
   std::string var1 = "abc";
 
   auto *token = new SimpleVariable(var1);

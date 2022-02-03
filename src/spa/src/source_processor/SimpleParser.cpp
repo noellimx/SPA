@@ -74,7 +74,7 @@ void SimpleParser::moveToStatementBreakOrClosingBrace() {
   }
 }
 
-void SimpleParser::parse(Simple &tokenBag) {
+void SimpleParser::parse(Simple &simple) {
   while (isNotEndOfSource()) {
     if (isCursorAtWhitespace()) {
       moveCursorAtWhiteSpaceToAfterWhiteSpace();
@@ -93,8 +93,8 @@ void SimpleParser::parse(Simple &tokenBag) {
     int cursorEndProcedureEnd = cursor;
     std::string procedureName = source.substr(cursorStartProcedureName,
                                               cursorEndProcedureEnd - cursorStartProcedureName + 1);
-    auto *tokenProcedure = new SimpleProcedure(procedureName);
-    tokenBag.addProcedure(tokenProcedure); // The first token of every set is a procedure token.
+    auto *sp = new SimpleProcedure(procedureName);
+    simple.addProcedure(sp); // The first token of every set is a procedure token.
     moveCursor(); // move out of procedure name
     char delimiterBetweenProcedureNameAndBody = source.at(cursor);
     if (!isspace(delimiterBetweenProcedureNameAndBody)) {
@@ -156,17 +156,17 @@ void SimpleParser::parse(Simple &tokenBag) {
 
           std::string var_name = source.substr(cursorStartReadableVar,
                                                moving - cursorStartReadableVar + 1);
-          auto *tokenVar = new SimpleVariable(var_name);
+          auto *sVar = new SimpleVariable(var_name);
 
-          tokenBag.addVariable(tokenVar);
+          simple.addVariable(sVar);
 
-          auto *tokenTargetVariable = tokenBag.getVariable(var_name);
+          auto *targetSVar = simple.getVariable(var_name);
           if (firstWord == "read") {
-            auto *tokenRead = new SimpleRead(thisLineNo, tokenTargetVariable);
-            tokenBag.addRead(tokenRead);
+            auto *sRead = new SimpleRead(thisLineNo, targetSVar);
+            simple.addRead(sRead);
           } else if (firstWord == "print") {
-            auto *tokenPrint = new SimplePrint(thisLineNo, tokenTargetVariable);
-            tokenBag.addPrint(tokenPrint);
+            auto *sPrint = new SimplePrint(thisLineNo, targetSVar);
+            simple.addPrint(sPrint);
           }
         } else {
           // assignment statement found .
@@ -174,8 +174,8 @@ void SimpleParser::parse(Simple &tokenBag) {
           // LHS
           std::string lhs = firstWord;
 
-          auto *tokenVarLHS = new SimpleVariable(lhs);
-          tokenBag.addVariable(tokenVarLHS);
+          auto *sVar_LHS = new SimpleVariable(lhs);
+          simple.addVariable(sVar_LHS);
 
           moving += 1; // move out of alphanumeric word
           while (isspace(source.at(moving))) { // move scoped cursor from end of alphanumeric word to equal sign
@@ -219,8 +219,8 @@ void SimpleParser::parse(Simple &tokenBag) {
                                                   moving - cursorStartOfSimpleWordRHS + 1);
 
             if (isdigit(charStartOfSimpleWordRHS)) { // rhs is a constant
-              auto *tokenConstant = new SimpleConstant(rhsFactor);
-              tokenBag.addConstant(tokenConstant);
+              auto *sConstant = new SimpleConstant(rhsFactor);
+              simple.addConstant(sConstant);
             } else if (isalpha(charStartOfSimpleWordRHS)) { // rhs is a variable
             } else {
               throw "Should not get here. Simple factor should start with alphanumeric"
@@ -228,13 +228,13 @@ void SimpleParser::parse(Simple &tokenBag) {
             }
             int thisLineNo = this->getNextLineNo();
 
-            auto *tokenAssignment =
-                new SimpleAssign(tokenBag.getVariable(lhs), tokenBag.getFactor(rhsFactor), thisLineNo);
-            tokenAssignment->setBlockScope(tokenProcedure);
-            tokenBag.getVariable(lhs)->addAssignmentModifier(tokenAssignment);
+            auto *sAssign =
+                new SimpleAssign(simple.getVariable(lhs), simple.getFactor(rhsFactor), thisLineNo);
+            sAssign->setBlockScope(sp);
+            simple.getVariable(lhs)->addAssignmentModifier(sAssign);
 
-            tokenBag.addAssign(tokenAssignment);
-            tokenProcedure->addChildToken(tokenAssignment);
+            simple.addAssign(sAssign);
+            sp->addChildNode(sAssign);
 
           } else {
           }

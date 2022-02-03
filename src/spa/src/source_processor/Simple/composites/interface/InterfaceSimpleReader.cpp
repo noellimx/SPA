@@ -6,7 +6,7 @@
 #include "InterfaceSimpleReader.hpp"
 #include "source_processor/Simple/composites/SimpleVariable.hpp"
 
-InterfaceSimpleReader::InterfaceSimpleReader(SimpleVariable * _token): readableVar(_token){};
+InterfaceSimpleReader::InterfaceSimpleReader(SimpleVariable * _sRead): readableVar(_sRead){};
 
 SimpleVariable * InterfaceSimpleReader::reads() { return readableVar;}
 

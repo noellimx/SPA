@@ -15,8 +15,8 @@ private:
 public:
   InterfaceSimpleLHS() = default;
 
-  bool isLHSOf(SimpleAssign * token);
-  void addAssignmentModifier(SimpleAssign * token);
+  bool isLHSOf(SimpleAssign * sA);
+  void addAssignmentModifier(SimpleAssign * sA);
 
 };
 
