@@ -7,7 +7,7 @@
 
 #include <vector>
 
-#include "query_processor/Declaration.hpp"
+#include "Declaration.hpp"
 class result_cl {
 
 public:

@@ -5,7 +5,7 @@
 #pragma once
 
 #include "database/database.hpp"
-#include "query_processor/aggregator/Query.hpp"
+#include "query_processor/Query/Query.hpp"
 
 class QueryEvaluator {
   QueryEvaluator() = default;

@@ -2,7 +2,7 @@
 
 #include <string>
 #include <vector>
-#include "query_processor/aggregator/Query.hpp"
+#include "query_processor/Query/Query.hpp"
 
 // A class to tokenize a program / query string into a vector of tokens
 class QueryParser {

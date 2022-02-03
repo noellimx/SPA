@@ -1,5 +1,5 @@
 #include "QueryParser.hpp"
-#include "Declaration.hpp"
+#include "query_processor/Query/Declaration.hpp"
 
 QueryParser::~QueryParser() = default;
 

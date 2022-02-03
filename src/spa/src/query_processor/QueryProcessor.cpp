@@ -1,6 +1,6 @@
 #include "QueryProcessor.hpp"
 #include "QueryParser.hpp"
-#include "query_processor/aggregator/Query.hpp"
+#include "query_processor/Query/Query.hpp"
 
 // constructor
 QueryProcessor::QueryProcessor() = default;

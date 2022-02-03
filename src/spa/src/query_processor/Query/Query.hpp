@@ -8,7 +8,7 @@
 #include <string>
 #include <map>
 #include <vector>
-#include "query_processor/Declaration.hpp"
+#include "query_processor/Query/Declaration.hpp"
 class Query {
   std::map<std::string, Declaration *> declarations;
 
