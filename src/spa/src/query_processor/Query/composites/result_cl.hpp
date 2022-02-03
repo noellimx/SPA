@@ -7,7 +7,7 @@
 
 #include <vector>
 
-#include "Declaration.hpp"
+#include "query_processor/Query/composites/Declaration.hpp"
 class result_cl {
 
 public:
