@@ -3,10 +3,9 @@
 
 sqlite3 *database::dbConnection;
 std::vector<std::vector<std::string>> database::_db_results = std::vector<std::vector<std::string>>();
-
-std::vector<Schema *> tables = std::vector<Schema *>();
-
 char *database::errorMessage;
+
+std::vector<Schema *> database::tables = std::vector<Schema *>();
 
 void database::initializeConnection() {
   if (dbConnection != nullptr) {
