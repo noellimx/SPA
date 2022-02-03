@@ -16,7 +16,7 @@
 
 
 #pragma once
-class TokenSimpleBag {
+class Simple {
 private:
   std::vector<SimpleProcedure *> procedureTokens;
   std::map<int, SimpleAssign *> assignTokens;

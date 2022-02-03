@@ -27,7 +27,7 @@ public:
   static void close();
 
   // CRUD - CREATE
-  static void insertSimple(TokenSimpleBag &){}
+  static void insertSimple(Simple &){}
   static void insertProcedure(SimpleProcedure *);
   // CRUD - READ
   static bool isProcedureExist(const std::string &procedureName);

@@ -31,7 +31,7 @@ TEST_CASE("[Test Iteration]", "001") {
       std::string program = procedure_01;
 
       SimpleParser tkSrc(program);
-      TokenSimpleBag tokenBag;
+      Simple tokenBag;
       tkSrc.parse(tokenBag);
       AND_THEN("The summary count of tokens") {
         CHECK(1 == tokenBag.countProcedure());
