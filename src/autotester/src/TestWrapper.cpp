@@ -12,18 +12,11 @@ AbstractWrapper *WrapperFactory::createWrapper() {
 
 volatile bool AbstractWrapper::GlobalStop = false;
 
-TestWrapper::TestWrapper() {
+TestWrapper::TestWrapper() = default;
 
-}
-
-void TestWrapper::parse(std::string filename) {
-
-  std::ifstream fs(filename);
-  std::stringstream buffer;
-  buffer << fs.rdbuf();
-  std::string program = buffer.str();
-
-  SourceProcessor::process(program);
+void TestWrapper::parse(std::string simpleFilePath) {
+  std::string simpleText = TestWrapper::getSimpleText(simpleFilePath);
+  SourceProcessor::process(simpleText);
 }
 
 void TestWrapper::evaluate(std::string query, std::list<std::string> &results) {

@@ -1,8 +1,6 @@
 #include "SourceProcessor.hpp"
 
 
-void SourceProcessor::process(const std::string& program) {
-
-  SourceParser tk(program);
-  std::vector<SimpleProcedure *> tokens;
+void SourceProcessor::process(const std::string& simple_text) {
+  SourceParser tk(simple_text);
 }

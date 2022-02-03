@@ -1,7 +1,6 @@
 #pragma once
 
-#include <sstream>
-#include <fstream>
+
 #include <iostream>
 
 #include <vector>
@@ -15,5 +14,5 @@
 class SourceProcessor {
 public:
     // method for processing the source program
-    static void process(const std::string& program);
+    static void process(const std::string& simple_text);
 };
