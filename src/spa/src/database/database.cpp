@@ -56,9 +56,9 @@ void database::initialize() {
 }
 
 // Mother of All inserts
-void database::insertSimple(Simple & simple){
-  std::vector<SimpleProcedure *> * procedures = simple.getProcedures();
-  for (auto it = procedures->begin(); it != procedures->end(); ++it){
+void database::insertSimple(Simple &simple) {
+  std::vector<SimpleProcedure *> *procedures = simple.getProcedures();
+  for (auto it = procedures->begin(); it != procedures->end(); ++it) {
     database::insertProcedure(*it);
   }
 
@@ -96,20 +96,27 @@ int database::getProcedureCount() {
 }
 void database::selectProcedureNamesAll(std::vector<std::string> &results) {
   results.clear();
-
   _db_results.clear();
-  std::string getProceduresSQL = "SELECT " + ProcedureTable::COLUMN_NAME() + " FROM procedures;";
+  std::string getProceduresSQL = "SELECT " + ProcedureTable::COLUMN_NAME() + " FROM " + ProcedureTable::NAME() + ";";
 
   sqlite3_exec(dbConnection, getProceduresSQL.c_str(), database::resultCallback, 0, &errorMessage);
+  if (errorMessage != nullptr) {
+    throw errorMessage;
+  }
 
-  for (std::vector<std::string> dbRow : _db_results) {
+//  if(_db_results.empty()){
+//    throw (ProcedureTable::COLUMN_NAME());
+//  }
+//  throw (design_entity);
+//  throw std::to_string(_db_results.size());
+
+
+  for (std::vector<std::string> &_db_result : _db_results) {
     std::string result;
-    result = dbRow.at(0);
+    result = _db_result.at(0);
     results.push_back(result);
   }
 }
-
-
 
 // callback method to put one row of results from the database into the dbResults vector
 // This method is called each time a row of results is returned from the database

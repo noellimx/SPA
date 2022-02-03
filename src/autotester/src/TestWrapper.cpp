@@ -12,7 +12,9 @@ AbstractWrapper *WrapperFactory::createWrapper() {
 
 volatile bool AbstractWrapper::GlobalStop = false;
 
-TestWrapper::TestWrapper() = default;
+TestWrapper::TestWrapper() {
+  database::initialize();
+};
 
 void TestWrapper::parse(std::string simpleFilePath) {
   std::string simpleText = TestWrapper::getSimpleText(simpleFilePath);
@@ -21,8 +23,6 @@ void TestWrapper::parse(std::string simpleFilePath) {
 
 // query_text is select-cl
 void TestWrapper::evaluate(std::string select_cl, std::list<std::string> &results) {
-
-
   std::vector<std::string> thisResults;
   QueryProcessor::parseAndEvaluate(select_cl, thisResults);
 

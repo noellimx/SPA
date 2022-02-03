@@ -45,13 +45,14 @@ public:
   static void insertProcedure(SimpleProcedure *);
 
   // CRUD - READ
-  static void queryAllNamesOf(std::string design_entity, std::vector<std::string> & results){
+  static void queryAllNamesOf(std::string design_entity, std::vector<std::string> &results) {
 
     std::vector<std::string> thisResults;
-    if(design_entity == "procedure"){
-        database::selectProcedureNamesAll(thisResults);
+    if (design_entity == "procedure") {
+
+      database::selectProcedureNamesAll(thisResults);
     }
-    for(std::string & thisResult: thisResults){
+    for (std::string &thisResult : thisResults) {
       results.push_back(thisResult);
     }
   }

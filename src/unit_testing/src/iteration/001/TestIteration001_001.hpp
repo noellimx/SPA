@@ -11,7 +11,7 @@
 
 namespace TestIteration001_001 {
 
-TEST_CASE("[Test Iteration]", "001") {
+TEST_CASE("[Test Iteration]", "001-1") {
   GIVEN("A connection to the database") {
     database::initialize();
 
@@ -80,5 +80,4 @@ TEST_CASE("[Test Iteration]", "001") {
 
 }
 };
-#include "catch.hpp"
 
