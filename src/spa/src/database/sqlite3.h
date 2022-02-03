@@ -12030,7 +12030,7 @@ struct Fts5ExtensionApi {
 **            on a columnsize=0 database.
 **   </ul>
 **
-**   For each token in the input string, the supplied callback xToken() must
+**   For each token in the input string, the supplied resultCallback xToken() must
 **   be invoked. The first argument to it should be a copy of the pointer
 **   passed as the second argument to xTokenize(). The third and fourth
 **   arguments are a pointer to a buffer containing the token text, and the
@@ -12038,14 +12038,14 @@ struct Fts5ExtensionApi {
 **   of the first byte of and first byte immediately following the text from
 **   which the token is derived within the input.
 **
-**   The second argument passed to the xToken() callback ("tflags") should
+**   The second argument passed to the xToken() resultCallback ("tflags") should
 **   normally be set to 0. The exception is if the tokenizer supports
 **   synonyms. In this case see the discussion below for details.
 **
-**   FTS5 assumes the xToken() callback is invoked for each token in the
+**   FTS5 assumes the xToken() resultCallback is invoked for each token in the
 **   order that they occur within the input text.
 **
-**   If an xToken() callback returns any value other than SQLITE_OK, then
+**   If an xToken() resultCallback returns any value other than SQLITE_OK, then
 **   the tokenization should be abandoned and the xTokenize() method should
 **   immediately return a copy of the xToken() return value. Or, if the
 **   input buffer is exhausted, xTokenize() should return SQLITE_OK. Finally,

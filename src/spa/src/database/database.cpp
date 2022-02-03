@@ -51,11 +51,8 @@ void database::initialize() {
     database::initializeConnection();
 
   } catch (...) {
-
   }
-
   database::initializeTables();
-
 }
 
 // method to insert a procedure into the database
@@ -71,7 +68,7 @@ bool database::isProcedureExist(const std::string &procedureName) {
   std::string statement =
       "SELECT EXISTS(SELECT 1 FROM " + ProcedureTable::NAME() + " WHERE " + ProcedureTable::COLUMN_NAME() + "=\""
           + procedureName + "\" LIMIT 1)";
-  sqlite3_exec(dbConnection, statement.c_str(), callback, 0, &errorMessage);
+  sqlite3_exec(dbConnection, statement.c_str(), resultCallback, 0, &errorMessage);
   if (errorMessage != nullptr) {
     return errorMessage;
   }
@@ -84,7 +81,7 @@ void database::selectProcedureNamesAll(std::vector<std::string> &results) {
   _db_results.clear();
   std::string getProceduresSQL = "SELECT " + ProcedureTable::COLUMN_NAME() + " FROM procedures;";
 
-  sqlite3_exec(dbConnection, getProceduresSQL.c_str(), database::callback, 0, &errorMessage);
+  sqlite3_exec(dbConnection, getProceduresSQL.c_str(), database::resultCallback, 0, &errorMessage);
 
   for (std::vector<std::string> dbRow : _db_results) {
     std::string result;
@@ -95,7 +92,7 @@ void database::selectProcedureNamesAll(std::vector<std::string> &results) {
 int database::getProcedureCount() {
   _db_results.clear();
   std::string getProceduresSQL = "SELECT COUNT(*) FROM procedures;";
-  sqlite3_exec(dbConnection, getProceduresSQL.c_str(), callback, 0, &errorMessage);
+  sqlite3_exec(dbConnection, getProceduresSQL.c_str(), resultCallback, 0, &errorMessage);
   if (errorMessage != nullptr) {
     return -1;
   }
@@ -106,23 +103,18 @@ int database::getProcedureCount() {
 }
 // callback method to put one row of results from the database into the dbResults vector
 // This method is called each time a row of results is returned from the database
-int database::callback(void *NotUsed, int argc, char **argv, char **azColName) {
+int database::resultCallback(void *NotUsed, int columnCount, char **argv, char **azColName) {
   NotUsed = 0;
   std::vector<std::string> dbRow;
 
-  // argc is the number of columns for this row of results
-  // argv contains the values for the columns
-  // Each value is pushed into a vector.
-  for (int i = 0; i < argc; i++) {
+  for (int i = 0; i < columnCount; i++) {
     dbRow.push_back(argv[i]);
   }
 
-  // The row is pushed to the vector for storing all rows of results
   _db_results.push_back(dbRow);
 
   return 0;
 }
-// method to close the database connection
 void database::close() {
   sqlite3_close(dbConnection);
 }
