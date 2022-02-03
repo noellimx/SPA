@@ -41,6 +41,6 @@ public:
   // destructor
   ~SimpleParser();
 
-  void tokenize(TokenSimpleBag &);
+  void parse(TokenSimpleBag &);
 };
 

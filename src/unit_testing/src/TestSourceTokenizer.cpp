@@ -26,7 +26,7 @@ SCENARIO("[TestTokenizer]", "One Procedure With 1 assignment statement") {
 
       SimpleParser tk(program);
       TokenSimpleBag tokenBag;
-      tk.tokenize(tokenBag);
+      tk.parse(tokenBag);
 
       THEN("Summary count of tokens") {
         // Count Summary Check
@@ -85,7 +85,7 @@ SCENARIO("[TestTokenizer] One Procedure with 1 read and 1 print statement uses t
 
       SimpleParser tk(program);
       TokenSimpleBag tokenBag;
-      tk.tokenize(tokenBag);
+      tk.parse(tokenBag);
 
       THEN("Summary count of tokens") {
         // Count Summary Check
@@ -154,7 +154,7 @@ SCENARIO("[TestTokenizer] One Procedure With 2 identical assignment statements")
 
       SimpleParser tk(program);
       TokenSimpleBag tokenBag;
-      tk.tokenize(tokenBag);
+      tk.parse(tokenBag);
 
       THEN("Summary count of tokens") {
 

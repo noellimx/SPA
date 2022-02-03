@@ -32,7 +32,7 @@ TEST_CASE("[Test Iteration]", "001") {
 
       SimpleParser tkSrc(program);
       TokenSimpleBag tokenBag;
-      tkSrc.tokenize(tokenBag);
+      tkSrc.parse(tokenBag);
       AND_THEN("The summary count of tokens") {
         CHECK(1 == tokenBag.countProcedure());
         CHECK(2 == tokenBag.countAssign());
@@ -56,7 +56,7 @@ TEST_CASE("[Test Iteration]", "001") {
                     + std::to_string(expectedCountSynonymInTuple) + " synonym.") {
               QueryParser tkQry(select_cl_text);
               Query qr;
-              tkQry.tokenize(qr);
+              tkQry.parse(qr);
               CHECK(qr.countDeclarations() == expectedCountDeclarations);
               CHECK(qr.getEntityOf(synonym) == expectedSynonymToRepresentType);
               CHECK(qr.countSynonymsInTuple() == expectedCountSynonymInTuple);

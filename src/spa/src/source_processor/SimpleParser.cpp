@@ -74,7 +74,7 @@ void SimpleParser::moveToStatementBreakOrClosingBrace() {
   }
 }
 
-void SimpleParser::tokenize(TokenSimpleBag &tokenBag) {
+void SimpleParser::parse(TokenSimpleBag &tokenBag) {
   while (isNotEndOfSource()) {
     if (isCursorAtWhitespace()) {
       moveCursorAtWhiteSpaceToAfterWhiteSpace();

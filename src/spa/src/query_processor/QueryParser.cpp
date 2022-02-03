@@ -5,7 +5,7 @@ QueryParser::~QueryParser() = default;
 
 // NOTE: this is inner help function for tokenize()
 // returns when cursor is at 't' of Select
-void QueryParser::_tokenizeDeclarations(Query &qr) {
+void QueryParser::_parseDeclarations(Query &qr) {
 
   bool isSelectKeyWordFound = false;
   int cc = 0;
@@ -78,7 +78,7 @@ void QueryParser::_tokenizeDeclarations(Query &qr) {
   }
 }
 // NOTE: this is inner help function for tokenize()
-void QueryParser::_tokenizeSelectCl(Query &qr) {
+void QueryParser::_parseSelectCl(Query &qr) {
   if (text.at(_cursor) != 't') {
     throw "This method should only be invoked when cursor position is at 't' of Select keyword";
   }
@@ -107,7 +107,7 @@ void QueryParser::_tokenizeSelectCl(Query &qr) {
     qr.addSynonymToResultCl(selectSyn);
   }
 }
-void QueryParser::tokenize(Query &qr) {
-  QueryParser::_tokenizeDeclarations(qr);
-  QueryParser::_tokenizeSelectCl(qr);
+void QueryParser::parse(Query &qr) {
+  QueryParser::_parseDeclarations(qr);
+  QueryParser::_parseSelectCl(qr);
 }
