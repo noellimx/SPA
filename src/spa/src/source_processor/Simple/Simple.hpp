@@ -9,7 +9,7 @@
 
 #include "source_processor/Simple/composites/TokenSimpleProcedure.hpp"
 #include "source_processor/Simple/composites/TokenSimpleAssignment.hpp"
-#include "source_processor/Simple/composites/TokenSimpleVariable.hpp"
+#include "source_processor/Simple/composites/SimpleVariable.hpp"
 #include "source_processor/Simple/composites/TokenSimpleConstant.hpp"
 #include "source_processor/Simple/composites/TokenSimpleRead.hpp"
 #include "source_processor/Simple/composites/TokenSimplePrint.hpp"
@@ -18,7 +18,7 @@ class TokenSimpleBag {
 private:
   std::vector<TokenSimpleProcedure *> procedureTokens;
   std::map<int, TokenSimpleAssignment *> assignTokens;
-  std::map<std::string, TokenSimpleVariable *> variableTokens;
+  std::map<std::string, SimpleVariable *> variableTokens;
   std::map<std::string, TokenSimpleConstant *> constantTokens;
   std::map<int, TokenSimpleRead *> readTokens;
   std::map<int, TokenSimplePrint *> printTokens;
@@ -29,12 +29,12 @@ public:
   TokenSimpleProcedure *getProcedure(int i) {
     return procedureTokens.at(i);
   }
-  void addVariable(TokenSimpleVariable *token) {
+  void addVariable(SimpleVariable *token) {
     std::string var_name = token->getName();
     variableTokens.insert({var_name, token});
   }
 
-  TokenSimpleVariable *getVariable(const std::string &var_name) {
+  SimpleVariable *getVariable(const std::string &var_name) {
     return variableTokens.at(var_name);
   }
 

@@ -5,14 +5,14 @@
 #pragma once
 
 
-class TokenSimpleVariable;
+class SimpleVariable;
 class InterfaceSimplePrinter {
-  TokenSimpleVariable * printableVar;
+  SimpleVariable * printableVar;
 public:
   InterfaceSimplePrinter() = default;
 
-  explicit InterfaceSimplePrinter(TokenSimpleVariable * );
+  explicit InterfaceSimplePrinter(SimpleVariable * );
 
-  TokenSimpleVariable * prints();
+  SimpleVariable * prints();
 };
 

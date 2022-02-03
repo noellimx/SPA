@@ -10,7 +10,7 @@
 #include "source_processor/Simple/composites/interface/InterfaceSimpleFactor.hpp"
 #include "source_processor/Simple/composites/interface/InterfaceSimpleAssign.hpp"
 
-#include "TokenSimpleVariable.hpp"
+#include "SimpleVariable.hpp"
 
 #include <iostream>
 #include <string>
@@ -26,7 +26,7 @@ private:
 
 public:
   TokenSimpleAssignment() = delete;
-  TokenSimpleAssignment(TokenSimpleVariable *_lhs, InterfaceSimpleFactor *_rhs, int _lineNo);
+  TokenSimpleAssignment(SimpleVariable *_lhs, InterfaceSimpleFactor *_rhs, int _lineNo);
   ~TokenSimpleAssignment() = default;
 
   static std::string TTYPE;

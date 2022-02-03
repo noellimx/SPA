@@ -4,9 +4,9 @@
 
 
 #include "InterfaceSimplePrinter.hpp"
-#include "source_processor/Simple/composites/TokenSimpleVariable.hpp"
+#include "source_processor/Simple/composites/SimpleVariable.hpp"
 
-InterfaceSimplePrinter::InterfaceSimplePrinter(TokenSimpleVariable * _token): printableVar(_token){};
+InterfaceSimplePrinter::InterfaceSimplePrinter(SimpleVariable * _token): printableVar(_token){};
 
-TokenSimpleVariable * InterfaceSimplePrinter::prints() { return printableVar;}
+SimpleVariable * InterfaceSimplePrinter::prints() { return printableVar;}
 

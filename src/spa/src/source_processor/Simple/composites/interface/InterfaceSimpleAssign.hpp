@@ -5,7 +5,7 @@
 #pragma once
 
 #include "source_processor/Simple/composites/TokenSimple.hpp"
-#include "source_processor/Simple/composites/TokenSimpleVariable.hpp"
+#include "source_processor/Simple/composites/SimpleVariable.hpp"
 #include <iostream>
 #include <string>
 #include <utility>
@@ -14,13 +14,13 @@ class InterfaceSimpleAssign {
 private:
 
 protected:
-  TokenSimpleVariable *lhs = nullptr;
+  SimpleVariable *lhs = nullptr;
   InterfaceSimpleFactor *rhs = nullptr;
 
 public:
   InterfaceSimpleAssign() = default;
   ~InterfaceSimpleAssign() = default;
-  TokenSimpleVariable *getLHS() {
+  SimpleVariable *getLHS() {
     return lhs;
   }
   InterfaceSimpleFactor *getRHS() {

@@ -6,7 +6,7 @@
 
 std::string TokenSimpleRead::TTYPE = "read";
 
-TokenSimpleRead::TokenSimpleRead(int _lineNo, TokenSimpleVariable * readableVar) : InterfaceSimpleLined(_lineNo), InterfaceSimpleReader(readableVar) {
+TokenSimpleRead::TokenSimpleRead(int _lineNo, SimpleVariable * readableVar) : InterfaceSimpleLined(_lineNo), InterfaceSimpleReader(readableVar) {
 }
 
 std::string TokenSimpleRead::getType() {

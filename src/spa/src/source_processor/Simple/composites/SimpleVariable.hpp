@@ -16,14 +16,14 @@
 #include <vector>
 #include <utility>
 
-class TokenSimpleVariable : public TokenSimple, public InterfaceSimpleTyped, public InterfaceSimpleNamed, public InterfaceSimpleFactor, public InterfaceSimpleLHS {
+class SimpleVariable : public TokenSimple, public InterfaceSimpleTyped, public InterfaceSimpleNamed, public InterfaceSimpleFactor, public InterfaceSimpleLHS {
 protected:
   std::string name;
   static std::string TTYPE;
 public:
-  TokenSimpleVariable() = delete;
-  ~TokenSimpleVariable() = default;
-  explicit TokenSimpleVariable(std::string _name) : InterfaceSimpleNamed(std::move(_name)){}
+  SimpleVariable() = delete;
+  ~SimpleVariable() = default;
+  explicit SimpleVariable(std::string _name) : InterfaceSimpleNamed(std::move(_name)){}
   std::string getType() override;
 };
 

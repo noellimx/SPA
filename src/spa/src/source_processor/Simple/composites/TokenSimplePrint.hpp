@@ -9,7 +9,7 @@
 #include "source_processor/Simple/composites/interface/InterfaceSimpleBlockScope.hpp"
 #include "source_processor/Simple/composites/interface/InterfaceSimplePrinter.hpp"
 
-#include "TokenSimpleVariable.hpp"
+#include "SimpleVariable.hpp"
 
 #include <iostream>
 #include <string>
@@ -21,7 +21,7 @@ private:
 
 public:
   TokenSimplePrint() = delete;
-  explicit TokenSimplePrint(int _lineNo, TokenSimpleVariable * readableVar);
+  explicit TokenSimplePrint(int _lineNo, SimpleVariable * readableVar);
   ~TokenSimplePrint() = default;
 
   static std::string TTYPE;

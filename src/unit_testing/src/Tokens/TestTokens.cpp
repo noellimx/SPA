@@ -24,12 +24,12 @@ TEST_CASE("[TestTokenizer] A constant token", "") {
 TEST_CASE("[TestTokenizer] A variable token", "") {
   std::string var1 = "abc";
 
-  auto *token = new TokenSimpleVariable(var1);
+  auto *token = new SimpleVariable(var1);
 
   std::string expectedTokenType = "variable";
   std::string actualTokenType = token->getType();
 
-  std::map<std::string, TokenSimpleVariable *> variables = std::map<std::string, TokenSimpleVariable *>();
+  std::map<std::string, SimpleVariable *> variables = std::map<std::string, SimpleVariable *>();
 
   variables.insert({var1, token});
 

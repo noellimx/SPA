@@ -7,7 +7,7 @@
 std::string TokenSimpleAssignment::TTYPE = "assign";
 
 
-TokenSimpleAssignment::TokenSimpleAssignment(TokenSimpleVariable *_lhs, InterfaceSimpleFactor *_rhs, int _lineNo)
+TokenSimpleAssignment::TokenSimpleAssignment(SimpleVariable *_lhs, InterfaceSimpleFactor *_rhs, int _lineNo)
     : InterfaceSimpleLined(_lineNo) {
   lhs = _lhs;
   rhs = _rhs;

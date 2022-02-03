@@ -6,7 +6,7 @@
 
 std::string TokenSimplePrint::TTYPE = "print";
 
-TokenSimplePrint::TokenSimplePrint(int _lineNo, TokenSimpleVariable *readableVar)
+TokenSimplePrint::TokenSimplePrint(int _lineNo, SimpleVariable *readableVar)
     : InterfaceSimpleLined(_lineNo), InterfaceSimplePrinter(readableVar) {
 }
 

@@ -10,7 +10,7 @@
 #include "source_processor/Simple/composites/interface/InterfaceSimpleFactor.hpp"
 #include "source_processor/Simple/composites/interface/InterfaceSimpleReader.hpp"
 
-#include "TokenSimpleVariable.hpp"
+#include "SimpleVariable.hpp"
 
 #include <iostream>
 #include <string>
@@ -22,7 +22,7 @@ private:
 
 public:
   TokenSimpleRead() = delete;
-  explicit TokenSimpleRead(int _lineNo, TokenSimpleVariable * readableVar);
+  explicit TokenSimpleRead(int _lineNo, SimpleVariable * readableVar);
   ~TokenSimpleRead() = default;
 
   static std::string TTYPE;

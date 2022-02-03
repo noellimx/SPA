@@ -156,7 +156,7 @@ void SourceTokenizer::tokenize(TokenSimpleBag &tokenBag) {
 
           std::string var_name = source.substr(cursorStartReadableVar,
                                                moving - cursorStartReadableVar + 1);
-          auto *tokenVar = new TokenSimpleVariable(var_name);
+          auto *tokenVar = new SimpleVariable(var_name);
 
           tokenBag.addVariable(tokenVar);
 
@@ -174,7 +174,7 @@ void SourceTokenizer::tokenize(TokenSimpleBag &tokenBag) {
           // LHS
           std::string lhs = firstWord;
 
-          auto *tokenVarLHS = new TokenSimpleVariable(lhs);
+          auto *tokenVarLHS = new SimpleVariable(lhs);
           tokenBag.addVariable(tokenVarLHS);
 
           moving += 1; // move out of alphanumeric word
