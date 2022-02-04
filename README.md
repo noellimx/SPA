@@ -41,10 +41,10 @@ Run binary which takes in a set of 3 file paths.
 2. Queries in PQL and its expected results (.pql)
 
 ### SPA Outputs
+#### Output Folder: ```./tests/spa_logs```. See [Viewing Test Result](#viewing-test-result). \
 
 3. Target output stores test result. (.xml)
 
-Output Folder: ```./tests/spa_logs```. See [Viewing Test Result](#viewing-test-result). \
 Outputs will not be persistently stored in the repository. Run execution to obtain fresh logs.
 
 For simplicity file names in each set should have the same name and differentiated by its file extension.
