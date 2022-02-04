@@ -33,7 +33,7 @@ TEST_CASE("[Test Iteration] Asserting Result: 1 Procedure get procedure") {
       AND_WHEN("SIMPLE text is parsed") {
         SimpleParser simpleParser(simple_text);
         Simple simple;
-        simpleParser.parse(simple);
+        simpleParser.parseInto(simple);
         AND_THEN("The summary count of composites in simple instance") {
           CHECK(1 == simple.countProcedure());
           CHECK(1 == simple.countAssign());
@@ -59,7 +59,7 @@ TEST_CASE("[Test Iteration] Asserting Result: 1 Procedure get procedure") {
             std::string expectedSynonymToRepresentType = "procedure";
             QueryParser tkQry(select_cl_text);
             Query qr;
-            tkQry.parse(qr);
+            tkQry.parseInto(qr);
             CHECK(qr.countDeclarations() == expectedCountDeclarations);
             CHECK(qr.getEntityOf(synonym) == expectedSynonymToRepresentType);
             CHECK(qr.countSynonymsInTuple() == expectedCountSynonymInTuple);
@@ -97,7 +97,7 @@ TEST_CASE("[Test Iteration] 001-2 Asserting Result: Give and get 1 Assign") {
       AND_WHEN("SIMPLE text is parsed") {
         SimpleParser simpleParser(simple_text);
         Simple simple;
-        simpleParser.parse(simple);
+        simpleParser.parseInto(simple);
         AND_THEN("The summary count of composites in simple instance") {
           CHECK(1 == simple.countProcedure());
           CHECK(1 == simple.countAssign());
@@ -122,7 +122,7 @@ TEST_CASE("[Test Iteration] 001-2 Asserting Result: Give and get 1 Assign") {
             std::string expectedSynonymToRepresentType = design_entity;
             QueryParser tkQry(select_cl_text);
             Query qr;
-            tkQry.parse(qr);
+            tkQry.parseInto(qr);
             CHECK(qr.countDeclarations() == expectedCountDeclarations);
             CHECK(qr.getEntityOf(synonym) == expectedSynonymToRepresentType);
             CHECK(qr.countSynonymsInTuple() == expectedCountSynonymInTuple);
@@ -160,7 +160,7 @@ TEST_CASE("[Test Iteration] 001-2 Asserting Result: Give and get 1 Print") {
       AND_WHEN("SIMPLE text is parsed") {
         SimpleParser simpleParser(simple_text);
         Simple simple;
-        simpleParser.parse(simple);
+        simpleParser.parseInto(simple);
         AND_THEN("The summary count of composites in simple instance") {
           CHECK(1 == simple.countProcedure());
           CHECK(0 == simple.countAssign());
@@ -186,7 +186,7 @@ TEST_CASE("[Test Iteration] 001-2 Asserting Result: Give and get 1 Print") {
             std::string expectedSynonymToRepresentType = design_entity;
             QueryParser tkQry(select_cl_text);
             Query qr;
-            tkQry.parse(qr);
+            tkQry.parseInto(qr);
             CHECK(qr.countDeclarations() == expectedCountDeclarations);
             CHECK(qr.getEntityOf(synonym) == expectedSynonymToRepresentType);
             CHECK(qr.countSynonymsInTuple() == expectedCountSynonymInTuple);
@@ -230,7 +230,7 @@ TEST_CASE("[Test Iteration] 001-2 Asserting Result: Give and get 1 Read") {
       AND_WHEN("SIMPLE text is parsed") {
         SimpleParser simpleParser(simple_text);
         Simple simple;
-        simpleParser.parse(simple);
+        simpleParser.parseInto(simple);
         AND_THEN("The summary count of composites in simple instance") {
           CHECK(1 == simple.countProcedure());
           CHECK(0 == simple.countAssign());
@@ -253,7 +253,7 @@ TEST_CASE("[Test Iteration] 001-2 Asserting Result: Give and get 1 Read") {
             std::string expectedSynonymToRepresentType = design_entity;
             QueryParser tkQry(select_cl_text);
             Query qr;
-            tkQry.parse(qr);
+            tkQry.parseInto(qr);
             CHECK(qr.countDeclarations() == expectedCountDeclarations);
             CHECK(qr.getEntityOf(synonym) == expectedSynonymToRepresentType);
             CHECK(qr.countSynonymsInTuple() == expectedCountSynonymInTuple);
@@ -301,7 +301,7 @@ TEST_CASE("[Test Iteration] 001-2 Asserting Result: Give 1 assigment and get 1 V
       AND_WHEN("SIMPLE text is parsed") {
         SimpleParser simpleParser(simple_text);
         Simple simple;
-        simpleParser.parse(simple);
+        simpleParser.parseInto(simple);
 
         int expectedReadCount = 0;
 
@@ -331,7 +331,7 @@ TEST_CASE("[Test Iteration] 001-2 Asserting Result: Give 1 assigment and get 1 V
             std::string expectedSynonymToRepresentType = design_entity_const;
             QueryParser tkQry(select_cl_text_const);
             Query qr;
-            tkQry.parse(qr);
+            tkQry.parseInto(qr);
             CHECK(qr.countDeclarations() == expectedCountDeclarations);
             CHECK(qr.getEntityOf(synonym_const) == expectedSynonymToRepresentType);
             CHECK(qr.countSynonymsInTuple() == expectedCountSynonymInTuple);
@@ -350,7 +350,7 @@ TEST_CASE("[Test Iteration] 001-2 Asserting Result: Give 1 assigment and get 1 V
             std::string expectedSynonymToRepresentType = design_entity_val;
             QueryParser tkQry(select_cl_text_val);
             Query qr;
-            tkQry.parse(qr);
+            tkQry.parseInto(qr);
             CHECK(qr.countDeclarations() == expectedCountDeclarations);
             CHECK(qr.getEntityOf(synonym_val) == expectedSynonymToRepresentType);
             CHECK(qr.countSynonymsInTuple() == expectedCountSynonymInTuple);
@@ -399,7 +399,7 @@ TEST_CASE("[Test Iteration] 001-2 Asserting Result: Give 1 assignment, 1 read an
       AND_WHEN("SIMPLE text is parsed") {
         SimpleParser simpleParser(simple_text);
         Simple simple;
-        simpleParser.parse(simple);
+        simpleParser.parseInto(simple);
 
         int expectedReadCount = 1;
         int expectedVariableCount = 3;
@@ -431,7 +431,7 @@ TEST_CASE("[Test Iteration] 001-2 Asserting Result: Give 1 assignment, 1 read an
             std::string expectedSynonymToRepresentType = design_entity;
             QueryParser tkQry(select_cl);
             Query qr;
-            tkQry.parse(qr);
+            tkQry.parseInto(qr);
             CHECK(qr.countDeclarations() == expectedCountDeclarations);
             CHECK(qr.getEntityOf(syn_01) == expectedSynonymToRepresentType);
             CHECK(qr.countSynonymsInTuple() == expectedCountSynonymInTuple);

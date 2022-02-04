@@ -41,6 +41,6 @@ public:
   // destructor
   ~SimpleParser();
 
-  void parse(Simple &);
+  void parseInto(Simple &simple);
 };
 

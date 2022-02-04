@@ -19,8 +19,8 @@ public:
   ~QueryParser();
 
   // method for tokenizing a program / query string
-  void _parseDeclarations(Query &qr);
-  void _parseSelectCl(Query &qr);
-  void parse(Query &qr);
+  void _parseDeclarationsInto(Query &qr);
+  void _parseSelectClInto(Query &qr);
+  void parseInto(Query &qr);
 };
 

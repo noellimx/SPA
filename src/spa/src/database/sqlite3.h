@@ -11979,7 +11979,7 @@ struct Fts5ExtensionApi {
 **
 ** xCreate:
 **   This function is used to allocate and initialize a tokenizer instance.
-**   A tokenizer instance is required to actually parse text.
+**   A tokenizer instance is required to actually parseInto text.
 **
 **   The first argument passed to this function is a copy of the (void*)
 **   pointer provided by the application when the fts5_tokenizer object
@@ -12001,7 +12001,7 @@ struct Fts5ExtensionApi {
 **   be invoked exactly once for each successful call to xCreate().
 **
 ** xTokenize:
-**   This function is expected to parse the nText byte string indicated
+**   This function is expected to parseInto the nText byte string indicated
 **   by argument pText. pText may or may not be nul-terminated. The first
 **   argument passed to this function is a pointer to an Fts5Tokenizer object
 **   returned by an earlier call to xCreate().
@@ -12016,7 +12016,7 @@ struct Fts5ExtensionApi {
 **            FTS index.
 **
 **       <li> <b>FTS5_TOKENIZE_QUERY</b> - A MATCH query is being executed
-**            against the FTS index. The tokenizer is being called to parse
+**            against the FTS index. The tokenizer is being called to parseInto
 **            a bareword or quoted string specified as part of the query.
 **
 **       <li> <b>(FTS5_TOKENIZE_QUERY | FTS5_TOKENIZE_PREFIX)</b> - Same as

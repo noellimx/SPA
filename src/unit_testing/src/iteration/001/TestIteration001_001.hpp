@@ -32,7 +32,7 @@ TEST_CASE("[Test Iteration]", "001-1") {
 
       SimpleParser simpleParser(simple_text);
       Simple simple;
-      simpleParser.parse(simple);
+      simpleParser.parseInto(simple);
       AND_THEN("The summary count of composites in simple instance") {
         CHECK(1 == simple.countProcedure());
         CHECK(2 == simple.countAssign());
@@ -56,7 +56,7 @@ TEST_CASE("[Test Iteration]", "001-1") {
                   + std::to_string(expectedCountSynonymInTuple) + " synonym(s).") {
             QueryParser tkQry(select_cl_text_SelectProcedureNames);
             Query qr;
-            tkQry.parse(qr);
+            tkQry.parseInto(qr);
             CHECK(qr.countDeclarations() == expectedCountDeclarations);
             CHECK(qr.getEntityOf(synonym) == expectedSynonymToRepresentType);
             CHECK(qr.countSynonymsInTuple() == expectedCountSynonymInTuple);

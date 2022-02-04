@@ -26,7 +26,7 @@ SCENARIO("[TestSourceParser]", "One Procedure With 1 assignment statement") {
 
       SimpleParser tk(program);
       Simple simple;
-      tk.parse(simple);
+      tk.parseInto(simple);
 
       THEN("Summary count of tokens") {
         // Count Summary Check
@@ -85,7 +85,7 @@ SCENARIO("[TestSourceParser] One Procedure with 1 read and 1 print statement use
 
       SimpleParser tk(program);
       Simple simple;
-      tk.parse(simple);
+      tk.parseInto(simple);
 
       THEN("Summary count of tokens") {
         // Count Summary Check
@@ -154,7 +154,7 @@ SCENARIO("[TestSourceParser] One Procedure With 2 identical assignment statement
 
       SimpleParser tk(program);
       Simple simple;
-      tk.parse(simple);
+      tk.parseInto(simple);
 
       THEN("Summary count of tokens") {
 

@@ -12,7 +12,7 @@ void QueryProcessor::parseAndEvaluate(std::string select_cl_text, std::vector<st
   // parse select_cl_text -> Query
   QueryParser queryParser(std::move(select_cl_text));
   Query qr;
-  queryParser.parse(qr);
+  queryParser.parseInto(qr);
   //todo execute Query
   std::vector<std::string> thisResults;
 
