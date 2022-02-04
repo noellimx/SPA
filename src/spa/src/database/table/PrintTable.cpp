@@ -21,7 +21,7 @@ std::string PrintTable::COLUMN_LINE_NO() {
 
 // Singleton
 PrintTable::PrintTable() {
-  _name = "print";
+  _name = "prints";
   _col_lineNo = "line_no";
 }
 std::string PrintTable::getName() {

@@ -7,8 +7,16 @@
 #include "database/table/Schema.hpp"
 #include "database/table/ProcedureTable.hpp"
 #include "database/table/AssignTable.hpp"
+#include "database/table/PrintTable.hpp"
+#include "database/table/ReadTable.hpp"
+#include "database/table/ConstantTable.hpp"
+#include "database/table/VariableTable.hpp"
+
 #include "source_processor/Simple/composites/SimpleProcedure.hpp"
 #include "source_processor/Simple/Simple.hpp"
+
+
+
 
 // The Database has to be a static class due to various constraints.
 
@@ -46,6 +54,9 @@ public:
   static void insertProcedure(SimpleProcedure *);
   static void insertAssign(SimpleAssign *);
   static void insertPrint(SimplePrint *);
+  static void insertRead(SimpleRead *);
+  static void insertConstant(SimpleConstant *);
+  static void insertVariables(SimpleVariable *);
 
   // CRUD - READ
   static void queryAllNamesOf(std::string design_entity, std::vector<std::string> &results) {
@@ -57,6 +68,12 @@ public:
       database::selectAssignLinesAll(thisResults);
     }else if (design_entity == "print") {
       database::selectPrintLinesAll(thisResults);
+    }else if (design_entity == "read") {
+      database::selectReadNamesAll(thisResults);
+    }else if (design_entity == "const") {
+      database::selectConstValAll(thisResults);
+    }else if (design_entity == "variable") {
+      database::selectVariableValAll(thisResults);
     }
 
     for (std::string &thisResult : thisResults) {
@@ -69,8 +86,15 @@ public:
   static void selectProcedureNamesAll(std::vector<std::string> &);
   static void selectAssignLinesAll(std::vector<std::string> &);
   static void selectPrintLinesAll(std::vector<std::string> &);
+  static void selectReadNamesAll(std::vector<std::string> &);
+  static void selectConstValAll(std::vector<std::string> &);
+  static void selectVariableValAll(std::vector<std::string> &);
 
   static int getAssignCount();
+  static int getConstantCount();
+  static int getVariableCount();
   static int getPrintCount();
+  static int getReadLimit1();
+  static int getReadCount();
 };
 

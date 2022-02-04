@@ -25,8 +25,14 @@ public:
     return declarations.size();
   }
 
-  Declaration *getDeclaration(const std::string &syn) {
-    return declarations.at(syn);
+  Declaration *getDeclaration( std::string syn) {
+    try{
+      return declarations.at(syn);
+
+    }catch(...){
+
+      throw "[getDeclaration] Declaration not found";
+    }
   }
 
   void addSynonymToResultCl(const std::string &syn) {

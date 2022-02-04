@@ -99,12 +99,17 @@ void QueryParser::_parseSelectCl(Query &qr) {
     int cursorStartOfSelectSynonym = cursorStartOfTuple;
     int moving = cursorStartOfSelectSynonym;
 
-    while ((moving + 1) < text.length() && isalpha(text.at(moving + 1))) { // move to last alphanumeric of synonym
+    while (
+        ((moving + 1) < text.length())
+            && (isalpha(text.at(moving + 1)) || isdigit(text.at(moving + 1)))) { // move to last alphanumeric of synonym
       moving++;
     }
-
     std::string selectSyn = text.substr(cursorStartOfSelectSynonym, moving - cursorStartOfSelectSynonym + 1);
-    qr.addSynonymToResultCl(selectSyn);
+    try {
+      qr.addSynonymToResultCl(selectSyn);
+    } catch (...) {
+      throw "Error adding synonym in result-cl syn|" + selectSyn + "|";
+    }
   }
 }
 void QueryParser::parse(Query &qr) {
