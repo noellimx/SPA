@@ -74,6 +74,8 @@ public:
       database::selectConstValAll(thisResults);
     }else if (design_entity == "variable") {
       database::selectVariableValAll(thisResults);
+    }else if (design_entity == "stmt") {
+      database::selectStatementLinesAll(thisResults);
     }
 
     for (std::string &thisResult : thisResults) {
@@ -89,6 +91,7 @@ public:
   static void selectReadNamesAll(std::vector<std::string> &);
   static void selectConstValAll(std::vector<std::string> &);
   static void selectVariableValAll(std::vector<std::string> &);
+  static void selectStatementLinesAll(std::vector<std::string> &);
 
   static int getAssignCount();
   static int getConstantCount();

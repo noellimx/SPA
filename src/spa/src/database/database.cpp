@@ -326,6 +326,28 @@ void database::selectVariableValAll(std::vector<std::string> &results) {
     results.push_back(result);
   }
 }
+
+void database::selectStatementLinesAll(std::vector<std::string> &results) {
+  results.clear();
+  _db_results.clear();
+  std::string getProceduresSQL = "SELECT " + AssignTable::COLUMN_LINE_NO() + " FROM " + AssignTable::NAME()
+      + " UNION SELECT " + ReadTable::COLUMN_LINE_NO() + " FROM " + ReadTable::NAME() + " UNION SELECT "
+      + PrintTable::COLUMN_LINE_NO() + " FROM " + PrintTable::NAME() +";";
+
+
+
+
+
+  sqlite3_exec(dbConnection, getProceduresSQL.c_str(), resultCallback, 0, &errorMessage);
+  if (errorMessage != nullptr) {
+    throw errorMessage;
+  }
+  std::cout << getProceduresSQL << _db_results.size() << std::endl;
+  for (std::vector<std::string> &_db_result : _db_results) {
+    std::string result = _db_result.at(0);
+    results.push_back(result);
+  }
+}
 void database::selectProcedureNamesAll(std::vector<std::string> &results) {
   results.clear();
   _db_results.clear();
@@ -352,9 +374,7 @@ int database::resultCallback(void *NotUsed, int columnCount, char **argv, char *
   for (int i = 0; i < columnCount; i++) {
     dbRow.push_back(argv[i]);
   }
-
   _db_results.push_back(dbRow);
-
   return 0;
 }
 void database::close() {

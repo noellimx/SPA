@@ -361,12 +361,93 @@ TEST_CASE("[Test Iteration] 001-2 Asserting Result: Give 1 assigment and get 1 V
               CHECK(results.at(0) == var_name_01);
             }
           }
-
         }
       }
     }
   }
 }
+
+
+TEST_CASE("[Test Iteration] 001-2 Asserting Result: Give 1 assignment, 1 read and 1 print get 3 statement lines count") {
+  GIVEN("A connection to the database") {
+    database::initialize();
+
+    WHEN("A SIMPLE text and PQL query") {
+      // Simple Text
+      std::string proc_name_01 = "main";
+      std::string var_name_01 = "variable0TARGET0";
+      std::string var_name_02 = "variable1TARGET1";
+      std::string var_name_03 = "variable2TARGET3";
+      std::string const_value_01 = "123123123123123";
+
+      std::string stmt_01_assign = var_name_01 + " = " + const_value_01 + ";";
+      std::string stmt_02_print = "print " + var_name_02 + ";";
+      std::string stmt_03_read = "read " + var_name_03 + ";";
+
+      std::string stmtLst = stmt_01_assign+stmt_02_print+stmt_03_read;
+      std::string procedure_01 = "procedure " + proc_name_01 + " {\n"
+                                                               "    " + stmtLst + "\n"
+                                                                                  "}";
+      std::string simple_text = procedure_01;
+
+      // PQL query
+      std::string design_entity = "stmt";
+      std::string syn_01 = "stmtALL0000";
+      std::string select_cl = design_entity + " " + syn_01 + "; Select " + syn_01;
+
+
+      AND_WHEN("SIMPLE text is parsed") {
+        SimpleParser simpleParser(simple_text);
+        Simple simple;
+        simpleParser.parse(simple);
+
+        int expectedReadCount = 1;
+        int expectedVariableCount = 3;
+        int expectedPrintCount = 1;
+        int expectedStatementCount = 3;
+        AND_THEN("The summary count of composites in simple instance") {
+
+          CHECK(1 == simple.countProcedure());
+          CHECK(1 == simple.countAssign());
+          CHECK(expectedPrintCount == simple.countPrint());
+          CHECK(expectedReadCount == simple.countRead());
+          CHECK(expectedVariableCount == simple.countVariable());
+          CHECK(1 == simple.countConstant());
+        }
+
+        AND_WHEN("Simple instance is inserted into database") {
+
+          database::insertSimple(simple);
+
+          CHECK(database::getReadCount() == expectedReadCount);
+          CHECK(database::getPrintCount() == expectedPrintCount);
+          CHECK(database::getAssignCount() == 1);
+          CHECK(database::getConstantCount() == 1);
+          CHECK(database::getVariableCount() == expectedVariableCount);
+          AND_WHEN(
+              "Query " + select_cl + " is parsed.") {
+            int expectedCountDeclarations = 1;
+            int expectedCountSynonymInTuple = 1;
+            std::string expectedSynonymToRepresentType = design_entity;
+            QueryParser tkQry(select_cl);
+            Query qr;
+            tkQry.parse(qr);
+            CHECK(qr.countDeclarations() == expectedCountDeclarations);
+            CHECK(qr.getEntityOf(syn_01) == expectedSynonymToRepresentType);
+            CHECK(qr.countSynonymsInTuple() == expectedCountSynonymInTuple);
+            AND_THEN("The database query result is statement count of" + std::to_string(expectedStatementCount)) {
+              std::vector<std::string> results;
+              QueryEvaluator::evaluate(qr, results);
+              CHECK(results.size() == expectedStatementCount);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
 
 };
 
