@@ -1,5 +1,6 @@
 #include "database.hpp"
 #include "utils/StreamPlus.hpp"
+#include "database/table/PrintTable.hpp"
 
 sqlite3 *database::dbConnection;
 std::vector<std::vector<std::string>> database::_db_results = std::vector<std::vector<std::string>>();
@@ -18,6 +19,7 @@ void database::initializeConnection() {
 void database::readyTables() {
   tables.push_back(&ProcedureTable::GET());
   tables.push_back(&AssignTable::GET());
+  tables.push_back(&PrintTable::GET());
 }
 void database::recreateTables() {
   std::string attributes = std::string();
@@ -68,6 +70,11 @@ void database::insertSimple(Simple &simple) {
     database::insertAssign(it->second);
   }
 
+  auto *reads = simple.getPrints();
+  for (auto it = reads->begin(); it != reads->end(); ++it) {
+    database::insertPrint(it->second);
+  }
+
 }
 // method to insert a procedure into the database
 void database::insertProcedure(SimpleProcedure *procedure) {
@@ -80,6 +87,14 @@ void database::insertProcedure(SimpleProcedure *procedure) {
 void database::insertAssign(SimpleAssign * assignment) {
   std::string insertProcedureSQL =
       "INSERT INTO " + AssignTable::NAME() + " ('" + AssignTable::COLUMN_LINE_NO() + "') VALUES ('"
+          + std::to_string(assignment->getLineNo()) + "');";
+  sqlite3_exec(dbConnection, insertProcedureSQL.c_str(), NULL, 0, &errorMessage);
+}
+
+// method to insert an assign into the database
+void database::insertPrint(SimplePrint * assignment) {
+  std::string insertProcedureSQL =
+      "INSERT INTO " + PrintTable::NAME() + " ('" + PrintTable::COLUMN_LINE_NO() + "') VALUES ('"
           + std::to_string(assignment->getLineNo()) + "');";
   sqlite3_exec(dbConnection, insertProcedureSQL.c_str(), NULL, 0, &errorMessage);
 }
@@ -122,10 +137,40 @@ int database::getAssignCount() {
   return std::stoi(firstRowFirstColumnVal);
 }
 
+int database::getPrintCount() {
+  _db_results.clear();
+
+  std::string sql = "SELECT COUNT(*) FROM " + PrintTable::NAME() +";";
+  sqlite3_exec(dbConnection, sql.c_str(), resultCallback, 0, &errorMessage);
+  if (errorMessage != nullptr) {
+    return -1;
+  }
+
+  auto firstRow = _db_results[0];
+  auto firstRowFirstColumnVal = firstRow[0];
+  return std::stoi(firstRowFirstColumnVal);
+}
+
 void database::selectAssignLinesAll(std::vector<std::string> &results) {
   results.clear();
   _db_results.clear();
   std::string getProceduresSQL = "SELECT " + AssignTable::COLUMN_LINE_NO() + " FROM " + AssignTable::NAME() + ";";
+  sqlite3_exec(dbConnection, getProceduresSQL.c_str(), resultCallback, 0, &errorMessage);
+  if (errorMessage != nullptr) {
+    throw errorMessage;
+  }
+  for (std::vector<std::string> &_db_result : _db_results) {
+    std::string result;
+    result = _db_result.at(0);
+    results.push_back(result);
+  }
+
+}
+
+void database::selectPrintLinesAll(std::vector<std::string> &results) {
+  results.clear();
+  _db_results.clear();
+  std::string getProceduresSQL = "SELECT " + PrintTable::COLUMN_LINE_NO() + " FROM " + PrintTable::NAME() + ";";
   sqlite3_exec(dbConnection, getProceduresSQL.c_str(), resultCallback, 0, &errorMessage);
   if (errorMessage != nullptr) {
     throw errorMessage;

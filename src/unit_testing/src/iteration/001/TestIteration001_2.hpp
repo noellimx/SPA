@@ -9,6 +9,7 @@
 #include "source_processor/SimpleParser.hpp"
 #include "query_processor/QueryProcessor.hpp"
 #include "query_processor/QueryParser.hpp"
+#include "query_processor/QueryEvaluator.hpp"
 
 namespace TestIteration001_002 {
 
@@ -76,8 +77,6 @@ TEST_CASE("[Test Iteration] Asserting Result: 1 Procedure") {
   }
 }
 
-
-
 TEST_CASE("[Test Iteration] 001-2 Asserting Result: Give and get 1 Assign") {
   GIVEN("A connection to the database") {
     database::initialize();
@@ -141,6 +140,69 @@ TEST_CASE("[Test Iteration] 001-2 Asserting Result: Give and get 1 Assign") {
   }
 }
 
+TEST_CASE("[Test Iteration] 001-2 Asserting Result: Give and get 1 Print") {
+  GIVEN("A connection to the database") {
+    database::initialize();
+
+    WHEN("A SIMPLE text and PQL query") {
+      // Simple Text
+      std::string proc_name_01 = "main";
+      std::string var_name_01 = "x";
+      std::string const_value_01 = "1";
+
+      std::string stmt_01_print = "print " + var_name_01 + ";";
+
+      std::string stmtLst = stmt_01_print;
+      std::string procedure_01 = "procedure " + proc_name_01 + " {\n"
+                                                               "    " + stmtLst + "\n"
+                                                                                  "}";
+      std::string simple_text = procedure_01;
+      AND_WHEN("SIMPLE text is parsed") {
+        SimpleParser simpleParser(simple_text);
+        Simple simple;
+        simpleParser.parse(simple);
+        AND_THEN("The summary count of composites in simple instance") {
+          CHECK(1 == simple.countProcedure());
+          CHECK(0 == simple.countAssign());
+          CHECK(1 == simple.countPrint());
+          CHECK(1 == simple.countVariable());
+          CHECK(0 == simple.countConstant());
+        }
+
+        AND_WHEN("Simple instance is inserted into database") {
+          database::insertSimple(simple);
+
+          CHECK(database::getPrintCount() == 1);
+
+          // PQL query
+          std::string design_entity = "print";
+          std::string synonym = "pp";
+          std::string select_cl_text = design_entity + " " + synonym + "; Select " + synonym;
+
+          AND_WHEN(
+              "Query is parsed.") {
+            int expectedCountDeclarations = 1;
+            int expectedCountSynonymInTuple = 1;
+            std::string expectedSynonymToRepresentType = design_entity;
+            QueryParser tkQry(select_cl_text);
+            Query qr;
+            tkQry.parse(qr);
+            CHECK(qr.countDeclarations() == expectedCountDeclarations);
+            CHECK(qr.getEntityOf(synonym) == expectedSynonymToRepresentType);
+            CHECK(qr.countSynonymsInTuple() == expectedCountSynonymInTuple);
+
+            AND_THEN("The database query result is line number 1") {
+              std::vector<std::string> results;
+              QueryEvaluator::evaluate(qr, results);
+              CHECK(results.size() == 1);
+              CHECK(results.at(0) == std::to_string(1));
+            }
+          }
+        }
+      }
+    }
+  }
+}
 
 };
 

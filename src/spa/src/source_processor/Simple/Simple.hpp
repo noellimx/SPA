@@ -21,8 +21,8 @@ private:
   std::map<int, SimpleAssign *> * assigns = new std::map<int, SimpleAssign *>();
   std::map<std::string, SimpleVariable *> variables;
   std::map<std::string, SimpleConstant *> constants;
-  std::map<int, SimpleRead *> reads;
-  std::map<int, SimplePrint *> prints;
+  std::map<int, SimpleRead *> * reads = new std::map<int, SimpleRead *>;
+  std::map<int, SimplePrint *> * prints = new std::map<int, SimplePrint *>;
 public:
 
   void addProcedure(SimpleProcedure *sP) {
@@ -36,6 +36,8 @@ public:
   std::map<int, SimpleAssign *>  *getAssigns() {
     return assigns;
   }
+
+
   SimpleProcedure *getProcedure(int i) {
     return procedures->at(i);
   }
@@ -48,18 +50,20 @@ public:
   }
   void addRead(SimpleRead *sR) {
     int lineNo = sR->getLineNo();
-    reads.insert({lineNo, sR});
+    reads->insert({lineNo, sR});
   }
   SimpleRead *getRead(int i) {
-    return reads.at(i);
+    return reads->at(i);
   }
-
+  std::map<int, SimplePrint *>  *getPrints() {
+    return prints;
+  }
   SimplePrint *getPrint(int i) {
-    return prints.at(i);
+    return prints->at(i);
   }
   void addPrint(SimplePrint *sP) {
     int lineNo = sP->getLineNo();
-    prints.insert({lineNo, sP});
+    prints->insert({lineNo, sP});
   }
 
   void addConstant(SimpleConstant *sC) {
@@ -97,9 +101,9 @@ public:
   }
 
   unsigned long countRead() {
-    return reads.size();
+    return reads->size();
   }
   unsigned long countPrint() {
-    return prints.size();
+    return prints->size();
   }
 };

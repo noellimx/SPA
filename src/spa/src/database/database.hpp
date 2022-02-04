@@ -45,6 +45,7 @@ public:
 
   static void insertProcedure(SimpleProcedure *);
   static void insertAssign(SimpleAssign *);
+  static void insertPrint(SimplePrint *);
 
   // CRUD - READ
   static void queryAllNamesOf(std::string design_entity, std::vector<std::string> &results) {
@@ -54,6 +55,8 @@ public:
       database::selectProcedureNamesAll(thisResults);
     } else if (design_entity == "assign") {
       database::selectAssignLinesAll(thisResults);
+    }else if (design_entity == "print") {
+      database::selectPrintLinesAll(thisResults);
     }
 
     for (std::string &thisResult : thisResults) {
@@ -65,7 +68,9 @@ public:
   static int getProcedureCount();
   static void selectProcedureNamesAll(std::vector<std::string> &);
   static void selectAssignLinesAll(std::vector<std::string> &);
+  static void selectPrintLinesAll(std::vector<std::string> &);
 
   static int getAssignCount();
+  static int getPrintCount();
 };
 
