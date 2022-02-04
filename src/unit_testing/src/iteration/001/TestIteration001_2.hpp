@@ -13,7 +13,7 @@
 
 namespace TestIteration001_002 {
 
-TEST_CASE("[Test Iteration] Asserting Result: 1 Procedure") {
+TEST_CASE("[Test Iteration] Asserting Result: 1 Procedure get procedure") {
   GIVEN("A connection to the database") {
     database::initialize();
 
@@ -66,7 +66,7 @@ TEST_CASE("[Test Iteration] Asserting Result: 1 Procedure") {
 
             AND_THEN("The database query result is " + proc_name_01) {
               std::vector<std::string> results;
-              QueryProcessor::parseAndEvaluate(select_cl_text, results);
+              QueryEvaluator::evaluate(qr, results);
               CHECK(results.size() == 1);
               CHECK(results.at(0) == proc_name_01);
             }
@@ -290,7 +290,7 @@ TEST_CASE("[Test Iteration] 001-2 Asserting Result: Give 1 assigment and get 1 V
       std::string simple_text = procedure_01;
 
       // PQL query
-      std::string design_entity_const = "const";
+      std::string design_entity_const = "constant";
       std::string synonym_const = "const123const123";
       std::string select_cl_text_const = design_entity_const + " " + synonym_const + "; Select " + synonym_const;
 

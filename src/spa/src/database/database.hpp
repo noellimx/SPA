@@ -70,7 +70,7 @@ public:
       database::selectPrintLinesAll(thisResults);
     }else if (design_entity == "read") {
       database::selectReadNamesAll(thisResults);
-    }else if (design_entity == "const") {
+    }else if (design_entity == "constant") {
       database::selectConstValAll(thisResults);
     }else if (design_entity == "variable") {
       database::selectVariableValAll(thisResults);

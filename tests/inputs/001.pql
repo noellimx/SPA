@@ -1,5 +1,35 @@
-001 - Hello
-procedure p;
+001 - Two procedures
+procedure proc;
+Select proc
+mainRead, mainPrint
+5000
+002 - Read Statement at Line
+read r;
+Select r
+1
+5000
+003 - Assign Statement at Line
+assign ass;
+Select ass
+2
+5000
+004 - Print Statement at Line
+print p;
 Select p
-main
+3
+5000
+004 - Statements at Line
+stmt statement;
+Select statement
+3, 2, 1
+5000
+005 - Variables
+variable v;
+Select v
+x, y
+5000
+006 - Constant
+constant c;
+Select c
+200
 5000

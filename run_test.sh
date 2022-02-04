@@ -1,8 +1,8 @@
 #!/bin/bash
 # Include input sets here.
-#SET_NAMES=("001")
+#SET_NAMES=("001" "002")
 
-SET_NAMES=("001" "002") # // TODO. for now no autotest test yet. implementing autotester.
+SET_NAMES=("001") # // TODO. for now no autotest test yet. implementing autotester.
 
 # Setup: binaries.
 

@@ -1,3 +1,8 @@
-procedure main {
-    x = 1;
+procedure mainRead {
+    read x;
+}
+
+procedure mainPrint {
+    y = 200;
+    print x;
 }
